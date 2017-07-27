@@ -5,3 +5,9 @@ Check [ens.bid](https://ens.bid) for more information about the ENS-bid .
 
 ## Techincal Stack
 - [infura](https://infura.io): Connect with Ethereum.
+- [Meteor](https://www.meteor.com/)
+
+## Library
+- [eth-registrar-en](https://www.npmjs.com/package/eth-registrar-ens)
+- [ethereum-ens](https://www.npmjs.com/package/ethereum-ens)
+- [web3](https://www.npmjs.com/package/web3)
