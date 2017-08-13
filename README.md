@@ -15,3 +15,4 @@ Check [ens.bid](http://ens.bid) for more information about the ens-bid.
 
 ## Development Reference
 - [Learn React](https://zhuanlan.zhihu.com/p/23412169)
+- [Ethereum Dapp Tutorial](https://medium.com/taipei-ethereum-meetup/ethereum-dapp-tutorial-push-button-cae3810086a4)
