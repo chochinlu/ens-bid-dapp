@@ -1,5 +1,28 @@
 # STRUCTURE
 
+Introduce DApp architecture.
+
+## DApp architecture
+```
+ens-bid-dapp
+├── README.md
+├── node_modules
+├── package.json
+├── .gitignore
+├── public
+└── src
+    ├── components
+    |   ├── SomeService.js
+    |   ├── SomeHelper.js
+    |   ├── SomeHelper.test.js
+    |   ├── utils.js
+    |   └── utils.test.js
+    └── lib
+        └── Some.http
+```
+
+## Components
+
 `./src/components` : React Components
 
 `./src/components/lib` : Lib functions for React components.
