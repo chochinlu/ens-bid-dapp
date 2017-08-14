@@ -3,6 +3,7 @@
 Introduce DApp architecture.
 
 ## DApp architecture
+
 ```
 ens-bid-dapp
 ├── README.md
@@ -12,29 +13,29 @@ ens-bid-dapp
 ├── public
 └── src
     ├── components
-    |   ├── SomeService.js
-    |   ├── SomeHelper.js
-    |   ├── SomeHelper.test.js
-    |   ├── utils.js
-    |   └── utils.test.js
+    |   └── Some.js
     └── lib
-        └── Some.http
-```
+        └── SomeService.js
+        └── SomeHelper.js
+        └── SomeHelper.test.js
+        └── utils.js
+        └── utils.test.js
+        └── app.http
 
-## Components
+```
 
 `./src/components` : React Components
 
 `./src/components/lib` : Lib functions for React components.
 
-`./src/components/AaaService.js` : API connections methods for the `Aaa` component. Usually `Aaa` is a [container component](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
+`./src/lib/SomeService.js` : API connections methods for the `Some` component. Usually `Some` is a [container component](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
 
-`./src/components/BbbHelper.js` : Help functions for the `Bbb` component.
+`./src/lib/SomeHelper.js` : Help functions for the `Some` component.
 
-`./src/components/BbbHelper.test.js` : For [Jest](https://facebook.github.io/jest/) testing.
+`./src/lib/SomeHelper.test.js` : For [Jest](https://facebook.github.io/jest/) testing.
 
-`./src/components/utils.js` : Common util functions for components.
+`./src/lib/utils.js` : Common util functions for components.
 
-`./src/components/utils.test.js`: For Jest testing.
+`./src/lib/utils.test.js`: For Jest testing.
 
-`./src/components/lib/CCC.http` (optional) : REST testing scripts for [vs-code rest client](https://github.com/Huachao/vscode-restclient)
+`./src/lib/lib/app.http` (optional) : REST testing scripts for [vs-code rest client](https://github.com/Huachao/vscode-restclient)
