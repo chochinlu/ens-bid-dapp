@@ -13,6 +13,15 @@ Check [ens.bid](http://ens.bid) for more information about the ens-bid.
 - [ethereum-ens](https://www.npmjs.com/package/ethereum-ens)
 - [web3](https://www.npmjs.com/package/web3)
 
+## Test 
+
+Test lib apis:
+
+```
+$ PRIVATE_KEY=<your private key> yarn dev
+```
+
+
 ## Development Reference
 - [Learn React](https://zhuanlan.zhihu.com/p/23412169)
 - [Ethereum Dapp Tutorial](https://medium.com/taipei-ethereum-meetup/ethereum-dapp-tutorial-push-button-cae3810086a4)
