@@ -15,8 +15,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "dev": "babel src/lib -d testbuild & babel test -d testbuild && node testbuild/dAppService.test.js",
-    "postdev": "rm -rf testbuild"
+    "dev:rmtestbuild": "rm -rf testbuild",
+    "dev:buildtestlib": "babel src/lib -d testbuild & babel test -d testbuild",
+    "predev": "npm run dev:rmtestbuild && npm run dev:buildtestlib",
+    "dev": "node testbuild/dAppService.test.js",
+    "postdev": "npm run dev:rmtestbuild"
   },
   "devDependencies": {
     "babel": "^6.23.0",
