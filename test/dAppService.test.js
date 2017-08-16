@@ -1,4 +1,5 @@
 import {sendRawTransaction} from './dAppService';
+import {searchAddress} from './ensService';
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 console.log(`PRIVATE_KEY: ${PRIVATE_KEY}`);
@@ -11,4 +12,6 @@ const testPayload = {
   privateKey: PRIVATE_KEY
 };
 
-sendRawTransaction(testPayload);
+//sendRawTransaction(testPayload);
+searchAddress("testing.eth");
+searchAddress("dasdfasdfa.eth");
