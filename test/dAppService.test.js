@@ -1,4 +1,5 @@
-import {searchAddress} from './dAppService';
+import {sendRawTransaction} from './dAppService';
+import {searchAddress, initRegistrar} from './ensService';
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 console.log(`PRIVATE_KEY: ${PRIVATE_KEY}`);
@@ -13,7 +14,11 @@ const testPayload = {
 
 //Sequential run tests
 const runTestSuite = async () => {
+  await sendRawTransaction(testPayload);
+
   await searchAddress("testing.eth");
   await searchAddress("dasdfasdfa.eth");
+  //let registrar = await initRegistrar();
+  //console.log(registrar.contract);
 };
 runTestSuite();
