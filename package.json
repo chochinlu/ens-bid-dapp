@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "eth-registrar-ens": "^0.8.1",
     "ethereum-ens": "^0.7.1",
     "ethereumjs-tx": "^1.3.3",
     "react": "^15.6.1",
