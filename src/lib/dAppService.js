@@ -1,13 +1,9 @@
 const Web3 = require('web3');
 const web3 = new Web3();
 const Tx = require('ethereumjs-tx');
-const ENS = require('ethereum-ens');
 
 const setWeb3Provider = () => {
-  const API_KEY = process.env.INFURA_API_KEY; //TODO: should check if is empty string
-  console.log(``)
-  const provider = `https://ropsten.infura.io/${API_KEY}`;
-  web3.setProvider(new web3.providers.HttpProvider(provider));
+  web3.setProvider(new web3.providers.HttpProvider(process.env.PROVIDER));
 };
 
 setWeb3Provider();
@@ -58,13 +54,3 @@ export const getEstimateGas = payload => {
   const {from, to, value, data} = payload;
   return web3.eth.estimateGas({ from, to, value, data });
 };
-
-export const searchAddress = async (address) => {
-  try {
-    const ens = new ENS(web3);
-    const addr = await ens.resolver(address).addr();
-    console.log(`[${address}] addr: ${addr}`);
-  } catch(error) {
-    console.log(`[${address}] ENS name not found or unavailable: ${error}`);
-  }
-}

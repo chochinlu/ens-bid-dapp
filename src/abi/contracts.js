@@ -2,10 +2,7 @@ const Web3 = require('web3');
 const web3 = new Web3();
 
 const setWeb3Provider = () => {
-  const API_KEY = process.env.INFURA_API_KEY; //TODO: should check if is empty string
-  console.log(``)
-  const provider = `https://ropsten.infura.io/${API_KEY}`;
-  web3.setProvider(new web3.providers.HttpProvider(provider));
+  web3.setProvider(new web3.providers.HttpProvider(process.env.PROVIDER));
 };
 
 setWeb3Provider();
@@ -224,7 +221,7 @@ var ensContract = web3.eth.contract([
     "type": "event"
   }
 ]);
-Contracts.prototype.ens = ensContract.at('0x112234455c3a32fd11230c42e7bccd4a84e02010');
+Contracts.prototype.ens = ensContract.at(process.env.ENS_ADDRESS);
 
 var auctionRegistrarContract = web3.eth.contract([
   {
@@ -1318,7 +1315,18 @@ var resolverContract = web3.eth.contract([
     "type": "event"
   }
 ]);
-Contracts.prototype.publicResolver = resolverContract.at('0x4c641fb9bad9b60ef180c31f56051ce826d21a9a');
+
+Contracts.prototype.getAddr = function(name) {
+  var node = Contracts.prototype.namehash(name)
+  var resolverAddress = Contracts.prototype.ens.resolver(node);
+  if (resolverAddress === '0x0000000000000000000000000000000000000000') {
+    return resolverAddress;
+  }
+  return resolverContract.at(resolverAddress).addr(node);
+}
+
+let publicResolverAddress = process.env.PUBLIC_RESOLVER || Contracts.prototype.getAddr('resolver.eth');
+Contracts.prototype.publicResolver = resolverContract.at(publicResolverAddress);
 
 var reverseRegistrarContract = web3.eth.contract([
   {
@@ -1399,15 +1407,6 @@ var reverseRegistrarContract = web3.eth.contract([
   }
 ]);
 Contracts.prototype.reverseRegistrar = reverseRegistrarContract.at(Contracts.prototype.ens.owner(Contracts.prototype.namehash('addr.reverse')));
-
-Contracts.prototype.getAddr = function(name) {
-  var node = Contracts.prototype.namehash(name)
-  var resolverAddress = Contracts.prototype.ens.resolver(node);
-  if (resolverAddress === '0x0000000000000000000000000000000000000000') {
-    return resolverAddress;
-  }
-  return resolverContract.at(resolverAddress).addr(node);
-}
 
 Contracts.prototype.getContent = function(name) {
   var node = Contracts.prototype.namehash(name)

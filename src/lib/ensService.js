@@ -6,30 +6,38 @@ const abi = require('ethereumjs-abi');
 const dAppService = require('./dAppService.js');
 
 let ens;
-const ENS_ADDRESS = "0x112234455c3a32fd11230c42e7bccd4a84e02010";
+const ENS_ADDRESS = process.env.ENS_ADDRESS;
 
 const setWeb3Provider = () => {
-  const API_KEY = process.env.INFURA_API_KEY; //TODO: should check if is empty string
-  console.log(``)
-  const provider = `https://ropsten.infura.io/${API_KEY}`;
-  web3.setProvider(new web3.providers.HttpProvider(provider));
+  web3.setProvider(new web3.providers.HttpProvider(process.env.PROVIDER));
 };
 
 setWeb3Provider();
 
-// 要降版本才可以 work
-export const searchAddress = (address) => {
-  ens = new ENS(web3, ENS_ADDRESS);
+/**
+ * 
+ * @param {*} address 
+ */
+export const getAddressByEns = (address) => {
+  ens = new ENS(web3, process.env.ENS_ADDRESS);
   return ens.resolver(address).addr();
 }
 
+/**
+ * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L174
+ * return tuple
+ * @param {*} name 
+ */
 export const entries = (name) => {
-  // return TUPLE, https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L174
-  return contracts.ethRegistrar.entries(web3.sha3(name));
+  return contracts.ethRegistrar.entries(contracts.namehash(name));
 }
 
+/**
+ * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L296
+ * return transactionHash
+ * @param {*} name 
+ */
 export const startAuction = (name) => {
-  // nothing return, https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L296
   let byteData = "0x" + 
                 abi.methodID("startAuction", [ "bytes32" ]).toString("hex") + 
                 abi.rawEncode([ "bytes32" ], [ name ]).toString("hex");
@@ -46,6 +54,17 @@ export const startAuction = (name) => {
   dAppService.sendRawTransaction(payload);
 }
 
+/**
+ * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L117
+ */
 export const registryStarted = () => {
   return contracts.ethRegistrar.registryStarted();
+}
+
+/**
+ * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L139
+ * @param {*} name 
+ */
+export const state = (name) => {
+  return contracts.ethRegistrar.state(web3.sha3(name));
 }
