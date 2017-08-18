@@ -17,7 +17,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "dev:rmtestbuild": "rm -rf testbuild",
-    "dev:buildtestlib": "babel src/lib -d testbuild & babel test -d testbuild",
+    "dev:buildtestlib": "babel src/lib -d testbuild & babel test -d testbuild & babel src/abi -d testbuild/abi",
     "predev": "npm run dev:rmtestbuild && npm run dev:buildtestlib",
     "dev": "node testbuild/dAppService.test.js",
     "postdev": "npm run dev:rmtestbuild"

@@ -1,5 +1,5 @@
 import {sendRawTransaction} from './dAppService';
-import {searchAddress} from './ensService';
+import {searchAddress, entries, startAuction, registryStarted} from './ensService';
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 console.log(`PRIVATE_KEY: ${PRIVATE_KEY}`);
@@ -15,14 +15,15 @@ const testPayload = {
 //Sequential run tests
 const runTestSuite = async () => {
   //await sendRawTransaction(testPayload);
-  await searchAddress("testing.eth");
-  //await searchAddress("dasdfasdfa.eth");
+  searchAddress("testing.eth");
+  //await searchAddress("testinga.eth");
   //await initRegistrar();
+  //await openAuction("testinga.eth");
+  let entriesResult = await entries("testingaadsxdd");
+  console.log("entries", entriesResult);
+
+  //await startAuction("testingaadsxdd");
+  let registryStartedResult = await registryStarted();
+  console.log("registryStarted", registryStartedResult);
 };
 runTestSuite();
-
-/*initRegistrar().then(function(result) {
-  console.log("RESULT", result);
-}).catch(function(err) {
-  console.log("ERR", err);
-});*/
