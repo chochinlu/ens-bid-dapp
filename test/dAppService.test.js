@@ -16,13 +16,10 @@ const testPayload = {
 const runTestSuite = async () => {
   //await sendRawTransaction(testPayload);
   searchAddress("testing.eth");
-  //await searchAddress("testinga.eth");
-  //await initRegistrar();
-  //await openAuction("testinga.eth");
   let entriesResult = await entries("testingaadsxdd");
   console.log("entries", entriesResult);
 
-  //await startAuction("testingaadsxdd");
+  await startAuction("testingaadsxdd");
   let registryStartedResult = await registryStarted();
   console.log("registryStarted", registryStartedResult);
 };

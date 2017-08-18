@@ -53,7 +53,6 @@ export const sendRawTransaction = payload => {
       console.log(`err: ${err}`);
   });
 };
-// module.exports.sendRawTransaction = sendRawTransaction;
 
 export const getEstimateGas = payload => {
   const {from, to, value, data} = payload;

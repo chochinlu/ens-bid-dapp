@@ -5,6 +5,7 @@
   "dependencies": {
     "eth-registrar-ens": "^0.8.1",
     "ethereum-ens": "^0.4.2",
+    "ethereumjs-abi": "^0.6.4",
     "ethereumjs-tx": "^1.3.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
