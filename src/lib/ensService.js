@@ -17,6 +17,7 @@ const setWeb3Provider = () => {
 
 setWeb3Provider();
 
+// 要降版本才可以 work
 export const searchAddress = (address) => {
   ens = new ENS(web3, ENS_ADDRESS);
   return ens.resolver(address).addr();
