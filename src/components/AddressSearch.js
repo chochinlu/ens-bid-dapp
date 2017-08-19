@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getAddressBalanceLoad} from '../lib/dAppService';
+import {getAddressBalance} from '../lib/dAppService';
 
 class AddressSearch extends Component {
   state = {
@@ -13,7 +13,7 @@ class AddressSearch extends Component {
 
   handleAddressBalanceLoad = async () => {
     try {
-      const balance = getAddressBalanceLoad(this.state.address);
+      const balance = getAddressBalance(this.state.address);
       this.setState({ balance });
     } catch (error) {
       console.error(`getAddressBalanceLoad error: ${error} `);
