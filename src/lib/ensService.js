@@ -88,7 +88,7 @@ export const newBid = (name, ether, secret, privateKey) => {
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
-    value: '0x0',
+    value: web3.toHex(web3.toWei(ether, "ether")),
     data: byteData,
     privateKey: privateKey
   };
