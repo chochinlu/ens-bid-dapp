@@ -1,3 +1,7 @@
+/**
+ * ENS FLOW: https://docs.ens.domains/en/latest/userguide.html
+ */
+
 const Web3 = require('web3');
 const web3 = new Web3();
 const ENS = require('ethereum-ens');
@@ -6,7 +10,6 @@ const abi = require('ethereumjs-abi');
 const dAppService = require('./dAppService.js');
 
 let ens;
-const ENS_ADDRESS = process.env.ENS_ADDRESS;
 
 const setWeb3Provider = () => {
   web3.setProvider(new web3.providers.HttpProvider(process.env.PROVIDER));
