@@ -11,16 +11,38 @@ setWeb3Provider();
 
 export const getBlockNumber = () => web3.eth.blockNumber;
 
+/**
+ * @description get address balance
+ * @param {*} address 
+ */
 export const getAddressBalance = address => {
   return web3.fromWei(web3.eth.getBalance(address), 'ether').toString(10);
 };
 
+/**
+ * @description extract address from private key
+ * @param {*} privateKey 
+ */
 export const getAddressByPrivateKey = (privateKey) => {
   let privateKeyBuffer = new Buffer(privateKey, 'hex');
   let wallet = Wallet.fromPrivateKey(privateKeyBuffer);
   return "0x" + wallet.getAddress().toString('hex');
 }
 
+/**
+ * @description send transaction from raw data
+ * Example usage:
+ * 
+ * sendRawTransaction({
+ *   from: '0x7c20badacd20f09f972013008b5e5dae82670c8d',
+ *   to: '0xd6026ddc3a2be02a3577de714a98e24dc4a89dbf',
+ *   value: '0x100',
+ *   data: '',
+ *   privateKey: PRIVATE_KEY
+ * });
+ * 
+ * @param {*} payload 
+ */
 export const sendRawTransaction = async payload => {
   const {privateKey, from, to, value, data} = payload;
 
@@ -60,6 +82,10 @@ export const sendRawTransaction = async payload => {
   return transactionHash;
 };
 
+/**
+ * @description estimate gas of payload
+ * @param {*} payload 
+ */
 export const getEstimateGas = payload => {
   const {from, to, value, data} = payload;
   return web3.eth.estimateGas({ from, to, value, data });

@@ -1,5 +1,12 @@
 /**
  * ENS FLOW: https://docs.ens.domains/en/latest/userguide.html
+ * 
+ * ENS Bid Flow
+ *   STEP 1: Check `entries`
+ *   STEP 2: `startAuction`
+ *   STEP 3: Check `entries` and `newBid`
+ *   STEP 4: Check `entries` and `unsealBid`
+ *   STEP 5: Check `entries` and `finalizeAuction`
  */
 
 const Web3 = require('web3');
@@ -18,6 +25,10 @@ const setWeb3Provider = () => {
 setWeb3Provider();
 
 /**
+ * @description 查詢這個 address 的 resolver
+ * 
+ * Example Usage:
+ *   getAddressByEns("foobar.eth"); // 需用全名
  * 
  * @param {*} address 
  */
@@ -27,21 +38,26 @@ export const getAddressByEns = (address) => {
 }
 
 /**
- * STEP 1 確認一下該.eth狀態，回傳 tuple 多維度資訊
+ * @description STEP 1: 確認一下該.eth狀態，回傳 tuple 多維度資訊
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L174
- * return tuple
+ * 
+ * Example Usage: 
+ *   entries("foobar");  // 只需搜尋需要註冊的名稱
+ * 
  * @param {*} name 
+ * @returns {array} tuple
  */
 export const entries = (name) => {
   return contracts.ethRegistrar.entries(web3.sha3(name));
 }
 
 /**
- * STEP 2 開標，選擇網域名稱並且開標
+ * @description STEP 2: 開標，選擇網域名稱並且開標
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L296
  * return transactionHash
  * @param {*} name 
  * @param {*} privateKey
+ * @returns {string} transactionHash
  */
 export const startAuction = (name, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -60,23 +76,25 @@ export const startAuction = (name, privateKey) => {
 }
 
 /**
- * STEP 3 加密投標資訊，選定網域名稱設定混淆投標金額以及密碼
+ * @description STEP 3: 加密投標資訊，選定網域名稱設定混淆投標金額以及密碼
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L333
  * @param {*} name 
  * @param {*} wei 
  * @param {*} secret
+ * @returns {string} bid hash
  */
 export const shaBid = (name, ether, secret) => {
   return contracts.ethRegistrar.shaBid(web3.sha3(name), web3.toWei(ether, "ether"), web3.sha3(secret));
 }
 
 /**
- * STEP 3 投標，將加密後的資訊發送至合約
+ * @description STEP 3: 投標，將加密後的資訊發送至合約
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L350
  * @param {*} name 
  * @param {*} ether 
  * @param {*} secret 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const newBid = (name, ether, secret, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -96,12 +114,13 @@ export const newBid = (name, ether, secret, privateKey) => {
 }
 
 /**
- * STEP 4 揭標，將資訊發送至合約
+ * @description STEP 4: 揭標，將資訊發送至合約
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L381
  * @param {*} name 
  * @param {*} ether 
  * @param {*} secret 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const unsealBid = (name, ether, secret, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -122,10 +141,11 @@ export const unsealBid = (name, ether, secret, privateKey) => {
 }
 
 /**
- * STEP 5 結標，將網域名發送至合約以完成結標，如果多人得標，將會退回第一名與第二名間差額的標金
+ * @description STEP 5: 結標，將網域名發送至合約以完成結標，如果多人得標，將會退回第一名與第二名間差額的標金
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L458
  * @param {*} name 
  * @param {*} privateKey
+ * @returns {string} transactionHash
  */
 export const finalizeAuction = (name, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -144,11 +164,12 @@ export const finalizeAuction = (name, privateKey) => {
 }
 
 /**
- * 轉移網域所有權，整個網域移交給另外一個帳戶管理，這個網域不再屬於你
+ * @description 轉移網域所有權，整個網域移交給另外一個帳戶管理，這個網域不再屬於你
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L475
  * @param {*} name 
  * @param {*} toAddress 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const transfer = (name, toAddress, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -168,12 +189,13 @@ export const transfer = (name, toAddress, privateKey) => {
 }
 
 /**
- * 如果忘記揭標，可以之後呼叫這隻取回一部分的標金
+ * @description 如果忘記揭標，可以之後呼叫這隻取回一部分的標金
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L434
  * @param {*} name 
  * @param {*} ether 
  * @param {*} secret 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const cancelBid = (name, ether, secret, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -194,10 +216,11 @@ export const cancelBid = (name, ether, secret, privateKey) => {
 }
 
 /**
- * 將網域歸還取得押金
+ * @description 將網域歸還取得押金
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L489
  * @param {*} name 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const releaseDeed = (name, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -216,11 +239,12 @@ export const releaseDeed = (name, privateKey) => {
 }
 
 /**
- * 設定網域使用權，可以將網域與子網域交給別的帳戶操作，這個網域依然屬於你
+ * @description 設定網域使用權，可以將網域與子網域交給別的帳戶操作，這個網域依然屬於你
  * https://github.com/ethereum/ens/blob/master/contracts/ENS.sol#L57
  * @param {*} name 需要加上網域名稱，如 testing.eth
  * @param {*} toAddress 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const setEnsOwner = (name, toAddress, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -239,12 +263,13 @@ export const setEnsOwner = (name, toAddress, privateKey) => {
 }
 
 /**
- * 設定子網域使用權
+ * @description 設定子網域使用權
  * https://github.com/ethereum/ens/blob/master/contracts/ENS.sol#L69
  * @param {*} name 
  * @param {*} sub 
  * @param {*} toAddress 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -264,11 +289,12 @@ export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey) => {
 }
 
 /**
- * 設定解析器
+ * @description 設定解析器
  * https://github.com/ethereum/ens/blob/master/contracts/ENS.sol#L80
  * @param {*} name 
  * @param {*} resolver 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const setEnsResolver = (name, resolver, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -287,11 +313,12 @@ export const setEnsResolver = (name, resolver, privateKey) => {
 }
 
 /**
- * 設定 TTL
+ * @description 設定 TTL
  * https://github.com/ethereum/ens/blob/master/contracts/ENS.sol#L90
  * @param {*} name 
  * @param {*} ttl 
  * @param {*} privateKey 
+ * @returns {string} transactionHash
  */
 export const setEnsTTL = (name, ttl, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
@@ -317,7 +344,7 @@ export const registryStarted = () => {
 }
 
 /**
- * STEP 1 確認一下該.eth狀態，回傳該網域的狀態
+ * @description STEP 1 確認一下該.eth狀態，回傳該網域的狀態
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L139
  * @param {*} name 
  */
