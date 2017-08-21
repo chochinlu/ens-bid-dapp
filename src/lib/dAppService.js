@@ -90,3 +90,15 @@ export const getEstimateGas = payload => {
   const {from, to, value, data} = payload;
   return web3.eth.estimateGas({ from, to, value, data });
 };
+
+/**
+ * @description search transactionHash for transaction receipt
+ * @param {*} transactionHash 
+ */
+export const getTransactionReceipt = (transactionHash) => {
+  return web3.eth.getTransactionReceipt(transactionHash);
+};
+
+export const getTransaction = (transactionHash) => {
+  return web3.eth.getTransaction(transactionHash);
+}
