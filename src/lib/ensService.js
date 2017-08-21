@@ -267,6 +267,10 @@ export const setEnsOwner = (name, toAddress, privateKey) => {
 /**
  * @description 設定子網域使用權
  * https://github.com/ethereum/ens/blob/master/contracts/ENS.sol#L69
+ * 
+ * Example Usage:
+ *   setEnsSubnodeOwner("testing.eth", "sub", "0x0", privateKey)
+ * 
  * @param {*} name 
  * @param {*} sub 
  * @param {*} toAddress 
