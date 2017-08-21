@@ -64,7 +64,7 @@ export const startAuction = (name, privateKey) => {
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" + 
                 abi.methodID("startAuction", [ "bytes32" ]).toString("hex") + 
-                abi.rawEncode([ "bytes32" ], [ name ]).toString("hex");
+                abi.rawEncode([ "bytes32" ], [ web3.sha3(name) ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
@@ -81,10 +81,12 @@ export const startAuction = (name, privateKey) => {
  * @param {*} name 
  * @param {*} wei 
  * @param {*} secret
+ * @param {*} privateKey
  * @returns {string} bid hash
  */
-export const shaBid = (name, ether, secret) => {
-  return contracts.ethRegistrar.shaBid(web3.sha3(name), web3.toWei(ether, "ether"), web3.sha3(secret));
+export const shaBid = (name, ether, secret, privateKey) => {
+  let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
+  return contracts.ethRegistrar.shaBid(web3.sha3(name), fromAddress, web3.toWei(ether, "ether"), web3.sha3(secret));
 }
 
 /**
@@ -99,7 +101,7 @@ export const shaBid = (name, ether, secret) => {
 export const newBid = (name, ether, secret, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
-  let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), web3.toWei(ether, "ether"), web3.sha3(secret));
+  let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), fromAddress, web3.toWei(ether, "ether"), web3.sha3(secret));
   let byteData = "0x" +
                 abi.methodID("newBid", [ "bytes32" ]).toString("hex") +
                 abi.rawEncode([ "bytes32" ], [ bid ]).toString("hex");
@@ -265,6 +267,10 @@ export const setEnsOwner = (name, toAddress, privateKey) => {
 /**
  * @description 設定子網域使用權
  * https://github.com/ethereum/ens/blob/master/contracts/ENS.sol#L69
+ * 
+ * Example Usage:
+ *   setEnsSubnodeOwner("testing.eth", "sub", "0x0", privateKey)
+ * 
  * @param {*} name 
  * @param {*} sub 
  * @param {*} toAddress 
