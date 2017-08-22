@@ -7,6 +7,7 @@ Check [ens.bid](http://ens.bid) for more information about the ens-bid.
 - [INFURA](https://infura.io): Connect with Ethereum.
 - [Web3.js](https://github.com/ethereum/web3.js/)
 - [React](https://facebook.github.io/react/)
+- [ENS Contracts](https://github.com/ethereum/ens)
 
 ## Library
 - [ethereumjs-abi](https://github.com/ethereumjs/ethereumjs-abi)
@@ -17,14 +18,18 @@ Check [ens.bid](http://ens.bid) for more information about the ens-bid.
 
 ## Test 
 
-Test lib apis:
-
+Test lib apis:  
+  
+Mainnet
 ```
 export ENS_ADDRESS=0x314159265dd8dbb310642f98f50c066173c1259b
-#export ENS_ADDRESS=0x112234455c3a32fd11230c42e7bccd4a84e02010
 export PROVIDER=https://mainnet.infura.io/YJ5zuNbAkmYQY3kFn4cZ
-#export PROVIDER=https://ropsten.infura.io/YJ5zuNbAkmYQY3kFn4cZ
-#export PUBLIC_RESOLVER=0x4c641fb9bad9b60ef180c31f56051ce826d21a9a
+```
+  
+Testnet(Ropsten)
+```
+export ENS_ADDRESS=0x112234455c3a32fd11230c42e7bccd4a84e02010
+export PROVIDER=https://ropsten.infura.io/YJ5zuNbAkmYQY3kFn4cZ
 ```
 
 ## Development Reference
