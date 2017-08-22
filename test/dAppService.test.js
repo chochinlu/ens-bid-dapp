@@ -1,5 +1,5 @@
-import {sendRawTransaction, getAddressByPrivateKey} from './dAppService';
-import {getAddressByEns, entries, startAuction, registryStarted, state} from './ensService';
+import {sendRawTransaction, getAddressByPrivateKey, getTransactionReceipt, getTransaction} from './dAppService';
+import {getAddressByEns, entries, startAuction, registryStarted, state, ethRegistrarEvents} from './ensService';
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 console.log(`PRIVATE_KEY: ${PRIVATE_KEY}`);
@@ -14,6 +14,12 @@ const testPayload = {
 
 //Sequential run tests
 const runTestSuite = async () => {
+  let txResult = getTransaction("0x607f16eda0ba7a4f09283d26c1cbbd9050c3a2a613132e15150c50dfe1fc4613");
+  console.log("tx", txResult);
+
+  let receiptResult = getTransactionReceipt("0x607f16eda0ba7a4f09283d26c1cbbd9050c3a2a613132e15150c50dfe1fc4613");
+  console.log("receipt", receiptResult);
+
   console.log("address by private key", getAddressByPrivateKey(PRIVATE_KEY));
   // WARNING: DONT USE THIS TEST CASE ON MAINNET
   //await sendRawTransaction(testPayload);
@@ -29,5 +35,12 @@ const runTestSuite = async () => {
   console.log("registryStarted", registryStartedResult);
 
   console.log("state", state("phyrextsai"));
+
+  
 };
 runTestSuite();
+
+const runEventSuite = async () => {
+  await ethRegistrarEvents();
+}
+runEventSuite();
