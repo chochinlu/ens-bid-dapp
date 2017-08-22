@@ -23,8 +23,6 @@ Test lib apis:
 Mainnet
 
 ```
-export ENS_ADDRESS=0x314159265dd8dbb310642f98f50c066173c1259b
-export PROVIDER=https://mainnet.infura.io/YJ5zuNbAkmYQY3kFn4cZ
 export REACT_APP_ENS_ADDRESS=0x314159265dd8dbb310642f98f50c066173c1259b
 export REACT_APP_PROVIDER=https://mainnet.infura.io/YJ5zuNbAkmYQY3kFn4cZ
 ```
@@ -32,8 +30,6 @@ export REACT_APP_PROVIDER=https://mainnet.infura.io/YJ5zuNbAkmYQY3kFn4cZ
 
 Testnet(Ropsten)
 ```
-export ENS_ADDRESS=0x112234455c3a32fd11230c42e7bccd4a84e02010
-export PROVIDER=https://ropsten.infura.io/YJ5zuNbAkmYQY3kFn4cZ
 export REACT_APP_ENS_ADDRESS=0x112234455c3a32fd11230c42e7bccd4a84e02010
 export REACT_APP_PROVIDER=https://ropsten.infura.io/YJ5zuNbAkmYQY3kFn4cZ
 ```

@@ -1,5 +1,5 @@
 import {sendRawTransaction, getAddressByPrivateKey, getTransactionReceipt, getTransaction} from './dAppService';
-import {getAddressByEns, entries, startAuction, registryStarted, state, ethRegistrarEvents} from './ensService';
+import {getAddressByEns, entries, startAuction, registryStarted, state} from './ensService';
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 console.log(`PRIVATE_KEY: ${PRIVATE_KEY}`);
@@ -36,11 +36,5 @@ const runTestSuite = async () => {
 
   console.log("state", state("phyrextsai"));
 
-  
 };
 runTestSuite();
-
-const runEventSuite = async () => {
-  await ethRegistrarEvents();
-}
-runEventSuite();
