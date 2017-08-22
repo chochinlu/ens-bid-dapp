@@ -6,7 +6,7 @@ import Warnings from './components/Warnings';
 import './App.css';
 
 class App extends Component {
-  provider = 'undefined' !== process ? process.env.PROVIDER : null
+  provider = 'undefined' !== process ? process.env.REACT_APP_PROVIDER : null
 
   renderDappComponents() {
     return (
@@ -18,6 +18,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(process.env);
     return (
       <div className="App">
         <div className="App-header">

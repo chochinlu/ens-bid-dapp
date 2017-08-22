@@ -4,7 +4,7 @@ const Tx = require('ethereumjs-tx');
 const Wallet = require('ethereumjs-wallet');
 
 const setWeb3Provider = () => {
-  web3.setProvider(new web3.providers.HttpProvider(process.env.PROVIDER));
+  web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 };
 
 setWeb3Provider();
