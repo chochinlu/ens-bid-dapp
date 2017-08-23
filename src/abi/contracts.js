@@ -2,7 +2,7 @@ const Web3 = require('web3');
 const web3 = new Web3();
 
 const setWeb3Provider = () => {
-  web3.setProvider(new web3.providers.HttpProvider(process.env.PROVIDER));
+  web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 };
 
 setWeb3Provider();
@@ -760,6 +760,7 @@ var auctionRegistrarContract = web3.eth.contract([
     "type": "event"
   }
 ]);
+console.log(Contracts.prototype.ens.owner(Contracts.prototype.namehash('eth')));
 Contracts.prototype.ethRegistrar = auctionRegistrarContract.at(Contracts.prototype.ens.owner(Contracts.prototype.namehash('eth')));
 
 var deedContract = web3.eth.contract([

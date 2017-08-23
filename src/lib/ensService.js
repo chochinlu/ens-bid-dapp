@@ -19,7 +19,7 @@ const dAppService = require('./dAppService.js');
 let ens;
 
 const setWeb3Provider = () => {
-  web3.setProvider(new web3.providers.HttpProvider(process.env.PROVIDER));
+  web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 };
 
 setWeb3Provider();
@@ -356,16 +356,4 @@ export const registryStarted = () => {
  */
 export const state = (name) => {
   return contracts.ethRegistrar.state(web3.sha3(name));
-}
-
-export const ethRegistrarEvents = () => {
-  let events = contracts.ethRegistrar.AuctionStarted({}, {fromBlock: 4186000, toBlock: "latest"});//.allEvents({fromBlock: 4180000, toBlock: 'latest'});
-  console.log("EVENTS", events);
-  events.watch(function(error, logs){ 
-    if (!error)
-      console.log("ENS event", logs);
-    else 
-      console.log("error", error);
-  });
-  //events.stopWatching();
 }
