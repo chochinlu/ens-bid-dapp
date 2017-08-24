@@ -1,0 +1,23 @@
+.JsonKeyUploader {
+  border: 1px dotted gray;
+  margin: 1em;
+  padding: 1em;
+}
+
+.dropzone {
+  height: 120px;
+}
+
+.dropzone-disable {
+  border: 2px dashed #BDBDBD;
+  color: #BDBDBD;
+}
+
+.dropzone-enable {
+  border: 2px dashed #585f87;
+  color: black;
+}
+
+.JsonKeyUploader button {
+  padding: 0.5em;
+}
