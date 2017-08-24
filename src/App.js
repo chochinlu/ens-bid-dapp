@@ -3,6 +3,7 @@ import logo from './logo.png';
 import BlockNumber from './components/BlockNumber';
 import AddressSearch from './components/AddressSearch';
 import Warnings from './components/Warnings';
+import SearchBar from './components/SearchBar';
 import './App.css';
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
       <div>
         <BlockNumber />
         <AddressSearch />
+        <SearchBar />
       </div>
     )
   }
