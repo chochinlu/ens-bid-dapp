@@ -1,33 +1,22 @@
 import React, { Component } from 'react';
 import logo from './logo.png';
-import BlockNumber from './components/BlockNumber';
-import AddressSearch from './components/AddressSearch';
+import {Dapp} from './components/Dapp';
 import Warnings from './components/Warnings';
 import SearchBar from './components/SearchBar';
 import './App.css';
 
 class App extends Component {
-  provider = 'undefined' !== process ? process.env.REACT_APP_PROVIDER : null
-
-  renderDappComponents() {
-    return (
-      <div>
-        <BlockNumber />
-        <AddressSearch />
-        <SearchBar />
-      </div>
-    )
-  }
-
   render() {
-    console.log(process.env);
+    // console.log(process.env);
     return (
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>ENS Bid Dapp</h2>
         </div>
-        { !!this.provider ? this.renderDappComponents() : <Warnings /> }
+        { process.env.REACT_APP_PROVIDER 
+          ? <Dapp /> 
+          : <Warnings /> }
       </div>
     );
   }
