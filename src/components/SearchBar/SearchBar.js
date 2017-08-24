@@ -33,7 +33,7 @@ const renderSuggestion = suggestion => suggestion;
 
 const renderInputComponent = inputProps => (
   <div className="inputContainer">
-    <img className="icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-128.png" />
+    <img className="icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-128.png" alt='user_icon' />
     <input {...inputProps} />
   </div>
 );

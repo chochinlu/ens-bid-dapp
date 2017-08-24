@@ -16,7 +16,7 @@ export class JsonKeyUploader extends Component {
 
   onDrop(files) {
     const file = files[0];
-    console.log(file);
+    // console.log(file);
 
     const self = this;
 

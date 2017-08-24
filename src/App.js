@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.png';
 import {Dapp} from './components/Dapp';
 import Warnings from './components/Warnings';
-import SearchBar from './components/SearchBar';
 import './App.css';
 
 class App extends Component {
