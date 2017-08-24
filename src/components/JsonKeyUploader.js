@@ -3,9 +3,6 @@ import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import './JsonKeyUploader.css';
 
-//TODO: determine if is a valid json file
-//TODO: analyze json file
-
 export class JsonKeyUploader extends Component {
   constructor(props) {
     super(props);
@@ -18,10 +15,27 @@ export class JsonKeyUploader extends Component {
   }
 
   onDrop(files) {
-    this.setState({ 
-      files,
-      dragDiabled: true
-    });
+    const file = files[0];
+    console.log(file);
+
+    const self = this;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target.result;
+      const base64data = result.split(',')[1];
+      const jsonStr = atob(base64data);
+      // console.log(jsonStr);
+
+      //TODO: fetch the private key via the ethereumjs-wallet
+
+      self.setState({ 
+        files,
+        dragDiabled: true,
+        keystore: JSON.parse(jsonStr)
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
   enableDrag() {
@@ -33,9 +47,10 @@ export class JsonKeyUploader extends Component {
       ? <p>You've uploaded a key file: </p>
       : <p>Drop your KEY FILE here. (JSON file only)</p>;
     
-    const style = this.state.dragDiabled
-      ? classNames('dropzone', 'dropzone-disable')
-      : classNames('dropzone', 'dropzone-enable');
+    const style = classNames(
+      'dropzone', 
+      this.state.dragDiabled ? 'dropzone-disable': 'dropzone-enable'
+    );
 
     const uploadInfo = this.state.files.length > 0 && 
       <div>
