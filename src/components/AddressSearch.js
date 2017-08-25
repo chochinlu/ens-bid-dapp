@@ -25,7 +25,7 @@ class AddressSearch extends Component {
     e.preventDefault();
     this.setState({address: e.target.value});
   }
-      
+
   handleClick = (e) => {
     e.preventDefault();
     this.handleAddressBalanceLoad();
@@ -34,14 +34,14 @@ class AddressSearch extends Component {
   render() {
     return (
       <div>
-        Address: 
+        Address:
         <input type="text"
           value={this.state.address}
           placeholder={this.props.initAddress}
           onChange={this.handleChange}
         />
         <button onClick={this.handleClick}>Search</button>
-        <div>Balance: {this.state.balance}</div> 
+        <div>Balance: {this.state.balance}</div>
       </div>
     )
   }
