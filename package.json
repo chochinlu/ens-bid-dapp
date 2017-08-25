@@ -15,6 +15,7 @@
     "react-dom": "^15.6.1",
     "react-dropzone": "^4.1.0",
     "react-scripts": "1.0.11",
+    "typeface-roboto": "0.0.35",
     "web3": "^0.20.1"
   },
   "scripts": {

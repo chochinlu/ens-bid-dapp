@@ -1,0 +1,6 @@
+{
+  "name": "DappBar",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DappBar.js"
+}
