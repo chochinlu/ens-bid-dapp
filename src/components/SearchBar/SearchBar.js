@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Autosuggest from 'react-autosuggest'
+import Search from 'material-ui-icons/Search';
 import './SearchBar.css';
 
 const names = [
@@ -33,7 +34,7 @@ const renderSuggestion = suggestion => suggestion;
 
 const renderInputComponent = inputProps => (
   <div className="inputContainer">
-    <img className="icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-128.png" alt='user_icon' />
+    <Search className="icon" />
     <input {...inputProps} />
   </div>
 );
@@ -75,7 +76,7 @@ class SearchBar extends Component {
     };
 
     return (
-      <Autosuggest 
+      <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
