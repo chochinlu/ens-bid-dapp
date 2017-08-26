@@ -62,10 +62,10 @@ export const sendRawTransaction = async payload => {
     // 打 contract 的時候需要認的 function call bytecode，或者 direct message
     data
   };
-
+  console.log("rawTx", rawTx);
   // 偵測要花多少 gas 才可以將 transaction 送出
   rawTx.gasLimit = web3.eth.estimateGas(rawTx);
-  
+  console.log("gasLimit", rawTx.gasLimit);
   const tx = new Tx(rawTx);
   tx.sign(hexPivateKey);
 
@@ -79,6 +79,7 @@ export const sendRawTransaction = async payload => {
       console.log(`err: ${err}`);
   });*/
   let transactionHash = await web3.eth.sendRawTransaction('0x' + serializedTx.toString('hex'));
+  console.log("transactionHash", transactionHash)
   return transactionHash;
 };
 
