@@ -24,6 +24,8 @@ const setWeb3Provider = () => {
 
 setWeb3Provider();
 
+const mode = ["Open", "Auction", "Owned", "Forbidden", "Reveal", "NotYetAvailable"];
+
 /**
  * @description 查詢這個 address 的 resolver
  * 
@@ -48,7 +50,23 @@ export const getAddressByEns = (address) => {
  * @returns {array} tuple
  */
 export const entries = (name) => {
-  return contracts.ethRegistrar.entries(web3.sha3(name));
+  let entriesResult = contracts.ethRegistrar.entries(web3.sha3(name));
+  let entries = {
+    "state": mode[entriesResult[0].toString()],
+    "deed": entriesResult[1],
+    "registrationDate": new Date(entriesResult[2].toNumber() * 1000),
+    "value": entriesResult[3].toNumber(),
+    "highestBid": entriesResult[4].toNumber()
+  };
+  return entries;
+}
+
+/**
+ * @description 如果 entires[0] 回傳是5，則代表"soft launch"結束後可以開標
+ * @param {*} name 
+ */
+export const getAllowedTime = (name) => {
+  return new Date(contracts.ethRegistrar.getAllowedTime(web3.sha3(name)) * 1000);
 }
 
 /**
@@ -76,6 +94,8 @@ export const startAuction = (name, privateKey) => {
 }
 
 /**
+ * TODO: 輸出 JSON 格式，可以允許匯入，順便支援 ens.domains 的格式
+ * 
  * @description STEP 3: 加密投標資訊，選定網域名稱設定混淆投標金額以及密碼
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L333
  * @param {*} name 
