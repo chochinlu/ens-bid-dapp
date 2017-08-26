@@ -56,12 +56,12 @@ const runEnsTestSuite = async () => {
   //console.log("STEP 3", newBidResult);
 
   // STEP 4: unsealBid
-  let unsealBidResult = await unsealBid(name, 0.01, "testing", PRIVATE_KEY);
-  console.log("STEP 4", unsealBidResult);
+  //let unsealBidResult = await unsealBid(name, 0.01, "testing", PRIVATE_KEY);
+  //console.log("STEP 4", unsealBidResult);
 
   // STEP 5: finalizeAuction
-  let finalizeAuctionResult = await finalizeAuction(name, PRIVATE_KEY);
-  console.log("STEP 5", finalizeAuctionResult);
+  //let finalizeAuctionResult = await finalizeAuction(name, PRIVATE_KEY);
+  //console.log("STEP 5", finalizeAuctionResult);
 }
 
 runEnsTestSuite();
