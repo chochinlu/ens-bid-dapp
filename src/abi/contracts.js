@@ -3,6 +3,7 @@ const web3 = new Web3();
 import {ensAbiArray} from './ensAbiArray';
 import {auctionRegistrarAbiArray} from './auctionRegistrarAbiArray';
 import {deedAbiArray} from './deedAbiArray';
+import {fifsRegistrarAbiArray} from './fifsRegistrarAbiArray';
 
 console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
 
@@ -31,82 +32,8 @@ Contracts.prototype.ethRegistrar = auctionRegistrarContract.at(Contracts.prototy
 
 const deedContract = web3.eth.contract(deedAbiArray);
 
-var fifsRegistrarContract = web3.eth.contract([
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "ens",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "name": "expiryTimes",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "subnode",
-        "type": "bytes32"
-      },
-      {
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "register",
-    "outputs": [],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "rootNode",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "name": "ensAddr",
-        "type": "address"
-      },
-      {
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "type": "constructor"
-  }
-]);
+const fifsRegistrarContract = web3.eth.contract(fifsRegistrarAbiArray);
+
 Contracts.prototype.testRegistrar = fifsRegistrarContract.at(Contracts.prototype.ens.owner(Contracts.prototype.namehash('test')));
 
 var resolverContract = web3.eth.contract([
