@@ -31,7 +31,7 @@ const mode = ["Open", "Auction", "Owned", "Forbidden", "Reveal", "NotYetAvailabl
  * 
  * Example Usage:
  *   getAddressByEns("foobar.eth"); // 需用全名
- * 
+ *
  * @param {*} address 
  */
 export const getAddressByEns = (address) => {
