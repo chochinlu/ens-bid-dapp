@@ -35,7 +35,7 @@ const mode = ["Open", "Auction", "Owned", "Forbidden", "Reveal", "NotYetAvailabl
  * @param {*} address 
  */
 export const getAddressByEns = (address) => {
-  ens = new ENS(web3, process.env.ENS_ADDRESS);
+  ens = new ENS(web3, process.env.REACT_APP_ENS_ADDRESS);
   return ens.resolver(address).addr();
 }
 
@@ -276,7 +276,7 @@ export const setEnsOwner = (name, toAddress, privateKey) => {
                 abi.rawEncode([ "address" ], [ toAddress ]).toString("hex");
   const payload = {
     from: fromAddress,
-    to: process.env.ENS_ADDRESS,
+    to: process.env.REACT_APP_ENS_ADDRESS,
     value: '0x0',
     data: byteData,
     privateKey: privateKey
@@ -306,7 +306,7 @@ export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey) => {
                 abi.rawEncode([ "address" ], [ toAddress ]).toString("hex");
   const payload = {
     from: fromAddress,
-    to: process.env.ENS_ADDRESS,
+    to: process.env.REACT_APP_ENS_ADDRESS,
     value: '0x0',
     data: byteData,
     privateKey: privateKey
@@ -330,7 +330,7 @@ export const setEnsResolver = (name, resolver, privateKey) => {
                 abi.rawEncode([ "address" ], [ resolver ]).toString("hex");
   const payload = {
     from: fromAddress,
-    to: process.env.ENS_ADDRESS,
+    to: process.env.REACT_APP_ENS_ADDRESS,
     value: '0x0',
     data: byteData,
     privateKey: privateKey
@@ -354,7 +354,7 @@ export const setEnsTTL = (name, ttl, privateKey) => {
                 abi.rawEncode([ "uint64" ], [ ttl ]).toString("hex");
   const payload = {
     from: fromAddress,
-    to: process.env.ENS_ADDRESS,
+    to: process.env.REACT_APP_ENS_ADDRESS,
     value: '0x0',
     data: byteData,
     privateKey: privateKey
