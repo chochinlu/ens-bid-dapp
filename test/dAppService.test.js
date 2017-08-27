@@ -23,7 +23,7 @@ const runTestSuite = async () => {
   console.log("address by private key", getAddressByPrivateKey(PRIVATE_KEY));
   // WARNING: DONT USE THIS TEST CASE ON MAINNET
   //await sendRawTransaction(testPayload);
-  console.log("address by ens", getAddressByEns("phyrextsai.eth"));
+  console.log("address by ens", getAddressByEns("yanlong.eth"));
   
   let entriesResult = await entries("phyrextsai");
   console.log("entries", entriesResult);
@@ -37,7 +37,7 @@ const runTestSuite = async () => {
   console.log("state", state("phyrextsai"));
 
 };
-//runTestSuite();
+runTestSuite();
 
 const runEnsTestSuite = async () => {
   // ropsten testing
