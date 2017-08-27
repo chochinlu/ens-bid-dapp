@@ -1,11 +1,13 @@
 const Web3 = require('web3');
 const web3 = new Web3();
-import {ensAbiArray} from './ensAbiArray';
-import {auctionRegistrarAbiArray} from './auctionRegistrarAbiArray';
-import {deedAbiArray} from './deedAbiArray';
-import {fifsRegistrarAbiArray} from './fifsRegistrarAbiArray';
-import {resolverAbiArray} from './resolverAbiArray';
-import {reverseRegistrarAbiArray} from './reverseRegistrarAbiArray';
+import {
+  ensAbiArray,
+  auctionRegistrarAbiArray,
+  deedAbiArray,
+  fifsRegistrarAbiArray,
+  resolverAbiArray,
+  reverseRegistrarAbiArray
+} from './abiArray';
 
 console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
 
