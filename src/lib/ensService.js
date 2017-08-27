@@ -12,7 +12,7 @@
 const Web3 = require('web3');
 const web3 = new Web3();
 const ENS = require('ethereum-ens');
-const contracts = require('./abi/contracts.js');
+const contracts = require('../abi/contracts.js');
 const abi = require('ethereumjs-abi');
 const dAppService = require('./dAppService.js');
 
