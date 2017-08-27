@@ -2,6 +2,7 @@ const Web3 = require('web3');
 const web3 = new Web3();
 
 const setWeb3Provider = () => {
+  console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
   web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 };
 
@@ -221,7 +222,7 @@ var ensContract = web3.eth.contract([
     "type": "event"
   }
 ]);
-Contracts.prototype.ens = ensContract.at(process.env.ENS_ADDRESS);
+Contracts.prototype.ens = ensContract.at(process.env.REACT_APP_ENS_ADDRESS);
 
 var auctionRegistrarContract = web3.eth.contract([
   {
@@ -1325,7 +1326,7 @@ Contracts.prototype.getAddr = function(name) {
   return resolverContract.at(resolverAddress).addr(node);
 }
 
-let publicResolverAddress = process.env.PUBLIC_RESOLVER || Contracts.prototype.getAddr('resolver.eth');
+let publicResolverAddress = process.env.REACT_APP_PUBLIC_RESOLVER || Contracts.prototype.getAddr('resolver.eth');
 Contracts.prototype.publicResolver = resolverContract.at(publicResolverAddress);
 
 var reverseRegistrarContract = web3.eth.contract([
