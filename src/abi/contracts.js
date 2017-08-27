@@ -5,6 +5,7 @@ import {auctionRegistrarAbiArray} from './auctionRegistrarAbiArray';
 import {deedAbiArray} from './deedAbiArray';
 import {fifsRegistrarAbiArray} from './fifsRegistrarAbiArray';
 import {resolverAbiArray} from './resolverAbiArray';
+import {reverseRegistrarAbiArray} from './reverseRegistrarAbiArray';
 
 console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
 
@@ -51,84 +52,7 @@ Contracts.prototype.getAddr = function(name) {
 let publicResolverAddress = process.env.REACT_APP_PUBLIC_RESOLVER || Contracts.prototype.getAddr('resolver.eth');
 Contracts.prototype.publicResolver = resolverContract.at(publicResolverAddress);
 
-var reverseRegistrarContract = web3.eth.contract([
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "claim",
-    "outputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "ens",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "addr",
-        "type": "address"
-      }
-    ],
-    "name": "node",
-    "outputs": [
-      {
-        "name": "ret",
-        "type": "bytes32"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "rootNode",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "name": "ensAddr",
-        "type": "address"
-      },
-      {
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "payable": false,
-    "type": "constructor"
-  }
-]);
+const reverseRegistrarContract = web3.eth.contract(reverseRegistrarAbiArray);
 Contracts.prototype.reverseRegistrar = reverseRegistrarContract.at(Contracts.prototype.ens.owner(Contracts.prototype.namehash('addr.reverse')));
 
 Contracts.prototype.getContent = function(name) {
