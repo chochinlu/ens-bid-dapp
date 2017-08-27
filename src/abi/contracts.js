@@ -1,12 +1,8 @@
 const Web3 = require('web3');
 const web3 = new Web3();
 
-const setWeb3Provider = () => {
-  console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
-  web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
-};
-
-setWeb3Provider();
+console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
+web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 
 function Contracts() {}
 
