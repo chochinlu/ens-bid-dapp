@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Autosuggest from 'react-autosuggest'
 import Search from 'material-ui-icons/Search';
 import './SearchBar.css';
-import {getAddressByEns} from '../../lib/ensService';
+import {getAddressByEns, entries} from '../../lib/ensService';
 
 const names = [
   'Brian',
@@ -47,19 +47,32 @@ class SearchBar extends Component {
     this.state = {
       value: '',
       suggestions: [],
-      address: 'yanlong.eth',
+      address: 'ethereum.eth',
+      name: 'ethereum',
       data: null,
+      entriesData: null,
     };
   }
 
-  // TODO have something wrong!
   getDataFromAddressByEns = async () => {
     try {
       const data = getAddressByEns(this.state.address);
       this.setState({ data });
+      console.log('getDataFromAddressByEns', data)
     } catch (error) {
       console.error(`getDataFromAddressByEns error: ${error} `);
       this.setState({ data: error });
+    }
+  }
+
+  getDataFromEntries = async () => {
+    try {
+      const entriesData = entries(this.state.name);
+      this.setState({ entriesData });
+      console.log('getDataFromEntries', entriesData)
+    } catch (error) {
+      console.error(`getDataFromEntries error: ${error} `);
+      this.setState({ entriesData: error });
     }
   }
 
@@ -69,6 +82,7 @@ class SearchBar extends Component {
     });
     // TODO chech the ens function
     this.getDataFromAddressByEns();
+    this.getDataFromEntries();
   };
   
   onSuggestionsFetchRequested = ({ value }) => {
