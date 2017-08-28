@@ -39,7 +39,8 @@ const runTestSuite = async () => {
 };
 // runTestSuite();
 
-const runEnsTestSuite =  () => {
+const runEnsTestSuite = async () => {
+  try {
   // ropsten testing
   let name = "testing";
 
@@ -56,12 +57,15 @@ const runEnsTestSuite =  () => {
   //console.log("STEP 3", newBidResult);
 
   // STEP 4: unsealBid
-  //let unsealBidResult = await unsealBid(name, 0.01, "testing", PRIVATE_KEY);
-  //console.log("STEP 4", unsealBidResult);
+  let unsealBidResult = await unsealBid(name, 0.01, "testing", PRIVATE_KEY);
+  console.log("STEP 4", unsealBidResult);
 
   // STEP 5: finalizeAuction
   //let finalizeAuctionResult = await finalizeAuction(name, PRIVATE_KEY);
   //console.log("STEP 5", finalizeAuctionResult);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 runEnsTestSuite();
