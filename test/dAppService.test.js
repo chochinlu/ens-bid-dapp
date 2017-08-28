@@ -37,14 +37,14 @@ const runTestSuite = async () => {
   console.log("state", state("phyrextsai"));
 
 };
-runTestSuite();
+// runTestSuite();
 
-const runEnsTestSuite = async () => {
+const runEnsTestSuite =  () => {
   // ropsten testing
   let name = "testing";
 
   // STEP 1: check ens 
-  let entriesResult = await entries(name);
+  let entriesResult =  entries(name);
   console.log("STEP 1", entriesResult);
   
   // STEP 2: startAuction, tx: 0x263e795b37cb297d3676e845d97c8b6995eb10cb2ab45428fb0ddd889c977ddb

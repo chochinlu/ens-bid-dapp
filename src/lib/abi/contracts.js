@@ -55,7 +55,6 @@ export const testRegistrar = () => {
 
 const getResolverContract = () => web3.eth.contract(resolverAbiArray);
 
-//TODO: error: should get a valid address
 export const getAddr = (name) => {
   const node = getNameHexHash(name);
   const resolverAddress = ens().resolver(node);
@@ -78,7 +77,6 @@ export const reverseRegistrar = () => {
   return  reverseRegistrarContract.at(address);
 };
 
-//TODO: error: should get a valid address
 export const getContent = (name) => {
   const node = getNameHexHash(name);
   const resolverAddress =  ens().resolver(node);
