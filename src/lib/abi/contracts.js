@@ -66,6 +66,30 @@ export const getAddr = (name) => {
     : getResolverContract().at(resolverAddress).addr(node);
 };
 
+export const publicResolver = () => {
+  const publicResolverAddress = process.env.REACT_APP_PUBLIC_RESOLVER || getAddr('resolver.eth');
+  return getResolverContract().at(publicResolverAddress);
+};
+
+export const reverseRegistrar = () => {
+  const node = getNameHexHash('addr.reverse');
+  const address = ens().owner(node);
+  const reverseRegistrarContract = web3.eth.contract(reverseRegistrarAbiArray);
+  return  reverseRegistrarContract.at(address);
+};
+
+//TODO: error: should get a valid address
+export const getContent = (name) => {
+  const node = getNameHexHash(name);
+  const resolverAddress =  ens().resolver(node);
+  const defaultAddress = '0x0000000000000000000000000000000000000000';
+  const defaultContent = '0x0000000000000000000000000000000000000000000000000000000000000000';
+  
+  return (resolverAddress === defaultAddress) 
+    ? defaultContent
+    : getResolverContract().at(resolverAddress).content(node);
+};
+
 
 function Contracts() {}
 
