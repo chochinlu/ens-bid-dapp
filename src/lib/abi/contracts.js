@@ -36,7 +36,7 @@ export const ens = () => {
   const ensContract = web3.eth.contract(ensAbiArray);
 
   // instantiate by address
-  return  ensContract.at(process.env.ENS_ADDRESS);
+  return ensContract.at(process.env.REACT_APP_ENS_ADDRESS);
 };
 
 export const ethRegistrar = () => {
@@ -106,7 +106,7 @@ Contracts.prototype.namehash = function(name) {
 
 const ensContract = web3.eth.contract(ensAbiArray);
 
-Contracts.prototype.ens = ensContract.at(process.env.ENS_ADDRESS);
+Contracts.prototype.ens = ensContract.at(process.env.REACT_APP_ENS_ADDRESS);
 
 const auctionRegistrarContract = web3.eth.contract(auctionRegistrarAbiArray);
 
@@ -123,6 +123,7 @@ const resolverContract = web3.eth.contract(resolverAbiArray);
 Contracts.prototype.getAddr = function(name) {
   var node = Contracts.prototype.namehash(name)
   var resolverAddress = Contracts.prototype.ens.resolver(node);
+  console.log("resolverAddress", resolverAddress);
   if (resolverAddress === '0x0000000000000000000000000000000000000000') {
     return resolverAddress;
   }
