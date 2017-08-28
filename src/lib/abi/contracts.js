@@ -40,17 +40,30 @@ export const ens = () => {
 };
 
 export const ethRegistrar = () => {
-  const name = getNameHexHash('eth');
-  const address = ens().owner(name);
+  const node = getNameHexHash('eth');
+  const address = ens().owner(node);
   const auctionRegistrarContract = web3.eth.contract(auctionRegistrarAbiArray);
   return auctionRegistrarContract.at(address);  
 };
 
 export const testRegistrar = () => {
-  const name = getNameHexHash('test');
-  const address = ens().owner(name);
+  const node = getNameHexHash('test');
+  const address = ens().owner(node);
   const fifsRegistrarContract = web3.eth.contract(fifsRegistrarAbiArray);
   return fifsRegistrarContract.at(address);  
+};
+
+const getResolverContract = () => web3.eth.contract(resolverAbiArray);
+
+//TODO: error: should get a valid address
+export const getAddr = (name) => {
+  const node = getNameHexHash(name);
+  const resolverAddress = ens().resolver(node);
+  const defaultAddress = '0x0000000000000000000000000000000000000000';
+
+  return (resolverAddress === defaultAddress) 
+    ? defaultAddress
+    : getResolverContract().at(resolverAddress).addr(node);
 };
 
 
