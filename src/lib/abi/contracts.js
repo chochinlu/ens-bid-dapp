@@ -1,5 +1,3 @@
-const Web3 = require('web3');
-const web3 = new Web3();
 import {
   ensAbiArray,
   auctionRegistrarAbiArray,
@@ -8,6 +6,9 @@ import {
   resolverAbiArray,
   reverseRegistrarAbiArray
 } from './abiArray';
+
+const Web3 = require('web3');
+const web3 = new Web3();
 
 console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
 
@@ -66,4 +67,4 @@ Contracts.prototype.getContent = function(name) {
   return resolverContract.at(resolverAddress).content(node);
 }
 
-module.exports = new Contracts();
+export const contracts = new Contracts();
