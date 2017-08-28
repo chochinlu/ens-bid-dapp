@@ -31,6 +31,29 @@ export const getNameHexHash = (name) => {
   return node;
 };
 
+// Get ensContract instance
+export const ens = () => {
+  const ensContract = web3.eth.contract(ensAbiArray);
+
+  // instantiate by address
+  return  ensContract.at(process.env.ENS_ADDRESS);
+};
+
+export const ethRegistrar = () => {
+  const name = getNameHexHash('eth');
+  const address = ens().owner(name);
+  const auctionRegistrarContract = web3.eth.contract(auctionRegistrarAbiArray);
+  return auctionRegistrarContract.at(address);  
+};
+
+export const testRegistrar = () => {
+  const name = getNameHexHash('test');
+  const address = ens().owner(name);
+  const fifsRegistrarContract = web3.eth.contract(fifsRegistrarAbiArray);
+  return fifsRegistrarContract.at(address);  
+};
+
+
 function Contracts() {}
 
 Contracts.prototype.namehash = function(name) {
