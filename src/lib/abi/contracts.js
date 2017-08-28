@@ -14,6 +14,23 @@ console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
 
 web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 
+//TODO: should move to util.js ?
+export const getHexHash = (hash) => web3.sha3(hash, {encoding: 'hex'});
+
+export const getHash = (hash) => web3.sha3(hash);
+
+export const getNameHexHash = (name) => {
+  let node = '0x0000000000000000000000000000000000000000000000000000000000000000';
+  if (name === '') return node;
+
+  for (const label of name.split('.').reverse()) {
+    const more = getHash(label).slice(2);
+    node = getHexHash(node + more);
+  }
+
+  return node;
+};
+
 function Contracts() {}
 
 Contracts.prototype.namehash = function(name) {
