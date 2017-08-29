@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
+import {isValidJsonString} from '../../lib/util';
 import './JsonKeyUploader.css';
 
 export class JsonKeyUploader extends Component {
@@ -16,7 +17,7 @@ export class JsonKeyUploader extends Component {
 
   onDrop(files) {
     const file = files[0];
-    console.log(file);
+    // console.log(file);
 
     //check file type 
     if (file.type !== 'application/json') {
@@ -24,10 +25,6 @@ export class JsonKeyUploader extends Component {
         message: 'Please upload a valid JSON file.'
       });
     } else {
-
-      //check if is a valid json 
-
-      //save result 
       const self = this;
 
       const reader = new FileReader();
@@ -37,18 +34,23 @@ export class JsonKeyUploader extends Component {
         const jsonStr = atob(base64data);
         // console.log(jsonStr);
 
-        //TODO: should save to Top App component
-        self.setState({
-          files,
-          dragDiabled: true,
-          keystore: JSON.parse(jsonStr),
-          message: ''
-        });
+        if (isValidJsonString(jsonStr)) {
+          //TODO: should save to Top App component
+          self.setState({
+            files,
+            dragDiabled: true,
+            keystore: JSON.parse(jsonStr),
+            message: ''
+          });
+        } else {
+          self.setState({
+            message: 'Please upload a valid JSON file.'
+          });
+        }
       };
       reader.readAsDataURL(file);
     }
   }
-
 
   enableDrag() {
     this.setState({dragDiabled: false});
