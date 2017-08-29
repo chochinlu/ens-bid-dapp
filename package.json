@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "lint-staged": "^4.0.2",
+    "prettier": "^1.5.3",
     "classnames": "^2.2.5",
     "ethereum-ens": "^0.4.2",
     "ethereumjs-abi": "^0.6.4",
