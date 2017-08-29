@@ -6,6 +6,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
 import { JsonKeyUploader } from '../JsonKeyUploader';
+import {MetaMaskWallet} from '../MetaMaskWallet/MetaMaskWallet';
 
 export const LoginDialog = (props) => {
   return (
@@ -14,11 +15,12 @@ export const LoginDialog = (props) => {
       transition={Slide}
       onRequestClose={props.onRequestClose}>
       <DialogTitle>
-        {"Upload your keystore file in JSON format"}
+        {"Your wallet: "}
       </DialogTitle>
       <DialogContent>
+        <MetaMaskWallet />
         <DialogContentText>
-          We will not backup your keystore in database. Please take care your file.
+          Or you can upload your keystore file. We will not backup your keystore in database. Please take care your file:
         </DialogContentText>
         <JsonKeyUploader/>
       </DialogContent>
