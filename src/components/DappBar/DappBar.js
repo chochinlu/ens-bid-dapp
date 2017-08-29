@@ -56,8 +56,8 @@ class DappBar extends Component {
               <DialogContent>
                 <DialogContentText>
                   We will not backup your keystore in database. Please take care your file.
-                  <JsonKeyUploader />
                 </DialogContentText>
+                <JsonKeyUploader />
               </DialogContent>
             </Dialog>
           </Toolbar>
