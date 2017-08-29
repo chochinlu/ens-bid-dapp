@@ -25,8 +25,8 @@ export class MetaMaskWallet extends Component {
         this.setState({message: messages.LOAD_MATAMASK_WALLET_ERROR});
       } else {
         accounts.length === 0 
-          ? this.setState({message: messages.EMPTY_METAMASK_ACCOUNT})
-          : this.setState({account: accounts[0]});
+          ? this.setState({account: '', message: messages.EMPTY_METAMASK_ACCOUNT})
+          : this.setState({account: accounts[0], message: ''});
       }
     });
   }
@@ -34,9 +34,9 @@ export class MetaMaskWallet extends Component {
   fetchNetwork() {
     const { web3 } = window;
 
-    web3 && web3.version && web3.version.getNetwork((err, netId) => {
+    web3.version.getNetwork((err, netId) => {
       if (err) {
-        this.setState({message: messages.NETWORK_ERROR});
+        this.setState({networkId: null, yarmessage: messages.NETWORK_ERROR});
       } else {
         this.setState({ networkId: netId })
       }
@@ -51,6 +51,10 @@ export class MetaMaskWallet extends Component {
         return 'MORDEN';
       case '3':
         return 'ROPSTEN';
+      case '4':
+        return 'RINKEBY';
+      case '42':
+        return 'KOVAN';
       default:
         return 'UNKNOWN';
     }
@@ -59,22 +63,31 @@ export class MetaMaskWallet extends Component {
   componentDidMount() {
     this.fetchAccounts();
     this.fetchNetwork();
+    this.AccountInterval = setInterval(() => this.fetchAccounts(), 1000);
+    this.NetworkInterval = setInterval(() => this.fetchNetwork(),  6000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.AccountInterval);
+    clearInterval(this.NetworkInterval);
   }
 
   render() {
-
     const accountInfo = this.state.account !== '' &&
-      <p>{messages.METAMASK_ACCOUNT + this.state.account}</p>
+      <p>{messages.METAMASK_ACCOUNT + this.state.account}</p>;
+
+    const alert = this.state.message &&
+      <p>{this.state.message}</p>;
 
     const currentNetwork = this.state.networkId &&
-      <p>Current Network: {this.getNetworkName(this.state.networkId)}</p>
+      <p>Current Network: {this.getNetworkName(this.state.networkId)}</p>;
 
     return (
       <div className='MetaMaskWallet'>
         <h1>MetaMask Wallet</h1>
         {accountInfo}
+        {alert}
         {currentNetwork}
-        <p>{this.state.message}</p>
       </div>
     );
   }
