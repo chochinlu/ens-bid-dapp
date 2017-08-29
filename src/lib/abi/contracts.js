@@ -10,11 +10,13 @@ import {
 const Web3 = require('web3');
 const web3 = new Web3();
 
-console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
+console.log("REACT_APP_PROVIDER", process.env.REACT_APP_PROVIDER);
 
-web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
+//TODO: error handling.
+if (process.env.REACT_APP_PROVIDER) {
+  web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
+}
 
-//TODO: should move to util.js ?
 export const getHexHash = (hash) => web3.sha3(hash, {encoding: 'hex'});
 
 export const getHash = (hash) => web3.sha3(hash);

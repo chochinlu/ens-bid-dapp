@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
+import {isValidJsonString} from '../../lib/util';
 import './JsonKeyUploader.css';
 
 export class JsonKeyUploader extends Component {
@@ -18,24 +19,37 @@ export class JsonKeyUploader extends Component {
     const file = files[0];
     // console.log(file);
 
-    const self = this;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target.result;
-      const base64data = result.split(',')[1];
-      const jsonStr = atob(base64data);
-      // console.log(jsonStr);
-
-      //TODO: fetch the private key via the ethereumjs-wallet
-
-      self.setState({ 
-        files,
-        dragDiabled: true,
-        keystore: JSON.parse(jsonStr)
+    //check file type 
+    if (file.type !== 'application/json') {
+      this.setState({
+        message: 'Please upload a valid JSON file.'
       });
-    };
-    reader.readAsDataURL(file);
+    } else {
+      const self = this;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target.result;
+        const base64data = result.split(',')[1];
+        const jsonStr = atob(base64data);
+        // console.log(jsonStr);
+
+        if (isValidJsonString(jsonStr)) {
+          //TODO: should save to Top App component
+          self.setState({
+            files,
+            dragDiabled: true,
+            keystore: JSON.parse(jsonStr),
+            message: ''
+          });
+        } else {
+          self.setState({
+            message: 'Please upload a valid JSON file.'
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   enableDrag() {
@@ -52,6 +66,9 @@ export class JsonKeyUploader extends Component {
       this.state.dragDiabled ? 'dropzone-disable': 'dropzone-enable'
     );
 
+    const msg = this.state.message && 
+      <p>{this.state.message}</p>;
+
     const uploadInfo = this.state.files.length > 0 && 
       <div>
         <p>File uploaded: <strong>{this.state.files[0].name}</strong></p>
@@ -65,12 +82,12 @@ export class JsonKeyUploader extends Component {
           <Dropzone 
             className={style} 
             disabled={this.state.dragDiabled}
-            accept='application/json' 
             multiple={false} 
             onDrop={this.onDrop}>
             {dropMsg}
           </Dropzone>
         </div>
+        {msg}
         {uploadInfo}
       </div>
     );
