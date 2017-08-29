@@ -16,27 +16,39 @@ export class JsonKeyUploader extends Component {
 
   onDrop(files) {
     const file = files[0];
-    // console.log(file);
+    console.log(file);
 
-    const self = this;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target.result;
-      const base64data = result.split(',')[1];
-      const jsonStr = atob(base64data);
-      // console.log(jsonStr);
-
-      //TODO: fetch the private key via the ethereumjs-wallet
-
-      self.setState({ 
-        files,
-        dragDiabled: true,
-        keystore: JSON.parse(jsonStr)
+    //check file type 
+    if (file.type !== 'application/json') {
+      this.setState({
+        message: 'Please upload a valid JSON file.'
       });
-    };
-    reader.readAsDataURL(file);
+    } else {
+
+      //check if is a valid json 
+
+      //save result 
+      const self = this;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target.result;
+        const base64data = result.split(',')[1];
+        const jsonStr = atob(base64data);
+        // console.log(jsonStr);
+
+        //TODO: should save to Top App component
+        self.setState({
+          files,
+          dragDiabled: true,
+          keystore: JSON.parse(jsonStr),
+          message: ''
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   }
+
 
   enableDrag() {
     this.setState({dragDiabled: false});
@@ -52,6 +64,9 @@ export class JsonKeyUploader extends Component {
       this.state.dragDiabled ? 'dropzone-disable': 'dropzone-enable'
     );
 
+    const msg = this.state.message && 
+      <p>{this.state.message}</p>;
+
     const uploadInfo = this.state.files.length > 0 && 
       <div>
         <p>File uploaded: <strong>{this.state.files[0].name}</strong></p>
@@ -65,12 +80,12 @@ export class JsonKeyUploader extends Component {
           <Dropzone 
             className={style} 
             disabled={this.state.dragDiabled}
-            accept='application/json' 
             multiple={false} 
             onDrop={this.onDrop}>
             {dropMsg}
           </Dropzone>
         </div>
+        {msg}
         {uploadInfo}
       </div>
     );
