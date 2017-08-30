@@ -6,17 +6,16 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import { blueGrey } from 'material-ui/colors';
-import {LoginDialog} from './LoginDialog';
-import {Menu} from './Menu';
+import {WalletDialog} from './WalletDialog';
 import {Title} from './Title';
-import {Login} from './Login';
+import {Wallet} from './Wallet';
 
 const styles = {
   root: {
-    width: '100%',
+    width: '100%'
   },
   flex: {
-    flex: 1,
+    flex: 1
   },
 };
 
@@ -36,10 +35,9 @@ class DappBar extends Component {
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
           <Toolbar>
-            <Menu />
             <Title className={classes.flex} />
-            <Login onClick={() => this.setState({ open: true })} />
-            <LoginDialog open={this.state.open} onRequestClose={this.handleRequestClose} />
+            <Wallet onClick={() => this.setState({ open: true })} />
+            <WalletDialog open={this.state.open} onRequestClose={this.handleRequestClose} />
           </Toolbar>
         </AppBar>
       </div>

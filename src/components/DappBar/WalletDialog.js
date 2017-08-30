@@ -8,7 +8,7 @@ import Slide from 'material-ui/transitions/Slide';
 import { JsonKeyUploader } from '../JsonKeyUploader';
 import {MetaMaskWallet} from '../MetaMaskWallet/MetaMaskWallet';
 
-export const LoginDialog = (props) => {
+export const WalletDialog = (props) => {
   return (
     <Dialog
       open={props.open}
