@@ -10,13 +10,15 @@
  */
 
 import {
-  contracts
+  contracts,
+  getHash
  } from './abi/contracts';
+
+ import {Box} from './util';
 
 const Web3 = require('web3');
 const web3 = new Web3();
 const ENS = require('ethereum-ens');
-//const contracts = require('./abi/contracts');
 const abi = require('ethereumjs-abi');
 const dAppService = require('./dAppService.js');
 
@@ -53,17 +55,17 @@ export const getAddressByEns = (address) => {
  * @param {*} name 
  * @returns {array} tuple
  */
-export const entries = (name) => {
-  let entriesResult = contracts.ethRegistrar.entries(web3.sha3(name));
-  let entries = {
-    "state": mode[entriesResult[0].toString()],
-    "deed": entriesResult[1],
-    "registrationDate": new Date(entriesResult[2].toNumber() * 1000),
-    "value": entriesResult[3].toNumber(),
-    "highestBid": entriesResult[4].toNumber()
-  };
-  return entries;
-}
+export const entries = name => 
+  Box(name)
+    .map(n => contracts.ethRegistrar.entries(getHash(n)))
+    .fold(result => ({
+      state: mode[result[0].toString()],
+      deed: result[1],
+      registrationDate: new Date(result[2].toNumber() * 1000),
+      value: result[3].toNumber(),
+      highestBid: result[4].toNumber()
+    }));
+
 
 /**
  * @description 如果 entires[0] 回傳是5，則代表"soft launch"結束後可以開標
