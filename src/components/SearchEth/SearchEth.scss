@@ -1,0 +1,25 @@
+.SearchEth {
+  margin: 1em;
+  padding: 3em 1em 1em 1em;
+  min-height: 200px;
+}
+
+.SearchEth input {
+  font-size: 1.8em;
+  padding: 5px 1em;
+  border: 1px solid black;
+}
+
+.SearchEth-search {
+  display: flex;
+  justify-content: center;
+}
+
+.SearchEth-btn {
+  font-size: 1.2em;
+  font-weight: bold;
+  border: 1px solid black;
+  padding: 0.5em 0.7em;
+  margin-left: 1em;
+  cursor: pointer;
+}
