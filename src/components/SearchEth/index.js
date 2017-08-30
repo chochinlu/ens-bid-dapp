@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {getAddressByEns, entries} from '../../lib/ensService';
+import {SearchResult} from './SearchResult';
 import './SearchEth.css';
 
 export class SearchEth extends Component {
@@ -6,19 +8,33 @@ export class SearchEth extends Component {
     super(props);
     this.state = {
       value: '',
-      result: null
+      result: null,
+      message: ''
     };
     this.handleChange = this.handleChange.bind(this); 
+    this.handleClear = this.handleClear.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleChange(e) {
     this.setState({value: e.target.value});
   }
 
-  render() {
-    const result = this.state.result &&
-      <div><h3>Search OutPut</h3></div>;
+  handleClear() {
+    this.setState({value: ''});
+  }
 
+  handleSearch(e) {
+    e.preventDefault();
+
+    if (this.state.value) {
+      const result = entries(this.state.value);
+      // console.log(result);
+      this.setState({result});
+    }
+  }
+
+  render() {
     return (
       <div className="SearchEth">
         <div className="SearchEth-search">
@@ -29,10 +45,10 @@ export class SearchEth extends Component {
               value={this.state.value}
               onChange={this.handleChange}/>
           </div>
-          <div className="SearchEth-btn">Search</div>
-          <div className="SearchEth-btn">Clear</div>
+          <div className="SearchEth-btn" onClick={this.handleSearch}>Search</div>
+          <div className="SearchEth-btn" onClick={this.handleClear}>Clear</div>
         </div>
-        {result}
+        <SearchResult result={this.state.result} />
       </div>
     );
   }
