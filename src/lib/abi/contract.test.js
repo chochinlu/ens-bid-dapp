@@ -35,8 +35,8 @@ test('getNameHexHash should return a default hex string', () => {
 test('ethRegistrar', () => {
   const result = ethRegistrar();
   // console.log(result);
+  expect(result).not.toBe(null);
 });
-
 
 test('getAddr should get a valid address', () => {
   const name = 'resolver.eth';

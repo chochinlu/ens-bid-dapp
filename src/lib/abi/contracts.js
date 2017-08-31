@@ -7,6 +7,8 @@ import {
   reverseRegistrarAbiArray
 } from './abiArray';
 
+import {Box} from '../util';
+
 const Web3 = require('web3');
 const web3 = new Web3();
 
@@ -17,7 +19,7 @@ if (process.env.REACT_APP_PROVIDER) {
   web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 }
 
-export const contractFrom = (abiArray) => web3.eth.contract(ensAbiArray);
+export const contractFrom = (abiArray) => web3.eth.contract(abiArray);
 
 export const getHexHash = (hash) => web3.sha3(hash, {encoding: 'hex'});
 
@@ -39,14 +41,11 @@ export const getNameHexHash = (name) => {
 export const ens = () => 
   contractFrom(ensAbiArray).at(process.env.REACT_APP_ENS_ADDRESS);
 
-
-export const ethRegistrar = () => {
-  const node = getNameHexHash('eth');
-  const address = ens().owner(node);
-  const auctionRegistrarContract = web3.eth.contract(auctionRegistrarAbiArray);
-  return auctionRegistrarContract.at(address);  
-};
-
+export const ethRegistrar = () => 
+  Box('eth')
+    .map(n => getNameHexHash(n))
+    .map(n => ens().owner(n))
+    .fold(addr => contractFrom(auctionRegistrarAbiArray).at(addr));
 
 export const testRegistrar = () => {
   const node = getNameHexHash('test');
