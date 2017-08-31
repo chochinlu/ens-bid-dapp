@@ -11,7 +11,8 @@
 
 import {
   contracts,
-  getHash
+  getHash,
+  ethRegistrar
  } from './abi/contracts';
 
  import {Box} from './util';
@@ -64,7 +65,8 @@ export const getAddressByEns = async (address) => {
  */
 export const entries = name => 
   Box(name)
-    .map(n => contracts.ethRegistrar.entries(getHash(n)))
+    .map(n => getHash(n))
+    .map(n => ethRegistrar().entries(n))
     .fold(result => ({
       state: mode[result[0].toString()],
       deed: result[1],

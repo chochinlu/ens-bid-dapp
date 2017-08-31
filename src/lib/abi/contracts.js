@@ -17,6 +17,8 @@ if (process.env.REACT_APP_PROVIDER) {
   web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 }
 
+export const contractFrom = (abiArray) => web3.eth.contract(ensAbiArray);
+
 export const getHexHash = (hash) => web3.sha3(hash, {encoding: 'hex'});
 
 export const getHash = (hash) => web3.sha3(hash);
@@ -34,12 +36,9 @@ export const getNameHexHash = (name) => {
 };
 
 // Get ensContract instance
-export const ens = () => {
-  const ensContract = web3.eth.contract(ensAbiArray);
+export const ens = () => 
+  contractFrom(ensAbiArray).at(process.env.REACT_APP_ENS_ADDRESS);
 
-  // instantiate by address
-  return ensContract.at(process.env.REACT_APP_ENS_ADDRESS);
-};
 
 export const ethRegistrar = () => {
   const node = getNameHexHash('eth');
@@ -47,6 +46,7 @@ export const ethRegistrar = () => {
   const auctionRegistrarContract = web3.eth.contract(auctionRegistrarAbiArray);
   return auctionRegistrarContract.at(address);  
 };
+
 
 export const testRegistrar = () => {
   const node = getNameHexHash('test');
