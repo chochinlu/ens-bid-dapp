@@ -40,10 +40,17 @@ const mode = ["Open", "Auction", "Owned", "Forbidden", "Reveal", "NotYetAvailabl
  *
  * @param {*} address 
  */
-export const getAddressByEns = (address) => {
-  ens = new ENS(web3, process.env.REACT_APP_ENS_ADDRESS);
-  return ens.resolver(address).addr();
+export const getAddressByEns = async (address) => {
+  try {
+    const ens = new ENS(web3, process.env.REACT_APP_ENS_ADDRESS);
+    const result = await ens.resolver(address).addr();
+    return result;
+  } catch (err) {
+    // console.log('getAddressByEns: ', err);
+    return 'ENS not found';
+  }
 }
+
 
 /**
  * @description STEP 1: 確認一下該.eth狀態，回傳 tuple 多維度資訊
