@@ -1,3 +1,5 @@
+import {Box} from './util';
+
 const Web3 = require('web3');
 const web3 = new Web3();
 const Tx = require('ethereumjs-tx');
@@ -15,9 +17,12 @@ export const getBlockNumber = () => web3.eth.blockNumber;
  * @description get address balance
  * @param {*} address 
  */
-export const getAddressBalance = address => {
-  return web3.fromWei(web3.eth.getBalance(address), 'ether').toString(10);
-};
+export const getAddressBalance = address => 
+  Box(address)
+    .map(addr => web3.eth.getBalance(addr))
+    .map(balance => web3.fromWei(balance, 'ether'))
+    .fold(wei => wei.toString(10));
+
 
 /**
  * @description extract address from private key
