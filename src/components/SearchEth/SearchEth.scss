@@ -25,6 +25,30 @@
 }
 
 .SearchEth-result {
-  border: 1px solid black;
-  margin: 1em;
+  display: flex;
+  align-items: center;
+  // border: 1px solid black;
+  margin: 2em;
+
+  div {
+    border: 1px solid black;
+    margin-left: 1em;
+    padding: 0.5em 1em;
+    h3 {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+.SearchEth-result-name {
+  flex: 7;
+  text-align: left;
+  font-size: 1.2em;
+
+}
+
+.SearchEth-result-action {
+  flex: 1;
+  font-size: 1.2em;
 }
