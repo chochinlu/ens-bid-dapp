@@ -9,6 +9,7 @@ import { blueGrey } from 'material-ui/colors';
 import {WalletDialog} from './WalletDialog';
 import {Title} from './Title';
 import {Wallet} from './Wallet';
+import './DappBar.css';
 
 const styles = {
   root: {
@@ -31,13 +32,27 @@ class DappBar extends Component {
   render () {
     const classes = this.props.classes;
 
+    const account = this.props.account && 
+      <p className="DappBar-info">{this.props.account}</p>;
+
+    const balance = this.props.balance && 
+      <p className="DappBar-info">Balance: {this.props.balance}</p>;
+
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
           <Toolbar>
             <Title className={classes.flex} />
+            {account}
+            {balance}
             <Wallet onClick={() => this.setState({ open: true })} />
-            <WalletDialog open={this.state.open} onRequestClose={this.handleRequestClose} />
+            <WalletDialog 
+              open={this.state.open} 
+              onRequestClose={this.handleRequestClose} 
+              account={this.props.account}
+              setAccount={this.props.setAccount}
+              setEmptyAccount={this.props.setEmptyAccount}
+              />
           </Toolbar>
         </AppBar>
       </div>
