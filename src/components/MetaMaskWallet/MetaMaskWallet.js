@@ -29,9 +29,8 @@ export class MetaMaskWallet extends Component {
         this.setState({message});
 
         const account = accounts.length === 0
-          ? ''
-          : accounts[0];
-        this.props.setAccount(account);
+          ? this.props.setEmptyAccount()
+          : this.props.setAccount(accounts[0]);
       }
     });
   }
