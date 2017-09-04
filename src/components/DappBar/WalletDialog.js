@@ -18,7 +18,7 @@ export const WalletDialog = (props) => {
         {"Your wallet: "}
       </DialogTitle>
       <DialogContent>
-        <MetaMaskWallet />
+        <MetaMaskWallet setAccount={props.setAccount} account={props.account}/>
         <DialogContentText>
           Or you can upload your keystore file. We will not backup your keystore in database. Please take care your file:
         </DialogContentText>

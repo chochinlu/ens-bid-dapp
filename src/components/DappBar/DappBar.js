@@ -31,13 +31,22 @@ class DappBar extends Component {
   render () {
     const classes = this.props.classes;
 
+    const account = this.props.account && 
+      <p>{this.props.account}</p>;
+
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
           <Toolbar>
             <Title className={classes.flex} />
+            {account}
             <Wallet onClick={() => this.setState({ open: true })} />
-            <WalletDialog open={this.state.open} onRequestClose={this.handleRequestClose} />
+            <WalletDialog 
+              open={this.state.open} 
+              onRequestClose={this.handleRequestClose} 
+              setAccount={this.props.setAccount}
+              account={this.props.account}
+              />
           </Toolbar>
         </AppBar>
       </div>
