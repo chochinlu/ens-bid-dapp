@@ -40,7 +40,16 @@ test('ethRegistrar', () => {
 
 test('getAddr should get a valid address', () => {
   const name = 'resolver.eth';
-  const result = contracts.getAddr(name);
+  const result = getAddr(name);
+  // console.log(result);
+  expect(typeof result).toBe('string');
+  expect(result).toMatch(/^0x/);
+});
+
+test.only('getAddr should get a valid address even the given name is empty', () => {
+  const name = '';
+  const result = getAddr(name);
+  // console.log(result); //0x000000...
   expect(typeof result).toBe('string');
   expect(result).toMatch(/^0x/);
 });

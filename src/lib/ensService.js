@@ -23,8 +23,6 @@ const ENS = require('ethereum-ens');
 const abi = require('ethereumjs-abi');
 const dAppService = require('./dAppService.js');
 
-let ens;
-
 const setWeb3Provider = () => {
   web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 };

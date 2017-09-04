@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getAddressByEns, entries} from '../../lib/ensService';
+import {entries} from '../../lib/ensService';
 import {SearchResult} from './SearchResult';
 import './SearchEth.css';
 
@@ -9,10 +9,10 @@ export class SearchEth extends Component {
     this.state = {
       value: '',
       result: null,
-      message: ''
+      message: '',
+      fetching: false
     };
     this.handleChange = this.handleChange.bind(this); 
-    this.handleClear = this.handleClear.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
   }
 
@@ -20,17 +20,18 @@ export class SearchEth extends Component {
     this.setState({value: e.target.value});
   }
 
-  handleClear() {
-    this.setState({value: ''});
-  }
-
   handleSearch(e) {
     e.preventDefault();
 
     if (this.state.value) {
+      this.setState({fetching: true}); //TODO: not work
       const result = entries(this.state.value);
-      // console.log(result);
-      this.setState({result});
+      result.searchName = this.state.value;
+      this.setState({
+        result,
+        value: '',
+        fetching: false
+      });
     }
   }
 
@@ -46,9 +47,11 @@ export class SearchEth extends Component {
               onChange={this.handleChange}/>
           </div>
           <div className="SearchEth-btn" onClick={this.handleSearch}>Search</div>
-          <div className="SearchEth-btn" onClick={this.handleClear}>Clear</div>
         </div>
-        <SearchResult result={this.state.result} />
+        {this.state.fetching
+          ? <h3>Fetching...</h3>
+          : <SearchResult result={this.state.result} />
+        }
       </div>
     );
   }
