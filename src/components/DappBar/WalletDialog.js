@@ -26,7 +26,7 @@ export const WalletDialog = (props) => {
   const jsonUploader = props.source === 'json' && <JsonKeyUploader/>;
 
   return (
-    <Dialog open={props.open} transition={Slide} onRequestClose={props.onRequestClose}>
+    <Dialog open={props.open} transition={Slide} onRequestClose={props.handleRequestClose}>
       <DialogTitle>
         {"Choose your wallet: "} 
         <WalletBtn setSource={props.setSource} type='metamask' source={props.source}>MetaMask</WalletBtn>

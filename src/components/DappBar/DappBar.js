@@ -49,6 +49,7 @@ class DappBar extends Component {
             <WalletDialog 
               open={this.state.open} 
               {...this.props}
+              handleRequestClose={this.handleRequestClose}
               />
           </Toolbar>
         </AppBar>
