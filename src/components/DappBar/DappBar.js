@@ -48,10 +48,7 @@ class DappBar extends Component {
             <Wallet onClick={() => this.setState({ open: true })} />
             <WalletDialog 
               open={this.state.open} 
-              onRequestClose={this.handleRequestClose} 
-              account={this.props.account}
-              setAccount={this.props.setAccount}
-              setEmptyAccount={this.props.setEmptyAccount}
+              {...this.props}
               />
           </Toolbar>
         </AppBar>

@@ -11,10 +11,16 @@ class App extends Component {
     super(props);
     this.state = {
       account: '',
-      balance: ''
+      balance: '',
+      source: 'metamask'
     };
     this.setAccount = this.setAccount.bind(this);
     this.setEmptyAccount = this.setEmptyAccount.bind(this);
+    this.setSource = this.setSource.bind(this);
+  }
+
+  setSource(type) {
+    this.setState({source: type});
   }
 
   setAccount(account) {
@@ -30,10 +36,10 @@ class App extends Component {
     return (
       <div className="App">
         <DappBar
-          account={this.state.account}
-          balance={this.state.balance}
+          {...this.state}
           setAccount={this.setAccount}
           setEmptyAccount={this.setEmptyAccount}
+          setSource={this.setSource}
         /> 
         {process.env.REACT_APP_PROVIDER
           ? <Dapp/>
