@@ -17,13 +17,12 @@ const WalletBtn = (props) => {
 }
 
 export const WalletDialog = (props) => {
-  const metaMaskWallet = props.source === 'metamask' && 
-    <MetaMaskWallet
-      account={props.account}
-      setAccount={props.setAccount}
-      setEmptyAccount={props.setEmptyAccount}/>;
 
-  const jsonUploader = props.source === 'json' && <JsonKeyUploader/>;
+  const metaMaskWallet = props.source === 'metamask' && 
+    <MetaMaskWallet {...props} />;
+
+  const jsonUploader = props.source === 'json' && 
+    <JsonKeyUploader setAccount={props.setAccount} />;
 
   return (
     <Dialog open={props.open} transition={Slide} onRequestClose={props.handleRequestClose}>
