@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Dapp} from './components/Dapp';
 import Warnings from './components/Warnings';
-import DappBar from './components/DappBar';
+import Top from './components/Top/Top';
 import {getAddressBalance} from './lib/dAppService';
 import 'typeface-roboto';
 import './App.css';
@@ -35,7 +35,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <DappBar
+        <Top
           {...this.state}
           setAccount={this.setAccount}
           setEmptyAccount={this.setEmptyAccount}
