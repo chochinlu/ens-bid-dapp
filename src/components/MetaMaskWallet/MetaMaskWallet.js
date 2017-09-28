@@ -13,7 +13,6 @@ export class MetaMaskWallet extends Component {
     super(props);
     this.state = {
       message: '',
-      account: '',
       networkId: null
     };
   }
@@ -24,9 +23,14 @@ export class MetaMaskWallet extends Component {
       if (err) {
         this.setState({message: messages.LOAD_MATAMASK_WALLET_ERROR});
       } else {
-        accounts.length === 0 
-          ? this.setState({account: '', message: messages.EMPTY_METAMASK_ACCOUNT})
-          : this.setState({account: accounts[0], message: ''});
+        const message = accounts.length === 0
+          ? messages.EMPTY_METAMASK_ACCOUNT
+          : '';
+        this.setState({message});
+
+        const account = accounts.length === 0
+          ? this.props.setEmptyAccount()
+          : this.props.setAccount(accounts[0]);
       }
     });
   }
@@ -73,8 +77,8 @@ export class MetaMaskWallet extends Component {
   }
 
   render() {
-    const accountInfo = this.state.account !== '' &&
-      <p>{messages.METAMASK_ACCOUNT + this.state.account}</p>;
+    const accountInfo = this.props.account !== '' &&
+      <p>{messages.METAMASK_ACCOUNT + this.props.account}</p>;
 
     const alert = this.state.message &&
       <p>{this.state.message}</p>;

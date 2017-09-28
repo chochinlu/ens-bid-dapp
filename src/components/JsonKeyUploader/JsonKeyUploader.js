@@ -15,6 +15,12 @@ export class JsonKeyUploader extends Component {
     this.enableDrag = this.enableDrag.bind(this);
   }
 
+  validAddress(from) {
+    return from.slice(0,2) === '0x' 
+      ? from 
+      : '0x' + from
+  }
+
   onDrop(files) {
     const file = files[0];
     // console.log(file);
@@ -34,14 +40,18 @@ export class JsonKeyUploader extends Component {
         const jsonStr = atob(base64data);
         // console.log(jsonStr);
 
+        const keystore = JSON.parse(jsonStr);
+
         if (isValidJsonString(jsonStr)) {
-          //TODO: should save to Top App component
           self.setState({
             files,
             dragDiabled: true,
-            keystore: JSON.parse(jsonStr),
+            keystore,
             message: ''
           });
+
+          const address = this.validAddress(keystore.address);
+          this.props.setAccount(address);
         } else {
           self.setState({
             message: 'Please upload a valid JSON file.'
@@ -69,6 +79,9 @@ export class JsonKeyUploader extends Component {
     const msg = this.state.message && 
       <p>{this.state.message}</p>;
 
+    const accountInfo = this.state.keystore && 
+      <p>Your address: {this.validAddress(this.state.keystore.address)}</p>
+
     const uploadInfo = this.state.files.length > 0 && 
       <div>
         <p>File uploaded: <strong>{this.state.files[0].name}</strong></p>
@@ -88,6 +101,7 @@ export class JsonKeyUploader extends Component {
           </Dropzone>
         </div>
         {msg}
+        {accountInfo}
         {uploadInfo}
       </div>
     );

@@ -1,5 +1,12 @@
-import {getHexHash, getNameHexHash, getAddr, reverseRegistrar, getContent} from './contracts';
-import {contracts} from './contracts';
+import {
+  getHexHash,
+  getNameHexHash,
+  getAddr,
+  reverseRegistrar,
+  getContent,
+  ethRegistrar,
+  contracts
+} from './contracts';
 
 test('getHash should return a hashed hex string by using web3.sha3', () => {
   const startHash = 'eth';
@@ -25,9 +32,24 @@ test('getNameHexHash should return a default hex string', () => {
   expect(result).toMatch(/^0x/);
 });
 
+test('ethRegistrar', () => {
+  const result = ethRegistrar();
+  // console.log(result);
+  expect(result).not.toBe(null);
+});
+
 test('getAddr should get a valid address', () => {
   const name = 'resolver.eth';
-  const result = contracts.getAddr(name);
+  const result = getAddr(name);
+  // console.log(result);
+  expect(typeof result).toBe('string');
+  expect(result).toMatch(/^0x/);
+});
+
+test.only('getAddr should get a valid address even the given name is empty', () => {
+  const name = '';
+  const result = getAddr(name);
+  // console.log(result); //0x000000...
   expect(typeof result).toBe('string');
   expect(result).toMatch(/^0x/);
 });
