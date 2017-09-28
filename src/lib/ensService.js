@@ -74,31 +74,6 @@ export const getAllowedTime = (name) => {
 }
 
 /**
- * @description STEP 2: 同時開標並且投標，整合 startAuction + newBid
- * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L369
- * return transactionHash
- * @param {*} name 
- * @param {*} ether 
- * @param {*} secret 
- * @param {*} privateKey 
- */
-export const startAuctionAndBid = (name, ether, secret, privateKey) => {
-  let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
-  let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
-  let byteData = "0x" + 
-                abi.methodID("startAuctionsAndBid", [ "bytes32[]" ]).toString("hex") + 
-                abi.rawEncode([ "bytes32[]" ], [ [web3.sha3(name)] ]).toString("hex");
-  const payload = {
-    from: fromAddress,
-    to: ethRegistrarAddress,
-    value: '0x0',
-    data: byteData,
-    privateKey: privateKey
-  };
-  return dAppService.sendRawTransaction(payload);
-}
-
-/**
  * @description STEP 2: 開標，選擇網域名稱並且開標
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L296
  * return transactionHash
