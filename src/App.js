@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Dapp} from './components/Dapp';
 import Warnings from './components/Warnings';
-import Top from './components/Top';
+import Top from './components/Top/Top';
 import {getAddressBalance} from './lib/dAppService';
 import 'typeface-roboto';
 import './App.css';
