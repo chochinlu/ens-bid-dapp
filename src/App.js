@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dapp} from './components/Dapp';
+import {Main} from './components/Main';
 import Warnings from './components/Warnings';
 import Top from './components/Top/Top';
 import {getAddressBalance} from './lib/dAppService';
@@ -42,7 +42,7 @@ class App extends Component {
           setSource={this.setSource}
         /> 
         {process.env.REACT_APP_PROVIDER
-          ? <Dapp/>
+          ? <Main/>
           : <Warnings/>}
       </div>
     );

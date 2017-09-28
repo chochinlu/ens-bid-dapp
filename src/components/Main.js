@@ -1,8 +1,8 @@
 import React from 'react';
 import {SearchEns} from './SearchEns';
-import './Dapp.css';
+import './Main.css';
 
-export const Dapp = () => (
+export const Main = () => (
   <div>
     <SearchEns />
   </div>
