@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {entries} from '../../lib/ensService';
 import {SearchResult} from './SearchResult';
-import './SearchEth.css';
+import './SearchEns.css';
 
-export class SearchEth extends Component {
+export class SearchEns extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,8 +37,8 @@ export class SearchEth extends Component {
 
   render() {
     return (
-      <div className="SearchEth">
-        <div className="SearchEth-search">
+      <div className="SearchEns">
+        <div className="SearchEns-search">
           <div>
             <input
               type="text"
@@ -46,7 +46,7 @@ export class SearchEth extends Component {
               value={this.state.value}
               onChange={this.handleChange}/>
           </div>
-          <div className="SearchEth-btn" onClick={this.handleSearch}>Search</div>
+          <div className="SearchEns-btn" onClick={this.handleSearch}>Search</div>
         </div>
         {this.state.fetching
           ? <h3>Fetching...</h3>
