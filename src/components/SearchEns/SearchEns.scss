@@ -1,21 +1,21 @@
-.SearchEth {
+.SearchEns {
   margin: 1em;
   padding: 3em 1em 1em 1em;
   min-height: 200px;
 }
 
-.SearchEth input {
+.SearchEns input {
   font-size: 1.8em;
   padding: 5px 1em;
   border: 1px solid black;
 }
 
-.SearchEth-search {
+.SearchEns-search {
   display: flex;
   justify-content: center;
 }
 
-.SearchEth-btn {
+.SearchEns-btn {
   font-size: 1.2em;
   font-weight: bold;
   border: 1px solid black;
@@ -24,7 +24,7 @@
   cursor: pointer;
 }
 
-.SearchEth-result {
+.SearchEns-result {
   display: flex;
   align-items: center;
   // border: 1px solid black;
@@ -41,14 +41,14 @@
   }
 }
 
-.SearchEth-result-name {
+.SearchEns-result-name {
   flex: 7;
   text-align: left;
   font-size: 1.2em;
 
 }
 
-.SearchEth-result-action {
+.SearchEns-result-action {
   flex: 1;
   font-size: 1.2em;
 }

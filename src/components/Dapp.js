@@ -1,9 +1,9 @@
 import React from 'react';
-import {SearchEth} from './SearchEth';
+import {SearchEns} from './SearchEns';
 import './Dapp.css';
 
 export const Dapp = () => (
   <div>
-    <SearchEth />
+    <SearchEns />
   </div>
 );
