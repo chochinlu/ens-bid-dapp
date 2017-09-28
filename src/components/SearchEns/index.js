@@ -3,6 +3,25 @@ import {entries} from '../../lib/ensService';
 import {SearchResult} from './SearchResult';
 import './SearchEns.css';
 
+const SearchDescription = () => (
+  <div>
+    <h1>Your Identity on Ethereum</h1>
+  </div>
+);
+
+const SearchInput = (props) => (
+  <div className="SearchEns-search">
+    <div>
+      <input
+        type="text"
+        placeholder='.eth'
+        value={props.value}
+        onChange={props.handleChange}/>
+    </div>
+    <div className="SearchEns-btn" onClick={props.handleSearch}>Search</div>
+  </div>
+);
+
 export class SearchEns extends Component {
   constructor(props) {
     super(props);
@@ -38,16 +57,13 @@ export class SearchEns extends Component {
   render() {
     return (
       <div className="SearchEns">
-        <div className="SearchEns-search">
-          <div>
-            <input
-              type="text"
-              placeholder='.eth'
-              value={this.state.value}
-              onChange={this.handleChange}/>
-          </div>
-          <div className="SearchEns-btn" onClick={this.handleSearch}>Search</div>
-        </div>
+        <SearchDescription />
+        <SearchInput 
+          value={this.state.value}
+          handleChange={this.handleChange}
+          handleSearch={this.handleSearch}
+        />
+
         {this.state.fetching
           ? <h3>Fetching...</h3>
           : <SearchResult result={this.state.result} />
