@@ -6,21 +6,21 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import { blueGrey } from 'material-ui/colors';
-import {LoginDialog} from './LoginDialog';
-import {Menu} from './Menu';
+import {WalletDialog} from './WalletDialog';
 import {Title} from './Title';
-import {Login} from './Login';
+import {Wallet} from './Wallet';
+import './Top.css';
 
 const styles = {
   root: {
-    width: '100%',
+    width: '100%'
   },
   flex: {
-    flex: 1,
+    flex: 1
   },
 };
 
-class DappBar extends Component {
+class Top extends Component {
   state = {
     open: false,
   };
@@ -32,14 +32,25 @@ class DappBar extends Component {
   render () {
     const classes = this.props.classes;
 
+    const account = this.props.account && 
+      <p className="Top-info">{this.props.account}</p>;
+
+    const balance = this.props.balance && 
+      <p className="Top-info">Balance: {this.props.balance}</p>;
+
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
           <Toolbar>
-            <Menu />
             <Title className={classes.flex} />
-            <Login onClick={() => this.setState({ open: true })} />
-            <LoginDialog open={this.state.open} onRequestClose={this.handleRequestClose} />
+            {account}
+            {balance}
+            <Wallet onClick={() => this.setState({ open: true })} />
+            <WalletDialog 
+              open={this.state.open} 
+              {...this.props}
+              handleRequestClose={this.handleRequestClose}
+              />
           </Toolbar>
         </AppBar>
       </div>
@@ -47,8 +58,8 @@ class DappBar extends Component {
   }
 }
 
-DappBar.propTypes = {
+Top.propTypes = {
   classes: PropTypes.object,
 };
 
-export default withStyles(styles)(DappBar);
+export default withStyles(styles)(Top);

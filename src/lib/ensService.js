@@ -10,17 +10,18 @@
  */
 
 import {
-  contracts
+  contracts,
+  getHash,
+  ethRegistrar
  } from './abi/contracts';
+
+ import {Box} from './util';
 
 const Web3 = require('web3');
 const web3 = new Web3();
 const ENS = require('ethereum-ens');
-//const contracts = require('./abi/contracts');
 const abi = require('ethereumjs-abi');
 const dAppService = require('./dAppService.js');
-
-let ens;
 
 const setWeb3Provider = () => {
   web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
@@ -38,10 +39,17 @@ const mode = ["Open", "Auction", "Owned", "Forbidden", "Reveal", "NotYetAvailabl
  *
  * @param {*} address 
  */
-export const getAddressByEns = (address) => {
-  ens = new ENS(web3, process.env.REACT_APP_ENS_ADDRESS);
-  return ens.resolver(address).addr();
+export const getAddressByEns = async (address) => {
+  try {
+    const ens = new ENS(web3, process.env.REACT_APP_ENS_ADDRESS);
+    const result = await ens.resolver(address).addr();
+    return result;
+  } catch (err) {
+    // console.log('getAddressByEns: ', err);
+    return 'ENS not found';
+  }
 }
+
 
 /**
  * @description STEP 1: 確認一下該.eth狀態，回傳 tuple 多維度資訊
@@ -53,17 +61,18 @@ export const getAddressByEns = (address) => {
  * @param {*} name 
  * @returns {array} tuple
  */
-export const entries = (name) => {
-  let entriesResult = contracts.ethRegistrar.entries(web3.sha3(name));
-  let entries = {
-    "state": mode[entriesResult[0].toString()],
-    "deed": entriesResult[1],
-    "registrationDate": new Date(entriesResult[2].toNumber() * 1000),
-    "value": entriesResult[3].toNumber(),
-    "highestBid": entriesResult[4].toNumber()
-  };
-  return entries;
-}
+export const entries = name => 
+  Box(name)
+    .map(n => getHash(n))
+    .map(n => ethRegistrar().entries(n))
+    .fold(result => ({
+      state: mode[result[0].toString()],
+      deed: result[1],
+      registrationDate: new Date(result[2].toNumber() * 1000),
+      value: result[3].toNumber(),
+      highestBid: result[4].toNumber()
+    }));
+
 
 /**
  * @description 如果 entires[0] 回傳是5，則代表"soft launch"結束後可以開標

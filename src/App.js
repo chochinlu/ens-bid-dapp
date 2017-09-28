@@ -1,22 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.png';
-import {Dapp} from './components/Dapp';
+import React, {Component} from 'react';
+import {Main} from './components/Main';
 import Warnings from './components/Warnings';
-import DappBar from './components/DappBar';
+import Top from './components/Top/Top';
+import {getAddressBalance} from './lib/dAppService';
 import 'typeface-roboto';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      account: '',
+      balance: '',
+      source: 'metamask'
+    };
+    this.setAccount = this.setAccount.bind(this);
+    this.setEmptyAccount = this.setEmptyAccount.bind(this);
+    this.setSource = this.setSource.bind(this);
+  }
+
+  setSource(type) {
+    this.setState({source: type});
+  }
+
+  setAccount(account) {
+    const balance = getAddressBalance(account);
+    this.setState({account, balance});
+  }
+
+  setEmptyAccount() {
+    this.setState({account: '', balance: ''});
+  }
+
   render() {
     return (
       <div className="App">
-        <DappBar />
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </div>
-        { process.env.REACT_APP_PROVIDER 
-          ? <Dapp /> 
-          : <Warnings /> }
+        <Top
+          {...this.state}
+          setAccount={this.setAccount}
+          setEmptyAccount={this.setEmptyAccount}
+          setSource={this.setSource}
+        /> 
+        {process.env.REACT_APP_PROVIDER
+          ? <Main/>
+          : <Warnings/>}
       </div>
     );
   }

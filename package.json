@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lint-staged": "^4.0.2",
+    "prettier": "^1.5.3",
     "classnames": "^2.2.5",
     "ethereum-ens": "^0.4.2",
     "ethereumjs-abi": "^0.6.4",
@@ -27,7 +29,8 @@
     "dev:buildtestlib": "babel src/lib -d testbuild && babel test -d testbuild",
     "predev": "npm run dev:rmtestbuild && npm run dev:buildtestlib",
     "dev": "node testbuild/dAppService.test.js",
-    "postdev": "npm run dev:rmtestbuild"
+    "postdev": "npm run dev:rmtestbuild",
+    "scss": "sass --watch src:src"
   },
   "devDependencies": {
     "babel": "^6.23.0",
