@@ -31,8 +31,4 @@ yarn-error.log*
 .vscode
 
 yarn.lock
-<<<<<<< HEAD
 package-lock.json 
-=======
-package-lock.json 
->>>>>>> e1d7b64b0e1b1140193f1348d1c3446ce3cb742e
