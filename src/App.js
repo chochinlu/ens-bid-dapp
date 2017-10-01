@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       account: '',
       balance: '',
-      source: 'metamask'
+      source: 'keystore'
     };
     this.setAccount = this.setAccount.bind(this);
     this.setEmptyAccount = this.setEmptyAccount.bind(this);
