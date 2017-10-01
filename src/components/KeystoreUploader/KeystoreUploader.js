@@ -2,9 +2,20 @@ import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import {isValidJsonString} from '../../lib/util';
-import './JsonKeyUploader.css';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import './KeystoreUploader.css';
 
-export class JsonKeyUploader extends Component {
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+});
+
+export class KeystoreUploader extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +25,10 @@ export class JsonKeyUploader extends Component {
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
   }
+
+  state = {
+    password: 'Password',
+  };
 
   validAddress(from) {
     return from.slice(0,2) === '0x' 
@@ -63,10 +78,16 @@ export class JsonKeyUploader extends Component {
   }
 
   enableDrag() {
-    this.setState({dragDiabled: false});
+    this.setState({ dragDiabled: false });
   }
 
+  handleChange = event => {
+    this.setState({ password: event.target.value });
+  };
+
   render() {
+    const classes = this.props.classes;
+    
     const dropMsg = this.state.dragDiabled
       ? <p>You've uploaded a key file: </p>
       : <p>Drop your KEY FILE here. (JSON file only)</p>;
@@ -90,7 +111,7 @@ export class JsonKeyUploader extends Component {
       </div>;
 
     return (
-      <div className='JsonKeyUploader'>
+      <div className='KeystoreUploader'>
         <div>
           <Dropzone 
             className={style} 
@@ -100,6 +121,12 @@ export class JsonKeyUploader extends Component {
             {dropMsg}
           </Dropzone>
         </div>
+        <div>
+          <FormControl>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input id="password" value={this.state.name} onChange={this.handleChange} />
+          </FormControl>
+        </div>
         {msg}
         {accountInfo}
         {uploadInfo}
@@ -107,3 +134,9 @@ export class JsonKeyUploader extends Component {
     );
   }
 }
+
+KeystoreUploader.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(KeystoreUploader);

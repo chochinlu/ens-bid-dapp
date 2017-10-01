@@ -1,0 +1,6 @@
+{
+  "name": "KeystoreUploader",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./KeystoreUploader.js"
+}
