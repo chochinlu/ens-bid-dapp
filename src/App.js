@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Main} from './components/Main';
 import Warnings from './components/Warnings';
 import Top from './components/Top/Top';
+import {StartAuction} from './components/StartAuction/StartAuction';
 import Footer from './components/Footer/Footer';
 import {getAddressBalance} from './lib/dAppService';
 import 'typeface-roboto';
@@ -45,6 +46,7 @@ class App extends Component {
         {process.env.REACT_APP_PROVIDER
           ? <Main/>
           : <Warnings/>}
+          <StartAuction/>
         <Footer/>
       </div>
     );
