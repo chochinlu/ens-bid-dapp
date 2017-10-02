@@ -1,6 +1,0 @@
-{
-  "name": "JsonKeyUploader",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./JsonKeyUploader.js"
-}
