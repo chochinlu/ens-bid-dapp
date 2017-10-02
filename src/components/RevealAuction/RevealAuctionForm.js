@@ -7,32 +7,24 @@ export const RevealAuctionForm = () => (
     <div>
       Timeline
     </div>
-    <div>
+    <form>
       <div>
-        <div>Email: </div>
-        <div>
-          <input type="email" value="" placeholder="youremail@example.com"/>
-        </div>
+        <label>Email</label>
+        <input type="email" value="" placeholder="youremail@example.com"/>
       </div>
       <div>
-        <div>ETH: </div>
-        <div>
-          <input type="text" value="" placeholder="0.01"/>
-        </div>
+        <label>ETH</label>
+        <input type="text" value="" placeholder="0.01"/>
       </div>
       <div>
-        <div>Secert: </div>
-        <div>
-          <input type="text" value="" placeholder="password"/>
-        </div>
+        <label>Secert</label>
+        <input type="text" value="" placeholder="password"/>
       </div>
       <div>
-        <div>Gas Price: </div>
-        <div>
-          <input type="text" value=""/>
-        </div>
+        <label>Gas Price</label>
+        <input type="text" value=""/>
       </div>
-    </div>
+    </form>
     <div>
       <button>Reveal Auction</button>
     </div>
