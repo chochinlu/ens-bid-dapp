@@ -85,9 +85,7 @@ export class KeystoreUploader extends Component {
     this.setState({ password: event.target.value });
   };
 
-  render() {
-    const classes = this.props.classes;
-    
+  render() {    
     const dropMsg = this.state.dragDiabled
       ? <p>You've uploaded a key file: </p>
       : <p>Drop your KEY FILE here. (JSON file only)</p>;
@@ -134,9 +132,5 @@ export class KeystoreUploader extends Component {
     );
   }
 }
-
-KeystoreUploader.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(KeystoreUploader);
