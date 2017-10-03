@@ -6,6 +6,7 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import Card from 'material-ui/Card';
+import Wallet from 'ethereumjs-wallet'
 
 import './KeystoreUploader.css';
 
@@ -18,10 +19,11 @@ export class KeystoreUploader extends Component {
     };
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
+    this.unlockWallet = this.unlockWallet.bind(this);
   }
 
   state = {
-    password: 'Password',
+    passpharse: 'Passphrase',
   };
 
   validAddress(from) {
@@ -73,8 +75,14 @@ export class KeystoreUploader extends Component {
     this.setState({ dragDiabled: false, keystore: null, name: '' });
   }
 
+  unlockWallet() {
+    const wallet = Wallet.fromV3(this.state.keystore, this.state.passpharse);
+    console.log("private key", wallet.getPrivateKeyString());
+    // TODO save private key to some where and change UI
+  }
+
   handleChange = event => {
-    this.setState({ password: event.target.value });
+    this.setState({ passpharse: event.target.value });
   };
 
   render() {    
@@ -118,10 +126,12 @@ export class KeystoreUploader extends Component {
         <h2>Import Keystore</h2>
         {msg}
         {dropzone}
-        {uploadInfo}
         {accountInfo}
         <FormControl className="KeystoreUploader-formcontrol">
-          <InputLabel htmlFor="passphrase" children="Enter passphrase to unlock the wallet" shrink={show} focused={show}/>
+          <InputLabel htmlFor="passphrase" 
+            children="Enter passphrase to unlock the wallet" 
+            shrink={show} 
+            focused={show}/>
           <Input
             type="password"
             className="input-secret" 
@@ -133,7 +143,10 @@ export class KeystoreUploader extends Component {
             disabled={passphraseDisabled}/>
           <div className="KeystoreUploader-button-container">
             {reUpload}
-            <Button raised className="KeystoreUploader-button">
+            <Button 
+              raised 
+              className="KeystoreUploader-button" 
+              onClick={this.unlockWallet}>
               Unlock
             </Button>
           </div>
