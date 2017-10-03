@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Main} from './components/Main';
+import {MainWrapper} from './components/MainWrapper';
 import Warnings from './components/Warnings';
 import Top from './components/Top/Top';
 import Footer from './components/Footer/Footer';
@@ -13,11 +13,13 @@ class App extends Component {
     this.state = {
       account: '',
       balance: '',
-      source: 'keystore'
+      source: 'keystore',
+      page: 'main'
     };
     this.setAccount = this.setAccount.bind(this);
     this.setEmptyAccount = this.setEmptyAccount.bind(this);
     this.setSource = this.setSource.bind(this);
+    this.switchPage = this.switchPage.bind(this);
   }
 
   setSource(type) {
@@ -33,6 +35,10 @@ class App extends Component {
     this.setState({account: '', balance: ''});
   }
 
+  switchPage(page) {
+    this.setState({page});
+  }
+
   render() {
     return (
       <div className="App">
@@ -43,7 +49,10 @@ class App extends Component {
           setSource={this.setSource}
         /> 
         {process.env.REACT_APP_PROVIDER
-          ? <Main/>
+          ? <MainWrapper
+              {...this.state}
+              switchPage={this.switchPage}
+            />
           : <Warnings/>}
         <Footer/>
       </div>
