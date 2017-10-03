@@ -9,7 +9,7 @@ export const SearchResult = (props) => {
           <h3>{result.searchName}.eth</h3>
         </div>
         <div className="SearchEns-result-action">
-          <h3>{result.state}</h3>
+          <h3 onClick={() => props.switchPage('auction') }>{result.state}</h3>
         </div>
       </div>
     )

@@ -1,9 +1,8 @@
 // @flow weak
 
-import React from 'react';
+import React, {Component} from 'react';
 import {StartAuctionForm} from './StartAuctionForm';
 import {StartAuctionInfo} from './StartAuctionInfo';
-//import AuctionStepper from './AuctionStepper';
 import './StartAuction.css';
 
 export const StartAuction = () => (
