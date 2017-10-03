@@ -33,9 +33,9 @@ export class KeystoreUploader extends Component {
   onDrop(files) {
     const file = files[0];
     // console.log(file);
-
+    
     //check file type 
-    if (file.type !== 'application/json') {
+    if (file.type !== 'application/json' && file.type !== '') {
       this.setState({
         message: 'Please upload a valid JSON file.'
       });
@@ -47,7 +47,7 @@ export class KeystoreUploader extends Component {
         const result = event.target.result;
         const base64data = result.split(',')[1];
         const jsonStr = atob(base64data);
-        // console.log(jsonStr);
+        console.log("json", jsonStr);
 
         const keystore = JSON.parse(jsonStr);
 
@@ -72,7 +72,7 @@ export class KeystoreUploader extends Component {
   }
 
   enableDrag() {
-    this.setState({ dragDiabled: false });
+    this.setState({ dragDiabled: false, keystore: null, name: '' });
   }
 
   handleChange = event => {
@@ -80,57 +80,65 @@ export class KeystoreUploader extends Component {
   };
 
   render() {    
-    const dropMsg = this.state.dragDiabled
-      ? <p>You've uploaded a key file: </p>
-      : <p>Drop your KEY FILE here. (JSON file only)</p>;
-    
+    const dropMsg = <p className="dropzone-message">Drop your KEY FILE here. (JSON file only)</p>;
+
     const style = classNames(
       'dropzone', 
       this.state.dragDiabled ? 'dropzone-disable': 'dropzone-enable'
     );
 
+    const dropzone = !this.state.dragDiabled && 
+    <Dropzone 
+      className={style} 
+      disabled={this.state.dragDiabled}
+      multiple={false} 
+      onDrop={this.onDrop}>
+      {dropMsg}
+    </Dropzone>
+    
     const msg = this.state.message && 
       <p>{this.state.message}</p>;
 
     const accountInfo = this.state.keystore && 
-      <p>Your address: {this.validAddress(this.state.keystore.address)}</p>
+      <p>Address: {this.validAddress(this.state.keystore.address)}</p>
 
-    const uploadInfo = this.state.files.length > 0 && 
+    const uploadInfo = this.state.files.length > 0 && this.state.keystore && 
       <div>
-        <p>File uploaded: <strong>{this.state.files[0].name}</strong></p>
-        {this.state.dragDiabled && 
-          <button onClick={this.enableDrag}>ReUpload</button>}
+        <p>File name: <strong>{this.state.files[0].name}</strong></p>
       </div>;
+
+    const passphraseDisabled = this.state.keystore ? "" : "disabled";
+
+    const reUpload = this.state.dragDiabled &&
+      <Button raised className="KeystoreUploader-button-reupload" onClick={this.enableDrag}>Reupload</Button>
+
+    const show = this.state.keystore ? true : false;
 
     return (
       <Card className='KeystoreUploader'>
         <h2>Import Keystore</h2>
-        <div>
-          <Dropzone 
-            className={style} 
-            disabled={this.state.dragDiabled}
-            multiple={false} 
-            onDrop={this.onDrop}>
-            {dropMsg}
-          </Dropzone>
-        </div>
+        {dropzone}
         {msg}
-        {accountInfo}
         {uploadInfo}
+        {accountInfo}
         <FormControl className="KeystoreUploader-formcontrol">
-          <InputLabel htmlFor="password" children="Enter Password to unlock the wallet" />
+          <InputLabel htmlFor="passphrase" children="Enter passphrase to unlock the wallet" shrink={show} focused={show}/>
           <Input
             type="password"
             className="input-secret" 
             fullWidth={true}
-            id="password" value={this.state.name} onChange={this.handleChange} />
+            id="password" 
+            autoFocus={true}
+            value={this.state.name} 
+            onChange={this.handleChange} 
+            disabled={passphraseDisabled}/>
           <div className="KeystoreUploader-button-container">
+            {reUpload}
             <Button raised className="KeystoreUploader-button">
               Unlock
             </Button>
           </div>
         </FormControl>
-        
       </Card>
     );
   }
