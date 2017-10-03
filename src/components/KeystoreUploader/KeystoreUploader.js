@@ -2,18 +2,12 @@ import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import {isValidJsonString} from '../../lib/util';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import './KeystoreUploader.css';
+import { FormControl } from 'material-ui/Form';
+import Button from 'material-ui/Button';
+import Card from 'material-ui/Card';
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-});
+import './KeystoreUploader.css';
 
 export class KeystoreUploader extends Component {
   constructor(props) {
@@ -109,7 +103,8 @@ export class KeystoreUploader extends Component {
       </div>;
 
     return (
-      <div className='KeystoreUploader'>
+      <Card className='KeystoreUploader'>
+        <h2>Import Keystore</h2>
         <div>
           <Dropzone 
             className={style} 
@@ -119,18 +114,24 @@ export class KeystoreUploader extends Component {
             {dropMsg}
           </Dropzone>
         </div>
-        <div>
-          <FormControl>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input id="password" value={this.state.name} onChange={this.handleChange} />
-          </FormControl>
-        </div>
         {msg}
         {accountInfo}
         {uploadInfo}
-      </div>
+        <FormControl className="KeystoreUploader-formcontrol">
+          <InputLabel htmlFor="password" children="Enter Password to unlock the wallet" />
+          <Input
+            type="password"
+            className="input-secret" 
+            fullWidth={true}
+            id="password" value={this.state.name} onChange={this.handleChange} />
+          <div className="KeystoreUploader-button-container">
+            <Button raised className="KeystoreUploader-button">
+              Unlock
+            </Button>
+          </div>
+        </FormControl>
+        
+      </Card>
     );
   }
 }
-
-export default withStyles(styles)(KeystoreUploader);
