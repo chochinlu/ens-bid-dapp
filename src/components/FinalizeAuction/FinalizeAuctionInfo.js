@@ -1,7 +1,7 @@
 // @flow weak
 
 import React from 'react';
-import './FinalizeAuctionIfn.css';
+import './FinalizeAuctionInfo.css';
 
 export const FinalizeAuctionInfo = () => (
   // TODO switch FinalizeAuctionInfo when Success
