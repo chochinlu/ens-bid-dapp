@@ -1,40 +1,23 @@
 import React from 'react';
-import Dialog, {DialogContent, DialogTitle} from 'material-ui/Dialog';
+import Dialog from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
 import {KeystoreUploader} from '../KeystoreUploader';
-import {MetaMaskWallet} from '../MetaMaskWallet/MetaMaskWallet';
-import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
+import './WalletDialog.css'
 
-const WalletBtn = (props) => {
-  const setSource = () => props.setSource(props.type);
-  const color = props.type === props.source ? 'accent': 'default';
-
-  return (
-    <Button raised color={color} onClick={setSource} className="WalletBtn" disabled={props.disabled}>
-      {props.children}
-    </Button>
-  );
-}
-
-export const WalletDialog = (props) => {
-
-  const keystoreUploader = props.source === 'keystore' && 
-    <KeystoreUploader setAccount={props.setAccount} />;
-
-    const metaMaskWallet = props.source === 'metamask' && 
-    <MetaMaskWallet {...props} />;
-
-  return (
-    <Dialog open={props.open} transition={Slide} onRequestClose={props.handleRequestClose}>
-      <DialogTitle>
-        {"Choose your wallet: "} 
-        <WalletBtn setSource={props.setSource} type='keystore' source={props.source} disabled={false}>Keystore file</WalletBtn>
-        <WalletBtn setSource={props.setSource} type='metamask' source={props.source} disabled={true}>MetaMask</WalletBtn>
-      </DialogTitle>
-      <DialogContent>
-        {keystoreUploader}
-        {metaMaskWallet}
-      </DialogContent>
-    </Dialog>
-  );
-};
+export const WalletDialog = (props) => (
+  <Dialog
+    className="WalletDialog"
+    fullScreen
+    open={props.open}
+    transition={Slide}>
+    <IconButton
+      color="primary"
+      onClick={props.handleRequestClose}
+      aria-label="Close">
+      <CloseIcon/>
+    </IconButton>
+    <KeystoreUploader setAccount={props.setAccount}/>
+  </Dialog>
+);
