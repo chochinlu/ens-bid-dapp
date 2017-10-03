@@ -32,7 +32,6 @@ export class KeystoreUploader extends Component {
 
   onDrop(files) {
     const file = files[0];
-    // console.log(file);
     
     //check file type 
     if (file.type !== 'application/json' && file.type !== '') {
@@ -47,7 +46,6 @@ export class KeystoreUploader extends Component {
         const result = event.target.result;
         const base64data = result.split(',')[1];
         const jsonStr = atob(base64data);
-        console.log("json", jsonStr);
 
         const keystore = JSON.parse(jsonStr);
 
@@ -96,6 +94,7 @@ export class KeystoreUploader extends Component {
       {dropMsg}
     </Dropzone>
     
+    // TODO using snackbars handle message
     const msg = this.state.message && 
       <p>{this.state.message}</p>;
 
@@ -117,8 +116,8 @@ export class KeystoreUploader extends Component {
     return (
       <Card className='KeystoreUploader'>
         <h2>Import Keystore</h2>
-        {dropzone}
         {msg}
+        {dropzone}
         {uploadInfo}
         {accountInfo}
         <FormControl className="KeystoreUploader-formcontrol">
