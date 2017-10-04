@@ -22,7 +22,11 @@ export const urlQueryParamsObject = () => {
     .split('&')
     .map(q => q.split('='))
     .filter(([name, value]) => name && value)
-    .map(([name, value]) => {name: decodeURI(value)})
+    .map(([name, value]) => {
+      obj = {};
+      obj[name] = decodeURI(value);
+      return obj;
+    })
     .reduce((a, b) => Object.assign(a,b), {});
   return query;
 }
