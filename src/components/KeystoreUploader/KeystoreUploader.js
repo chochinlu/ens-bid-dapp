@@ -73,7 +73,7 @@ export class KeystoreUploader extends Component {
   }
 
   enableDrag() {
-    this.setState({ dragDiabled: false, keystore: null, name: '' });
+    this.setState({ dragDiabled: false, keystore: '', name: '' });
   }
 
   unlockWallet() {
