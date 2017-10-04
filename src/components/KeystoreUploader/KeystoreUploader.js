@@ -15,7 +15,8 @@ export class KeystoreUploader extends Component {
     super(props);
     this.state = {
       files: [],
-      dragDiabled: false
+      dragDiabled: false,
+      unlock: false,
     };
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
@@ -77,8 +78,9 @@ export class KeystoreUploader extends Component {
 
   unlockWallet() {
     const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
-    console.log("private key", privateKey);
-    // TODO save private key to some where and change UI
+    // TODO catch wrong passphrase exception
+    this.props.setKeystore(this.state.keystore);
+    this.props.setPrivateKey(privateKey);
   }
 
   handleChange = event => {
