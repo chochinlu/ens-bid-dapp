@@ -10,7 +10,6 @@ const Main = (props) => (
   <div>
     <SearchEns
       switchPage={props.switchPage} />
-    <hr/>
     <Content />
     <FAQ />
     <About />
