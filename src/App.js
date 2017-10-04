@@ -13,11 +13,17 @@ class App extends Component {
     this.state = {
       account: '',
       balance: '',
-      source: 'keystore'
+      source: 'keystore',
+      keystore: '',
+      privateKey: '',
     };
     this.setAccount = this.setAccount.bind(this);
     this.setEmptyAccount = this.setEmptyAccount.bind(this);
     this.setSource = this.setSource.bind(this);
+    this.setKeystore = this.setKeystore.bind(this);
+    this.setEmptyKeystore = this.setEmptyKeystore.bind(this);
+    this.setPrivateKey = this.setPrivateKey.bind(this);
+    this.setEmptyPrivateKey = this.setEmptyPrivateKey.bind(this);
   }
 
   setSource(type) {
@@ -33,6 +39,22 @@ class App extends Component {
     this.setState({account: '', balance: ''});
   }
 
+  setKeystore(keystore) {
+    this.setState({keystore});
+  }
+
+  setEmptyKeystore() {
+    this.setState({keystore: ''});
+  }
+
+  setPrivateKey(privateKey) {
+    this.setState({privateKey});
+  }
+
+  setEmptyPrivateKey() {
+    this.setPrivateKey({privateKey: ''});
+  }
+
   render() {
     return (
       <div className="App">
@@ -41,6 +63,10 @@ class App extends Component {
           setAccount={this.setAccount}
           setEmptyAccount={this.setEmptyAccount}
           setSource={this.setSource}
+          setKeystore={this.setKeystore}
+          setEmptyKeystore={this.setEmptyKeystore}
+          setPrivateKey={this.setPrivateKey}
+          setEmptyPrivateKey={this.setEmptyPrivateKey}
         /> 
         {process.env.REACT_APP_PROVIDER
           ? <Main/>
