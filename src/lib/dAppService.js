@@ -108,3 +108,13 @@ export const getTransactionReceipt = (transactionHash) => {
 export const getTransaction = (transactionHash) => {
   return web3.eth.getTransaction(transactionHash);
 }
+
+/**
+ * @description return private key by keystore V3 
+ * @param {*} keystore 
+ * @param {*} passpharse 
+ */
+export const getPrivateKeyFromV3 = (keystore, passpharse) => {
+  const wallet = Wallet.fromV3(keystore, passpharse);
+  return wallet.getPrivateKeyString();
+}

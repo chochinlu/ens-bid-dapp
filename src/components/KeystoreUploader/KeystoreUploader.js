@@ -6,7 +6,7 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import Card from 'material-ui/Card';
-import Wallet from 'ethereumjs-wallet'
+import {getPrivateKeyFromV3} from '../../lib/dAppService';
 
 import './KeystoreUploader.css';
 
@@ -76,8 +76,8 @@ export class KeystoreUploader extends Component {
   }
 
   unlockWallet() {
-    const wallet = Wallet.fromV3(this.state.keystore, this.state.passpharse);
-    console.log("private key", wallet.getPrivateKeyString());
+    const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
+    console.log("private key", privateKey);
     // TODO save private key to some where and change UI
   }
 
