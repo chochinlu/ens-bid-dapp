@@ -73,7 +73,7 @@ export class KeystoreUploader extends Component {
   }
 
   enableDrag() {
-    this.setState({ dragDiabled: false, keystore: '', name: '' });
+    this.setState({ dragDiabled: false, name: '' });
   }
 
   unlockWallet() {
@@ -100,13 +100,13 @@ export class KeystoreUploader extends Component {
     );
 
     const dropzone = !this.state.dragDiabled && 
-    <Dropzone 
-      className={style} 
-      disabled={this.state.dragDiabled}
-      multiple={false} 
-      onDrop={this.onDrop}>
-      {dropMsg}
-    </Dropzone>
+      <Dropzone 
+        className={style} 
+        disabled={this.state.dragDiabled}
+        multiple={false} 
+        onDrop={this.onDrop}>
+        {dropMsg}
+      </Dropzone>
     
     // TODO using snackbars handle message
     const msg = this.state.message && 
