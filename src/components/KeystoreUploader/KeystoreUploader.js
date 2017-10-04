@@ -77,10 +77,14 @@ export class KeystoreUploader extends Component {
   }
 
   unlockWallet() {
-    const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
-    // TODO catch wrong passphrase exception
-    this.props.setKeystore(this.state.keystore);
-    this.props.setPrivateKey(privateKey);
+    try {
+      const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
+      this.props.setKeystore(this.state.keystore);
+      this.props.setPrivateKey(privateKey);
+    } catch(err) {
+      // TODO show exception using snackbars
+      console.log("err", err);
+    }
   }
 
   handleChange = event => {
