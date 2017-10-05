@@ -31,16 +31,7 @@ class Top extends Component {
 
   render () {
     const classes = this.props.classes;
-
-    const account = this.props.account && 
-      <p className="Top-info">{this.props.account}</p>;
-
-    const balance = this.props.balance && 
-      <p className="Top-info">Balance: {this.props.balance}</p>;
-
-    const privateKey = this.props.privateKey &&
-    <p className="Top-info">PrivateKey: {this.props.privateKey}</p>;
-
+    
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
