@@ -15,9 +15,9 @@ const SearchInput = (props) => (
         type="text"
         placeholder='.eth'
         value={props.value}
-        onChange={props.handleChange}/>
+        onChange={props.handleSearchChange}/>
     </div>
-    <div className="SearchEns-btn" onClick={props.handleSearch}>Search</div>
+    <div className="SearchEns-btn" onClick={props.handleSearchClick}>Search</div>
   </div>
 );
 
@@ -35,8 +35,8 @@ export class SearchEns extends Component {
         <SearchDescription />
         <SearchInput 
           value={this.props.searchValue}
-          handleChange={this.props.handleChange}
-          handleSearch={this.props.handleSearch}
+          handleSearchChange={this.props.handleSearchChange}
+          handleSearchClick={this.props.handleSearchClick}
         />
 
         {this.props.SearchFetching

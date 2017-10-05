@@ -25,15 +25,15 @@ export class MainWrapper extends Component {
       searchResult: null,
       searchFetching: false
     };
-    this.handleChange = this.handleChange.bind(this); 
-    this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this); 
+    this.handleSearchClick = this.handleSearchClick.bind(this);
   }
 
-  handleChange(e) {
+  handleSearchChange(e) {
     this.setState({searchValue: e.target.value});
   }
 
-  handleSearch(e) {
+  handleSearchClick(e) {
     e.preventDefault();
 
     if (this.state.searchValue) {
@@ -54,14 +54,15 @@ export class MainWrapper extends Component {
         return (
           <Main
             {...this.state}
-            handleChange={this.handleChange}
-            handleSearch={this.handleSearch}
+            handleSearchChange={this.handleSearchChange}
+            handleSearchClick={this.handleSearchClick}
             switchPage={this.props.switchPage}
           />
         );
       case 'auction':
         return (
           <AuctionWrapper
+            {...this.props}
             searchResult={this.state.searchResult}
           />
         );
