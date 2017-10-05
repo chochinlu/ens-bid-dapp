@@ -169,7 +169,7 @@ export class KeystoreUploader extends Component {
               id="password" 
               autoFocus={true}
               value={this.state.passpharse} 
-              onChange={this.handleChange} 
+              onChange={() => this.handleChange} 
               disabled={passphraseDisabled}/>
             <div className="KeystoreUploader-button-container">
               {reUpload}
