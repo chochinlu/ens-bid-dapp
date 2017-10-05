@@ -21,6 +21,7 @@ export class KeystoreUploader extends Component {
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
     this.unlockWallet = this.unlockWallet.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   state = {
@@ -73,7 +74,7 @@ export class KeystoreUploader extends Component {
   }
 
   enableDrag() {
-    this.setState({ dragDiabled: false, name: '' });
+    this.setState({ dragDiabled: false, keystore: '', passpharse: '' });
   }
 
   unlockWallet() {
@@ -81,6 +82,7 @@ export class KeystoreUploader extends Component {
       const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
       this.props.setKeystore(this.state.keystore);
       this.props.setPrivateKey(privateKey);
+      this.props.handleRequestClose();
     } catch(err) {
       // TODO show exception using snackbars
       console.log("err", err);
@@ -113,7 +115,7 @@ export class KeystoreUploader extends Component {
       <p>{this.state.message}</p>;
 
     const accountInfo = this.state.keystore && 
-      <p>Address: {this.validAddress(this.state.keystore.address)}</p>
+      <p>Current Address: {this.validAddress(this.state.keystore.address)}</p>
 
     const uploadInfo = this.state.files.length > 0 && this.state.keystore && 
       <div>
@@ -131,8 +133,8 @@ export class KeystoreUploader extends Component {
       <Card className='KeystoreUploader'>
         <h2>Import Keystore</h2>
         {msg}
-        {dropzone}
         {accountInfo}
+        {dropzone}
         <FormControl className="KeystoreUploader-formcontrol">
           <InputLabel htmlFor="passphrase" 
             children="Enter passphrase to unlock the wallet" 
@@ -144,7 +146,7 @@ export class KeystoreUploader extends Component {
             fullWidth={true}
             id="password" 
             autoFocus={true}
-            value={this.state.name} 
+            value={this.state.passpharse} 
             onChange={this.handleChange} 
             disabled={passphraseDisabled}/>
           <div className="KeystoreUploader-button-container">

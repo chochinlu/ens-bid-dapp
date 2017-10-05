@@ -46,7 +46,9 @@ class Top extends Component {
         <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
           <Toolbar>
             <Title className={classes.flex} />
-            <Wallet onClick={() => this.setState({ open: true })} />
+            <Wallet 
+              privateKey={this.props.privateKey}
+              onClick={() => this.setState({ open: true })} />
             <WalletDialog 
               open={this.state.open} 
               {...this.props}
