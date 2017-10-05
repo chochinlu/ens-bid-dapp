@@ -1,0 +1,35 @@
+$circle-diameter: 2vw;
+$circle-radius: $circle-diameter / 2;
+
+.Stepper {
+  display: flex;
+  justify-content: space-between;
+
+  :first-child{
+    i {
+      display: none;
+    }
+  }
+}
+
+.Step {
+  display: flex;
+}
+
+.StepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #252c3e;
+  border-radius: 50%;
+  min-width: $circle-diameter;
+  max-height: $circle-diameter;
+}
+
+.Light {
+  color: black;
+}
+
+.Dark {
+  color: grey;
+}

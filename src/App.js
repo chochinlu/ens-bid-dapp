@@ -14,9 +14,9 @@ class App extends Component {
       address: '',
       balance: '',
       source: 'keystore',
-      page: 'main'
+      page: 'main',
       keystore: '',
-      privateKey: '',
+      privateKey: ''
     };
     this.setAddress = this.setAddress.bind(this);
     this.setSource = this.setSource.bind(this);
