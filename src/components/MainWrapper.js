@@ -17,6 +17,13 @@ const Main = (props) => (
 );
 
 export class MainWrapper extends Component {
+  // this function
+  // 1. component did amount
+  //    - set state of page
+  //    - get query params
+  //    - 
+  // 2. 
+
   getPage() {
     switch (this.props.page) {
       case 'main':

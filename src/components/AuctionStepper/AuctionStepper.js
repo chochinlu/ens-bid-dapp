@@ -4,7 +4,7 @@ import './AuctionStepper.css';
 const Step = (props) => (
   // TODO
   // this is for temporary testing step change
-  <div onClick={()=> props.setStep(props.step) }>
+  <div onClick={()=> props.setStep(props.name) }>
     <div>{props.index + 1}</div>
     <div>{props.title}</div>
   </div>

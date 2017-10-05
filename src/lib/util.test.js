@@ -14,30 +14,16 @@ test('isValidJsonString should return false if str is not a valid json string', 
 });
 
 test('urlQueryParamsObject should return false when the url has no search query', () => {
-  var customNoSearchQueryWindow = {
-    location: {
-      search: ""
-    }
-  };
-  customNoSearchQueryWindow.window = customNoSearchQueryWindow;
+  let url = "https://vincenttu.is.awesome"
 
-  (function(window) {
-    const result = urlQueryParamsObject();
-    expect(result).toBe(false);
-  })(customNoSearchQueryWindow);
+  const result = urlQueryParamsObject(url);
+  expect(result.empty).toBe(true);
 });
 
-// test('urlQueryParamsObject should return the whole params object when the url get search query params', () => {
-//   var customHasSearchQueryWindow = {
-//     location: {
-//       search: "?foo=fooValue&bar=barValue"
-//     }
-//   };
-//   customHasSearchQueryWindow.window = customHasSearchQueryWindow;
+test('urlQueryParamsObject should return the whole params object when the url get search query params', () => {
+  let url = "https://vincenttu.is.awesome?foo=fooValue&bar=barValue"
 
-//   (function(window) {
-//     let result = urlQueryParamsObject();
-//     expect(result.foo).toBe('fooValue');
-//     expect(result.bar).toBe('barValue');
-//   })(customHasSearchQueryWindow);
-// });
+  let result = urlQueryParamsObject(url);
+  expect(result.foo === 'fooValue').toBeTruthy;
+  expect(result.bar === 'barValue').toBeTruthy;
+});
