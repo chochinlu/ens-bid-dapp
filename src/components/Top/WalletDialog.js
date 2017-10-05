@@ -18,6 +18,11 @@ export const WalletDialog = (props) => (
       aria-label="Close">
       <CloseIcon/>
     </IconButton>
-    <KeystoreUploader setAccount={props.setAccount}/>
+    <KeystoreUploader 
+      {...props}
+      setAddress={props.setAddress} 
+      setKeystore={props.setKeystore}
+      setPrivateKey={props.setPrivateKey}
+      handleRequestClose={props.handleRequestClose}/>
   </Dialog>
 );
