@@ -17,7 +17,9 @@ export class AuctionWrapper extends Component {
   switchStep() {
     switch (this.state.step) {
       case 'StartAuction':
-        return <StartAuction />;
+        return (
+          <StartAuction searchResult={this.props.searchResult} />
+        );
       case 'RevealAuction':
         return <RevealAuction />;
       case 'FinalizeAuction':

@@ -1,9 +1,9 @@
 import React from 'react';
 import './StartAuctionForm.css';
 
-export const StartAuctionForm = () => (
+export const StartAuctionForm = (props) => (
   <div>
-    <h2>mybidens.eth</h2>
+    <h2>{props.searchResult.searchName}.eth</h2>
     <div>
       <div>
         <div>Email: </div>
