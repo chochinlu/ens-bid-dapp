@@ -10,6 +10,17 @@ import {getAddressBalance, getPrivateKeyFromV3} from '../../lib/dAppService';
 
 import './KeystoreUploader.css';
 
+const CurrentWallet = (props) => {
+  return props.privateKey 
+    ? (
+      <div>
+        <h2>Current Wallet</h2>
+        <p>Address: {this.props.address}</p>
+        <p>Balance: {getAddressBalance(this.props.address)}</p>
+      </div>
+    ) : null;
+};
+
 export class KeystoreUploader extends Component {
   constructor(props) {
     super(props);
@@ -117,24 +128,12 @@ export class KeystoreUploader extends Component {
     const accountInfo = this.state.keystore && 
       <p>Current Address: {this.validAddress(this.state.keystore.address)}</p>
 
-    const uploadInfo = this.state.files.length > 0 && this.state.keystore && 
-      <div>
-        <p>File name: <strong>{this.state.files[0].name}</strong></p>
-      </div>;
-
     const passphraseDisabled = this.state.keystore ? "" : "disabled";
 
     const reUpload = this.state.dragDiabled &&
       <Button raised className="KeystoreUploader-button-reupload" onClick={this.enableDrag}>Reupload</Button>
 
     const show = this.state.keystore ? true : false;
-
-    const currentWallet = this.props.privateKey &&
-      <div>
-        <h2>Current Wallet</h2>
-        <p>Address: {this.props.address}</p>
-        <p>Balance: {getAddressBalance(this.props.address)}</p>
-      </div>;
 
     const unlockWalletTitle = this.props.privateKey ?
       <h2>Unlock Wallet</h2> : 
@@ -143,7 +142,7 @@ export class KeystoreUploader extends Component {
     return (
       <Card className='KeystoreUploader'>
         {msg}
-        {currentWallet}
+        <CurrentWallet privateKey={this.props.privateKey} />
         <div>
           {unlockWalletTitle}
           {accountInfo}
