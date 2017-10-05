@@ -1,38 +1,38 @@
 import React from 'react';
 import './StartAuctionInfo.css';
 
-export const StartAuctionInfo = () => (
+export const StartAuctionInfo = (props) => (
   <div>
-    <h2>mybidens.eth</h2>
+    <h2>{props.searchName}.eth</h2>
     <div>
       <div>
         <div>Email: </div>
         <div>
-          youremail@example.com
+          {props.email}
         </div>
       </div>
       <div>
         <div>ETH: </div>
         <div>
-          0.01
+          {props.ethBid}
         </div>
       </div>
       <div>
         <div>Secert: </div>
         <div>
-          password
+          {props.secret}
         </div>
       </div>
       <div>
         <div>TxHash: </div>
         <div>
-          0x0
+          {props.auctionTXHash}
         </div>
       </div>
       <p>We've send you the auction information Email.</p>
     </div>
     <div>
-      <button>Back to Search</button>
+      <button onClick={() => props.switchPage('main')}>Back to Search</button>
       <button>My ENS List</button>
     </div>
   </div>
