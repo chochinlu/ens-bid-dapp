@@ -66,7 +66,9 @@ export class SearchEns extends Component {
 
         {this.state.fetching
           ? <h3>Fetching...</h3>
-          : <SearchResult result={this.state.result} />
+          : <SearchResult
+            switchPage={this.props.switchPage}
+            result={this.state.result} />
         }
       </div>
     );

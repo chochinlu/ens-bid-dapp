@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Main} from './components/Main';
+import {MainWrapper} from './components/MainWrapper';
 import Warnings from './components/Warnings';
 import Top from './components/Top/Top';
 import Footer from './components/Footer/Footer';
@@ -14,11 +14,13 @@ class App extends Component {
       address: '',
       balance: '',
       source: 'keystore',
+      page: 'main'
       keystore: '',
       privateKey: '',
     };
     this.setAddress = this.setAddress.bind(this);
     this.setSource = this.setSource.bind(this);
+    this.switchPage = this.switchPage.bind(this);
     this.setKeystore = this.setKeystore.bind(this);
     this.setPrivateKey = this.setPrivateKey.bind(this);
   }
@@ -40,6 +42,10 @@ class App extends Component {
     this.setState({privateKey});
   }
 
+  switchPage(page) {
+    this.setState({page});
+  }
+
   render() {
     return (
       <div className="App">
@@ -51,7 +57,10 @@ class App extends Component {
           setPrivateKey={this.setPrivateKey}
         /> 
         {process.env.REACT_APP_PROVIDER
-          ? <Main/>
+          ? <MainWrapper
+              {...this.state}
+              switchPage={this.switchPage}
+            />
           : <Warnings/>}
         <Footer/>
       </div>

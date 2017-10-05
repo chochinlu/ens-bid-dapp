@@ -2,8 +2,7 @@
 
 import React from 'react';
 import {StartAuctionForm} from './StartAuctionForm';
-import {StartAuctionInfo} from './StartAuctionInfo';
-//import AuctionStepper from './AuctionStepper';
+// import {StartAuctionInfo} from './StartAuctionInfo';
 import './StartAuction.css';
 
 export const StartAuction = () => (
