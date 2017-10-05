@@ -11,26 +11,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: '',
+      address: '',
       balance: '',
-      source: 'keystore'
+      source: 'keystore',
+      keystore: '',
+      privateKey: '',
     };
-    this.setAccount = this.setAccount.bind(this);
-    this.setEmptyAccount = this.setEmptyAccount.bind(this);
+    this.setAddress = this.setAddress.bind(this);
     this.setSource = this.setSource.bind(this);
+    this.setKeystore = this.setKeystore.bind(this);
+    this.setPrivateKey = this.setPrivateKey.bind(this);
   }
 
   setSource(type) {
     this.setState({source: type});
   }
 
-  setAccount(account) {
-    const balance = getAddressBalance(account);
-    this.setState({account, balance});
+  setAddress(address) {
+    const balance = getAddressBalance(address);
+    this.setState({address, balance});
   }
 
-  setEmptyAccount() {
-    this.setState({account: '', balance: ''});
+  setKeystore(keystore) {
+    this.setState({keystore});
+  }
+
+  setPrivateKey(privateKey) {
+    this.setState({privateKey});
   }
 
   render() {
@@ -38,9 +45,10 @@ class App extends Component {
       <div className="App">
         <Top
           {...this.state}
-          setAccount={this.setAccount}
-          setEmptyAccount={this.setEmptyAccount}
+          setAddress={this.setAddress}
           setSource={this.setSource}
+          setKeystore={this.setKeystore}
+          setPrivateKey={this.setPrivateKey}
         /> 
         {process.env.REACT_APP_PROVIDER
           ? <Main/>

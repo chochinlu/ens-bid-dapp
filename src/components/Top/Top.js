@@ -38,14 +38,17 @@ class Top extends Component {
     const balance = this.props.balance && 
       <p className="Top-info">Balance: {this.props.balance}</p>;
 
+    const privateKey = this.props.privateKey &&
+    <p className="Top-info">PrivateKey: {this.props.privateKey}</p>;
+
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
           <Toolbar>
             <Title className={classes.flex} />
-            {account}
-            {balance}
-            <Wallet onClick={() => this.setState({ open: true })} />
+            <Wallet 
+              privateKey={this.props.privateKey}
+              onClick={() => this.setState({ open: true })} />
             <WalletDialog 
               open={this.state.open} 
               {...this.props}
