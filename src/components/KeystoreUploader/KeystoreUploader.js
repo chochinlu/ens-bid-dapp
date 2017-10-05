@@ -42,6 +42,32 @@ const JsonDropZone = (props) => {
     );
 }
 
+const ReUploadButton = (props) => {
+  return props.dragDiabled ? (
+    <Button 
+      raised 
+      className="KeystoreUploader-button-reupload" 
+      onClick={props.enableDrag}>
+      Reupload
+    </Button>
+  ): null;
+};
+
+const UnlockButton = (props) => (
+  <Button 
+    raised 
+    className="KeystoreUploader-button" 
+    onClick={props.unlockWallet}>
+    Unlock
+  </Button>
+);
+
+const Actions = (props) => (
+  <div className="KeystoreUploader-button-container">
+    <ReUploadButton {...props} />
+    <UnlockButton {...props} />
+  </div>
+);
 
 export class KeystoreUploader extends Component {
   constructor(props) {
@@ -132,19 +158,16 @@ export class KeystoreUploader extends Component {
     const msg = this.state.message && 
       <p>{this.state.message}</p>;
 
+    const unlockWalletTitle = this.props.privateKey === "" ?
+      <h2>Unlock Wallet</h2> : 
+      <h2>Unlock Another Wallet</h2>;
+
     const accountInfo = this.state.keystore && 
       <p>Current Address: {this.validAddress(this.state.keystore.address)}</p>
 
     const passphraseDisabled = this.state.keystore ? "" : "disabled";
 
-    const reUpload = this.state.dragDiabled &&
-      <Button raised className="KeystoreUploader-button-reupload" onClick={this.enableDrag}>Reupload</Button>
-
     const show = this.state.keystore ? true : false;
-
-    const unlockWalletTitle = this.props.privateKey ?
-      <h2>Unlock Wallet</h2> : 
-      <h2>Unlock Another Wallet</h2>;
 
     return (
       <Card className='KeystoreUploader'>
@@ -171,15 +194,11 @@ export class KeystoreUploader extends Component {
               value={this.state.passpharse} 
               onChange={() => this.handleChange} 
               disabled={passphraseDisabled}/>
-            <div className="KeystoreUploader-button-container">
-              {reUpload}
-              <Button 
-                raised 
-                className="KeystoreUploader-button" 
-                onClick={this.unlockWallet}>
-                Unlock
-              </Button>
-            </div>
+            <Actions 
+              dragDiabled={this.state.dragDiabled}
+              enableDrag={this.enableDrag}
+              unlockWallet={this.unlockWallet}
+            />
           </FormControl>
         </div>
       </Card>
