@@ -21,6 +21,28 @@ const CurrentWallet = (props) => {
     ) : null;
 };
 
+const JsonDropZone = (props) => {  
+  const style = classNames(
+    'dropzone', 
+    props.dragDiabled ? 'dropzone-disable': 'dropzone-enable'
+  );
+
+  const dropMsg = <p className="dropzone-message">Drop your KEY FILE here. (JSON file only)</p>;
+
+  return props.dragDiabled
+    ? null
+    : (
+      <Dropzone 
+        className={style} 
+        disabled={props.dragDiabled}
+        multiple={false} 
+        onDrop={props.onDrop}>
+        {dropMsg}
+      </Dropzone>
+    );
+}
+
+
 export class KeystoreUploader extends Component {
   constructor(props) {
     super(props);
@@ -105,22 +127,7 @@ export class KeystoreUploader extends Component {
   };
 
   render() {    
-    const dropMsg = <p className="dropzone-message">Drop your KEY FILE here. (JSON file only)</p>;
 
-    const style = classNames(
-      'dropzone', 
-      this.state.dragDiabled ? 'dropzone-disable': 'dropzone-enable'
-    );
-
-    const dropzone = !this.state.dragDiabled && 
-      <Dropzone 
-        className={style} 
-        disabled={this.state.dragDiabled}
-        multiple={false} 
-        onDrop={this.onDrop}>
-        {dropMsg}
-      </Dropzone>
-    
     // TODO using snackbars handle message
     const msg = this.state.message && 
       <p>{this.state.message}</p>;
@@ -146,7 +153,10 @@ export class KeystoreUploader extends Component {
         <div>
           {unlockWalletTitle}
           {accountInfo}
-          {dropzone}
+          <JsonDropZone 
+            dragDiabled={this.state.dragDiabled}
+            onDrop={this.onDrop}
+          />
           <FormControl className="KeystoreUploader-formcontrol">
             <InputLabel htmlFor="passphrase" 
               children="Enter passphrase to unlock the wallet" 
