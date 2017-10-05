@@ -1,8 +1,8 @@
 // @flow weak
 
 import React from 'react';
-import FinalizeAuctionInfo from './FinalizeAuctionInfo';
-//import AuctionStepper from './AuctionStepper';
+// import FinalizeAuctionInfo from './FinalizeAuctionInfo';
+// import AuctionStepper from './AuctionStepper';
 import './FinalizeAuction.css';
 
 export const FinalizeAuction = () => (

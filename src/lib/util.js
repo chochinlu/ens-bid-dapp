@@ -15,7 +15,7 @@ export const Box = x => ({
 
 // if search params not exists return false
 export const urlQueryParamsObject = (url) => {
-  if (url.indexOf('?') == -1) return {empty: true};
+  if (url.indexOf('?') === -1) return {empty: true};
   let urlSearchString = url.split("?")[1];
   const query = urlSearchString
     .split('&')
