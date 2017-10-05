@@ -24,6 +24,6 @@ test('urlQueryParamsObject should return the whole params object when the url ge
   let url = "https://vincenttu.is.awesome?foo=fooValue&bar=barValue"
 
   let result = urlQueryParamsObject(url);
-  expect(result.foo === 'fooValue').toBeTruthy;
-  expect(result.bar === 'barValue').toBeTruthy;
+  expect(result.foo).toBe('fooValue');
+  expect(result.bar).toBe('barValue');
 });
