@@ -11,13 +11,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: '',
+      address: '',
       balance: '',
       source: 'keystore',
       keystore: '',
       privateKey: '',
     };
-    this.setAccount = this.setAccount.bind(this);
+    this.setAddress = this.setAddress.bind(this);
     this.setSource = this.setSource.bind(this);
     this.setKeystore = this.setKeystore.bind(this);
     this.setPrivateKey = this.setPrivateKey.bind(this);
@@ -27,9 +27,9 @@ class App extends Component {
     this.setState({source: type});
   }
 
-  setAccount(account) {
-    const balance = getAddressBalance(account);
-    this.setState({account, balance});
+  setAddress(address) {
+    const balance = getAddressBalance(address);
+    this.setState({address, balance});
   }
 
   setKeystore(keystore) {
@@ -45,7 +45,7 @@ class App extends Component {
       <div className="App">
         <Top
           {...this.state}
-          setAccount={this.setAccount}
+          setAddress={this.setAddress}
           setSource={this.setSource}
           setKeystore={this.setKeystore}
           setPrivateKey={this.setPrivateKey}

@@ -19,7 +19,8 @@ export const WalletDialog = (props) => (
       <CloseIcon/>
     </IconButton>
     <KeystoreUploader 
-      setAccount={props.setAccount} 
+      {...props}
+      setAddress={props.setAddress} 
       setKeystore={props.setKeystore}
       setPrivateKey={props.setPrivateKey}
       handleRequestClose={props.handleRequestClose}/>
