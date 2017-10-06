@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {entries} from '../../lib/ensService';
 import {SearchResult} from './SearchResult';
 import './SearchEns.css';
 
@@ -16,9 +15,9 @@ const SearchInput = (props) => (
         type="text"
         placeholder='.eth'
         value={props.value}
-        onChange={props.handleChange}/>
+        onChange={props.handleSearchChange}/>
     </div>
-    <div className="SearchEns-btn" onClick={props.handleSearch}>Search</div>
+    <div className="SearchEns-btn" onClick={props.handleSearchClick}>Search</div>
   </div>
 );
 
@@ -26,32 +25,8 @@ export class SearchEns extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      result: null,
-      message: '',
-      fetching: false
+      message: ''
     };
-    this.handleChange = this.handleChange.bind(this); 
-    this.handleSearch = this.handleSearch.bind(this);
-  }
-
-  handleChange(e) {
-    this.setState({value: e.target.value});
-  }
-
-  handleSearch(e) {
-    e.preventDefault();
-
-    if (this.state.value) {
-      this.setState({fetching: true}); //TODO: not work
-      const result = entries(this.state.value);
-      result.searchName = this.state.value;
-      this.setState({
-        result,
-        value: '',
-        fetching: false
-      });
-    }
   }
 
   render() {
@@ -59,16 +34,16 @@ export class SearchEns extends Component {
       <div className="SearchEns">
         <SearchDescription />
         <SearchInput 
-          value={this.state.value}
-          handleChange={this.handleChange}
-          handleSearch={this.handleSearch}
+          value={this.props.searchValue}
+          handleSearchChange={this.props.handleSearchChange}
+          handleSearchClick={this.props.handleSearchClick}
         />
 
-        {this.state.fetching
+        {this.props.SearchFetching
           ? <h3>Fetching...</h3>
           : <SearchResult
             switchPage={this.props.switchPage}
-            result={this.state.result} />
+            result={this.props.searchResult} />
         }
       </div>
     );
