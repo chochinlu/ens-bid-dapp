@@ -4,6 +4,7 @@ import moment from 'moment'
 import {RevealAuctionForm} from './RevealAuctionForm';
 import {RevealAuctionInfo} from './RevealAuctionInfo';
 import {unsealBid} from '../../lib/ensService';
+import {getBefore, getDuringReveal} from '../../lib/util';
 import './RevealAuction.css';
 
 export class RevealAuction extends Component {
@@ -37,23 +38,15 @@ export class RevealAuction extends Component {
     const startsAt = '';
     const endsAt = '';
     this.setState({
-      startsAt: startsAt,
-      endsAt: endsAt
-    })
-    const now = moment();
-    const beforeStartsAt = moment(now,"dddd, MMMM D YYYY, h:mm:ss a z").diff(moment(startsAt,"dddd, MMMM D YYYY, h:mm:ss a z")) < 0;
-    const beforeEndsAt = moment(now,"dddd, MMMM D YYYY, h:mm:ss a z").diff(moment(endsAt,"dddd, MMMM D YYYY, h:mm:ss a z")) < 0;
-    let duringReveal = '';
+      startsAt,
+      endsAt
+    });
 
-    if (beforeStartsAt && beforeEndsAt) {
-      duringReveal = 'before';
-    } else if (!beforeStartsAt && beforeEndsAt) {
-      duringReveal = 'during';
-    } else {
-      duringReveal = 'expired';
-    }
-    
-    this.setState({duringReveal: duringReveal});
+    const beforeStartsAt = getBefore(startsAt);
+    const beforeEndsAt = getBefore(endsAt);
+    const duringReveal = getDuringReveal(beforeStartsAt, beforeEndsAt);
+
+    this.setState({duringReveal});
   }
 
   setRevealFormSent(state) {
@@ -65,9 +58,7 @@ export class RevealAuction extends Component {
   }
 
   handleInputChange(event) {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
+    const {name, value} = event.target;
 
     this.setState({
       [name]: value
@@ -76,10 +67,9 @@ export class RevealAuction extends Component {
 
   handelRevealFormSubmit(event) {
     event.preventDefault();
-    let txHash = unsealBid(
-      this.state.email, this.state.ethBid,
-      this.state.secret, this.props.privateKey
-    )
+    const {email, ethBid, secret} = this.state;
+    const privateKey = this.props.privateKey;
+    let txHash = unsealBid(email, ethBid, secret, privateKey)
     this.setRevealTXHash(txHash);
     this.setRevealFormSent('sent');
   }

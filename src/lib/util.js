@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const isValidJsonString = (str) => {
   try {
     JSON.parse(str);
@@ -28,4 +30,18 @@ export const urlQueryParamsObject = (url) => {
     })
     .reduce((a, b) => Object.assign(a,b), {});
   return query;
+}
+
+// time formate related methods
+const format = (date) => moment(date, 'dddd, MMMM D YYYY, h:mm:ss a z');
+const now = moment();
+export const getBefore = (time) => format(now).diff(format(time)) < 0;
+export const getDuringReveal = (beforeStartsAt, beforeEndsAt) => {
+  if (beforeStartsAt && beforeEndsAt) {
+    return 'before';
+  } else if (!beforeStartsAt && beforeEndsAt) {
+    return 'during';
+  } else {
+    return 'expired';
+  }
 }
