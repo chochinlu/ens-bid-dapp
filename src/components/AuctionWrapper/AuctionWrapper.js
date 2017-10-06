@@ -20,11 +20,15 @@ export class AuctionWrapper extends Component {
         return (
           <StartAuction
             {...this.props}
-            searchResult={this.props.searchResult} 
           />
         );
       case 'RevealAuction':
-        return <RevealAuction />;
+        return (
+          <RevealAuction 
+            {...this.props}
+            setStep={this.setStep}
+          />
+        );
       case 'FinalizeAuction':
         return <FinalizeAuction />;
       default:

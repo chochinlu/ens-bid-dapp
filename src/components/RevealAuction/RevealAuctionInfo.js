@@ -1,9 +1,9 @@
 import React from 'react';
 import './RevealAuctionInfo.css';
 
-export const RevealAuctionInfo = () => (
+export const RevealAuctionInfo = (props) => (
   <div>
-    <h2>mybidens.eth</h2>
+    <h2>{props.searchName}.eth</h2>
     <div>
       Timeline
     </div>
@@ -11,25 +11,25 @@ export const RevealAuctionInfo = () => (
       <div>
         <div>Email: </div>
         <div>
-          youremail@example.com
+          {props.email}
         </div>
       </div>
       <div>
         <div>ETH: </div>
         <div>
-          0.01
+          {props.ethBid}
         </div>
       </div>
       <div>
         <div>TxHash: </div>
         <div>
-          0x0
+          {props.revealTXHash}
         </div>
       </div>
     </div>
     <div>
-      <button>Back to Search</button>
-      <button>My ENS List</button>
+      <button onClick={() => props.switchPage('main')}>Back to Search</button>
+      <button onClick={() => props.setStep('FinalizeAuction')}>Finalize</button>
     </div>
   </div>
 );
