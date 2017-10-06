@@ -1,73 +1,11 @@
 import React, {Component} from 'react';
-import Dropzone from 'react-dropzone';
-import classNames from 'classnames';
 import {isValidJsonString} from '../../lib/util';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
-import Button from 'material-ui/Button';
 import Card from 'material-ui/Card';
-import {getAddressBalance, getPrivateKeyFromV3} from '../../lib/dAppService';
-
+import {getPrivateKeyFromV3} from '../../lib/dAppService';
+import {JsonDropZone} from './JsonDropZone';
+import {CurrentWallet} from './CurrentWallet';
+import {PassphraseForm} from './PassphraseForm';
 import './KeystoreUploader.css';
-
-const CurrentWallet = (props) => {
-  return props.privateKey 
-    ? (
-      <div>
-        <h2>Current Wallet</h2>
-        <p>Address: {this.props.address}</p>
-        <p>Balance: {getAddressBalance(this.props.address)}</p>
-      </div>
-    ) : null;
-};
-
-const JsonDropZone = (props) => {  
-  const style = classNames(
-    'dropzone', 
-    props.dragDiabled ? 'dropzone-disable': 'dropzone-enable'
-  );
-
-  const dropMsg = <p className="dropzone-message">Drop your KEY FILE here. (JSON file only)</p>;
-
-  return props.dragDiabled
-    ? null
-    : (
-      <Dropzone 
-        className={style} 
-        disabled={props.dragDiabled}
-        multiple={false} 
-        onDrop={props.onDrop}>
-        {dropMsg}
-      </Dropzone>
-    );
-}
-
-const ReUploadButton = (props) => {
-  return props.dragDiabled ? (
-    <Button 
-      raised 
-      className="KeystoreUploader-button-reupload" 
-      onClick={props.enableDrag}>
-      Reupload
-    </Button>
-  ): null;
-};
-
-const UnlockButton = (props) => (
-  <Button 
-    raised 
-    className="KeystoreUploader-button" 
-    onClick={props.unlockWallet}>
-    Unlock
-  </Button>
-);
-
-const Actions = (props) => (
-  <div className="KeystoreUploader-button-container">
-    <ReUploadButton {...props} />
-    <UnlockButton {...props} />
-  </div>
-);
 
 export class KeystoreUploader extends Component {
   constructor(props) {
@@ -133,7 +71,8 @@ export class KeystoreUploader extends Component {
   }
 
   enableDrag() {
-    this.setState({ dragDiabled: false, keystore: '', passpharse: '' });
+    // this.setState({ dragDiabled: false, keystore: '', passpharse: '' });
+    this.setState({ dragDiabled: false });
   }
 
   unlockWallet() {
@@ -158,49 +97,31 @@ export class KeystoreUploader extends Component {
     const msg = this.state.message && 
       <p>{this.state.message}</p>;
 
-    const unlockWalletTitle = this.props.privateKey === "" ?
+    const title = this.props.privateKey === "" ?
       <h2>Unlock Wallet</h2> : 
       <h2>Unlock Another Wallet</h2>;
 
     const accountInfo = this.state.keystore && 
       <p>Current Address: {this.validAddress(this.state.keystore.address)}</p>
 
-    const passphraseDisabled = this.state.keystore ? "" : "disabled";
-
-    const show = this.state.keystore ? true : false;
-
     return (
       <Card className='KeystoreUploader'>
         {msg}
         <CurrentWallet privateKey={this.props.privateKey} />
-        <div>
-          {unlockWalletTitle}
-          {accountInfo}
-          <JsonDropZone 
-            dragDiabled={this.state.dragDiabled}
-            onDrop={this.onDrop}
-          />
-          <FormControl className="KeystoreUploader-formcontrol">
-            <InputLabel htmlFor="passphrase" 
-              children="Enter passphrase to unlock the wallet" 
-              shrink={show} 
-              focused={show}/>
-            <Input
-              type="password"
-              className="input-secret" 
-              fullWidth={true}
-              id="password" 
-              autoFocus={true}
-              value={this.state.passpharse} 
-              onChange={() => this.handleChange} 
-              disabled={passphraseDisabled}/>
-            <Actions 
-              dragDiabled={this.state.dragDiabled}
-              enableDrag={this.enableDrag}
-              unlockWallet={this.unlockWallet}
-            />
-          </FormControl>
-        </div>
+        {title}
+        {accountInfo}
+        <JsonDropZone 
+          dragDiabled={this.state.dragDiabled}
+          onDrop={this.onDrop}
+        />
+        <PassphraseForm
+          keystore={this.state.keystore}
+          passpharse={this.state.passpharse}
+          handleChange={this.handleChange}
+          dragDiabled={this.state.dragDiabled}
+          enableDrag={this.enableDrag}
+          unlockWallet={this.unlockWallet}
+        />
       </Card>
     );
   }
