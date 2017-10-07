@@ -5,6 +5,7 @@ import './RevealAuctionInfo.css';
 
 export const RevealAuctionInfo = (props) => {
   const endsFromNow = moment(props.endsAt).fromNow();
+  const txHashUrl = `https://etherscan.io/tx/${props.revealTXHash}`
   return (
     <div>
       <h2>{props.searchName}.eth</h2>
@@ -29,7 +30,9 @@ export const RevealAuctionInfo = (props) => {
         <div>
           <div>TxHash: </div>
           <div>
-            {props.revealTXHash}
+            <a target='_blank' href={txHashUrl}>
+              {props.revealTXHash}
+            </a>
           </div>
         </div>
       </div>
