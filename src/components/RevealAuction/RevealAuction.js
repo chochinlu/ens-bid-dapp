@@ -4,7 +4,7 @@ import moment from 'moment'
 import {RevealAuctionForm} from './RevealAuctionForm';
 import {RevealAuctionInfo} from './RevealAuctionInfo';
 import {unsealBid} from '../../lib/ensService';
-import {getBefore, getDuringReveal} from '../../lib/util';
+import {getDuringReveal} from '../../lib/util';
 import './RevealAuction.css';
 
 export class RevealAuction extends Component {
@@ -41,11 +41,7 @@ export class RevealAuction extends Component {
       startsAt,
       endsAt
     });
-
-    const beforeStartsAt = getBefore(startsAt);
-    const beforeEndsAt = getBefore(endsAt);
-    const duringReveal = getDuringReveal(beforeStartsAt, beforeEndsAt);
-
+    const duringReveal = getDuringReveal(startsAt, endsAt);
     this.setState({duringReveal});
   }
 
