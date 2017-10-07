@@ -79,7 +79,6 @@ export class RevealAuction extends Component {
         <RevealAuctionInfo
           searchName={this.props.searchResult.searchName}
           switchPage={this.props.switchPage}
-          setStep={this.props.setStep}
           {...this.state}
         />
       ) : (

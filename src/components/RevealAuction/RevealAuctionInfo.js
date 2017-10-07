@@ -35,7 +35,6 @@ export const RevealAuctionInfo = (props) => {
       </div>
       <div>
         <button onClick={() => props.switchPage('main')}>Back to Search</button>
-        <button onClick={() => props.setStep('FinalizeAuction')}>Finalize</button>
       </div>
     </div>
   );
