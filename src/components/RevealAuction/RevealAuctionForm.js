@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment'
 import classNames from 'classnames/bind';
+import {fromNow} from '../../lib/util';
 import './RevealAuctionForm.css';
 
 const FormComponent = (props) => (
@@ -60,8 +61,6 @@ const FormComponent = (props) => (
 
 export const RevealAuctionForm = (props) => {
   const timelineState = classNames(props.duringReveal === 'before' ? '' : 'hidden');
-  const startsFromNow = moment(props.startsAt).fromNow();
-  const endsFromNow = moment(props.endsAt).fromNow();
 
   return (
     <div>
@@ -70,12 +69,12 @@ export const RevealAuctionForm = (props) => {
         <div className={timelineState}>
           <p>Reveal Bids On</p>
           <div>{props.startsAt}</div>
-          <div>{startsFromNow}</div>
+          <div>{()=>{fromNow(props.startsAt)}}</div>
         </div>
         <div>
           <p>Auction Close On</p>
           <div>{props.endsAt}</div>
-          <div>{endsFromNow}</div>
+          <div>{()=>{fromNow(props.endsAt)}}</div>
         </div>
       </div>
       { props.duringReveal === 'during' ? 

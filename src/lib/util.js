@@ -35,8 +35,12 @@ export const urlQueryParamsObject = (url) => {
 // time formate related methods
 const format = (date) => moment(date, 'dddd, MMMM D YYYY, h:mm:ss a z');
 const now = moment();
-export const getBefore = (time) => format(now).diff(format(time)) < 0;
-export const getDuringReveal = (beforeStartsAt, beforeEndsAt) => {
+const getBefore = (time) => format(now).diff(format(time)) < 0;
+
+export const getDuringReveal = (start, end) => {
+  const beforeStartsAt = start && getBefore(start);
+  const beforeEndsAt = end && getBefore(end);
+
   if (beforeStartsAt && beforeEndsAt) {
     return 'before';
   } else if (!beforeStartsAt && beforeEndsAt) {
@@ -45,3 +49,5 @@ export const getDuringReveal = (beforeStartsAt, beforeEndsAt) => {
     return 'expired';
   }
 }
+
+export const fromNow = (thisTime) => moment(thisTime).fromNow();
