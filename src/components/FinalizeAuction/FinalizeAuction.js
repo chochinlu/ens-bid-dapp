@@ -2,13 +2,12 @@
 import React, {Component} from 'react';
 import moment from 'moment'
 import classNames from 'classnames/bind';
-import {FinalizeAuctionInfo} from './FinalizeAuctionInfo';
 import {finalizeAuction} from '../../lib/ensService';
-import {getBefore, getDuringReveal} from '../../lib/util';
+import {fromNow, getDuringReveal} from '../../lib/util';
+import {FinalizeAuctionInfo} from './FinalizeAuctionInfo';
 import './FinalizeAuction.css';
 
 const FinalizeAuctionForm = (props) => {
-  const endsFromNow = moment(props.endsAt).fromNow();
   const timelineState = classNames(props.duringReveal === 'during' ? 'hidden' : null);
   return (
     <div>
@@ -19,7 +18,7 @@ const FinalizeAuctionForm = (props) => {
         { props.duringReveal === 'expired' ? (
             <div>Finalization</div>
           ) : (
-            <div>{endsFromNow}</div>
+            <div>{fromNow(props.endsAt)}</div>
           )
         }
       </div>
@@ -43,7 +42,7 @@ const FinalizeAuctionForm = (props) => {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
 export class FinalizeAuction extends Component {
@@ -66,8 +65,7 @@ export class FinalizeAuction extends Component {
     // request api to get startsAt and endsAt
     const endsAt = '';
     this.setState({endsAt});
-    const beforeEndsAt = getBefore(endsAt);
-    const duringReveal = getDuringReveal(false, beforeEndsAt);
+    const duringReveal = getDuringReveal(null, endsAt);
 
     this.setState({duringReveal});
   }
