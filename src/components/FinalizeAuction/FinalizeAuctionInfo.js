@@ -3,16 +3,15 @@
 import React from 'react';
 import './FinalizeAuctionInfo.css';
 
-export const FinalizeAuctionInfo = () => (
+export const FinalizeAuctionInfo = (props) => (
   // TODO switch FinalizeAuctionInfo when Success
   <div>
-    <h2>mybidens.eth</h2>
+    <h2>{props.searchName}.eth</h2>
     <p>
-      Congratulations! You've owned the mybidens.eth domain name!
+      Congratulations! You've owned the {props.searchName}.eth domain name!
     </p>
     <div>
-      <button>Back to Search</button>
-      <button>My ENS List</button>
+      <button onClick={() => props.switchPage('main')}>Back to Search</button>
     </div>
   </div>
 );
