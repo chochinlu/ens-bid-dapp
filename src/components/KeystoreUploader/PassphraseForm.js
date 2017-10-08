@@ -21,7 +21,7 @@ export const PassphraseForm = (props) => {
         id='password'
         autoFocus={true}
         value={props.passpharse}
-        onChange={() => props.handleChange}
+        onChange={props.handleChange}
         disabled={passphraseDisabled}/>
       <Actions
         dragDiabled={props.dragDiabled}
