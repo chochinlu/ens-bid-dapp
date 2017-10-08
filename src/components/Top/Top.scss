@@ -21,21 +21,21 @@
 
 .Top-Drawer {
   width: 15em;
+}
 
-  .Top-Drawer-Chevron {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 64px;
-  }
+.Top-Drawer-Chevron {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 64px;
+}
 
-  .Top-Drawer-ListItem {
-    display: flex;
-    align-items: left;
-    justify-content: flex-start;
-  }
+.Top-Drawer-ListItem {
+  display: flex;
+  align-items: left;
+  justify-content: flex-start;
+}
 
-  .Top-Drawer-ListItemText {
-    text-align: left;
-  }
+.Top-Drawer-ListItemText {
+  text-align: left;
 }

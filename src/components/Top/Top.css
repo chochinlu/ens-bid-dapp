@@ -15,16 +15,19 @@
 
 .Top-Drawer {
   width: 15em; }
-  .Top-Drawer .Top-Drawer-Chevron {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 64px; }
-  .Top-Drawer .Top-Drawer-ListItem {
-    display: flex;
-    align-items: left;
-    justify-content: flex-start; }
-  .Top-Drawer .Top-Drawer-ListItemText {
-    text-align: left; }
+
+.Top-Drawer-Chevron {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 64px; }
+
+.Top-Drawer-ListItem {
+  display: flex;
+  align-items: left;
+  justify-content: flex-start; }
+
+.Top-Drawer-ListItemText {
+  text-align: left; }
 
 /*# sourceMappingURL=Top.css.map */

@@ -6,7 +6,6 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import { blueGrey } from 'material-ui/colors';
-import MenuIcon from 'material-ui-icons/Menu';
 import {WalletDialog} from './WalletDialog';
 import IconButton from 'material-ui/IconButton';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
@@ -14,6 +13,7 @@ import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import HomeIcon from 'material-ui-icons/Home';
+import {Menu} from './Menu';
 import classNames from 'classnames';
 import {Title} from './Title';
 import {Wallet} from './Wallet';
@@ -26,10 +26,56 @@ const styles = {
   flex: {
     flex: 1
   },
-  hide: {
-    display: 'none',
-  },
 };
+
+const menu = [
+  {icon: 'home', name: 'ENS.BID'},
+  {icon: 'view_list', name: 'My ENS List'},
+  {icon: 'gavel', name: 'ENS Trade'},
+  {icon: 'attach_money', name: 'ENS Loan'},
+];
+
+const info = [
+  {icon: 'help_outline', name: 'FAQ'},
+  {icon: 'assignment', name: 'Terms & Service'},
+]
+
+const MenuItem = (props) => (
+  <ListItem button className="Top-Drawer-ListItem">
+     <ListItemIcon>
+        <i className="material-icons">{props.icon}</i>
+     </ListItemIcon>
+     <ListItemText primary={props.children} className="Top-Drawer-ListItemText"/>
+  </ListItem>
+); 
+
+const menuItems = menu.map(({icon, name}, index) => 
+  <MenuItem key={`menu-${index}`} icon={icon}>{name}</MenuItem>);
+
+const infoItems = info.map(({icon, name}, index) => 
+  <MenuItem key={`menu-${index}`} icon={icon}>{name}</MenuItem>);
+
+const MenuDrawer = (props) => (
+  <Drawer
+    type="persistent"
+    open={props.menu}>
+  <div className="Top-Drawer">
+    <div className="Top-Drawer-Chevron">
+      <IconButton onClick={props.handleDrawerClose}>
+        <ChevronLeftIcon />
+      </IconButton>
+    </div>
+    <Divider />
+    <List>
+      {menuItems}
+    </List>
+    <Divider />
+    <List>
+      {infoItems}
+    </List>
+  </div>
+</Drawer>
+);
 
 class Top extends Component {
   state = {
@@ -51,18 +97,12 @@ class Top extends Component {
 
   render () {
     const classes = this.props.classes;
-    
+
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
           <Toolbar>
-            <IconButton
-              color="contrast"
-              aria-label="open menu"
-              onClick={this.handleDrawerOpen}
-              className="MenuBtn">  
-              <MenuIcon />
-            </IconButton>
+            <Menu handleDrawerOpen={this.handleDrawerOpen}/>
             <Title className={classes.flex} />
             <Wallet 
               privateKey={this.props.privateKey}
@@ -74,59 +114,7 @@ class Top extends Component {
               />
           </Toolbar>
         </AppBar>
-        <Drawer
-          type="persistent"
-          open={this.state.menu}>
-          <div className="Top-Drawer">
-            <div className="Top-Drawer-Chevron">
-              <IconButton onClick={this.handleDrawerClose}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            <Divider />
-            <List>
-              <ListItem button className="Top-Drawer-ListItem">
-                <ListItemIcon>
-                  <i className="material-icons">home</i>
-                </ListItemIcon>
-                <ListItemText primary="ENS.BID" className="Top-Drawer-ListItemText"/>
-              </ListItem>
-              <ListItem button className="Top-Drawer-ListItem">
-                <ListItemIcon>
-                  <i className="material-icons">view_list</i>
-                </ListItemIcon>
-                <ListItemText primary="My ENS List" className="Top-Drawer-ListItemText"/>
-              </ListItem>
-              <ListItem button className="Top-Drawer-ListItem">
-                <ListItemIcon>
-                  <i className="material-icons">gavel</i>
-                </ListItemIcon>
-                <ListItemText primary="ENS Trade" className="Top-Drawer-ListItemText"/>
-              </ListItem>
-              <ListItem button className="Top-Drawer-ListItem">
-                <ListItemIcon>
-                  <i className="material-icons">attach_money</i>
-                </ListItemIcon>
-                <ListItemText primary="ENS Loan" className="Top-Drawer-ListItemText"/>
-              </ListItem>
-            </List>
-            <Divider />
-            <List>
-              <ListItem button className="Top-Drawer-ListItem">
-                <ListItemIcon>
-                <i className="material-icons">help_outline</i>
-                </ListItemIcon>
-                <ListItemText primary="FAQ" className="Top-Drawer-ListItemText"/>
-              </ListItem>
-              <ListItem button className="Top-Drawer-ListItem">
-                <ListItemIcon>
-                  <i className="material-icons">assignment</i>
-                </ListItemIcon>
-                <ListItemText primary="Terms & Service" className="Top-Drawer-ListItemText"/>
-              </ListItem>
-            </List>
-          </div>
-        </Drawer>
+        <MenuDrawer menu={this.state.menu} handleDrawerClose={this.handleDrawerClose}/>
       </div>
     );
   }
