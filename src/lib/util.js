@@ -34,8 +34,7 @@ export const urlQueryParamsObject = (url) => {
 
 // time formate related methods
 const format = (date) => moment(date, 'dddd, MMMM D YYYY, h:mm:ss a z');
-const now = moment();
-const getBefore = (time) => format(now).diff(format(time)) < 0;
+const getBefore = (time) => format(moment()).diff(format(time)) < 0;
 
 export const getDuringReveal = (start, end) => {
   const beforeStartsAt = start && getBefore(start);
