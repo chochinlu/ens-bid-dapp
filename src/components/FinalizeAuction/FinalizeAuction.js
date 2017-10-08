@@ -83,7 +83,7 @@ export class FinalizeAuction extends Component {
     event.preventDefault();
     const email = this.state.email;
     const privateKey = this.props.privateKey;
-    finalizeAuction(email, privateKey);
+    finalizeAuction(this.props.searchResult.searchName, privateKey);
     this.setFinalFormSent('sent');
   }
 
