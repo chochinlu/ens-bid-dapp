@@ -87,24 +87,23 @@ export class FinalizeAuction extends Component {
     this.setFinalFormSent('sent');
   }
 
-  finalAuctionPage(){
-    return this.state.finalFormSent === 'sent' ? (
-      <FinalizeAuctionInfo
-        searchName={this.props.searchResult.searchName}
-        switchPage={this.props.switchPage}
-      />
-    ) : (
-      <FinalizeAuctionForm
-        {...this.props}
-        endsAt={this.state.endsAt}
-        setFinalFormSent={this.setFinalFormSent}
-        handleChange={this.handleChange}
-        handleFormSubmit={this.handleFormSubmit}
-      />
-    )
-  }
+  finalizeAuctionInfo = () => (
+    <FinalizeAuctionInfo
+      searchName={this.props.searchResult.searchName}
+      switchPage={this.props.switchPage}
+    />
+  );
 
-  render() {
-    return this.finalAuctionPage();
-  }
+  finalizeAuctionForm = () => (
+    <FinalizeAuctionForm
+      {...this.props}
+      endsAt={this.state.endsAt}
+      setFinalFormSent={this.setFinalFormSent}
+      handleChange={this.handleChange}
+      handleFormSubmit={this.handleFormSubmit}
+    />
+  )
+
+  render = () => this.state.finalFormSent === 'sent' ?
+  this.finalizeAuctionInfo() : this.finalizeAuctionForm();
 }
