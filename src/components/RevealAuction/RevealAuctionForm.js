@@ -1,40 +1,84 @@
 import React from 'react';
+import moment from 'moment'
+import classNames from 'classnames/bind';
+import {fromNow} from '../../lib/util';
 import './RevealAuctionForm.css';
 
-export const RevealAuctionForm = () => (
-  <div>
-    <h2>mybidens.eth</h2>
+const FormComponent = (props) => (
+  <form onSubmit={props.handelRevealFormSubmit}>
     <div>
-      Timeline
+      <label>
+        Email:
+        <input
+          name="email"
+          type="email"
+          placeholder="youremail@example.com"
+          value={props.email}
+          onChange={props.handleInputChange}
+        />
+      </label>
     </div>
-    <form>
-      <div>
-        <label>
-          Email:
-          <input type="email" value="" placeholder="youremail@example.com"/>
-        </label>
-      </div>
-      <div>
-        <label>
-          ETH:
-          <input type="text" value="" placeholder="0.01"/>
-        </label>
-      </div>
-      <div>
-        <label>
-          Secert:
-          <input type="text" value="" placeholder="password"/>
-        </label>
-      </div>
-      <div>
-        <label>
-          Gas Price:
-          <input type="text" value=""/>
-        </label>
-      </div>
-    </form>
     <div>
-      <button>Reveal Auction</button>
+      <label>
+        ETH:
+        <input
+          name="ethBid"
+          type="text"
+          placeholder="0.01"
+          value={props.ethBid}
+          onChange={props.handleInputChange}
+        />
+      </label>
     </div>
-  </div>
-);
+    <div>
+      <label>
+        Secret:
+        <input
+          name="secret"
+          type="text"
+          placeholder="password"
+          value={props.secret}
+          onChange={props.handleInputChange}
+        />
+      </label>
+    </div>
+    <div>
+      <label>
+        Gas Price:
+        <input
+          name="gas"
+          type="text"
+          value={props.gas}
+          onChange={props.handleInputChange}
+        />
+      </label>
+    </div>
+    <div>
+      <input type="submit" value="Submit" />
+    </div>
+  </form>
+)
+
+export const RevealAuctionForm = (props) => {
+  const timelineState = classNames(props.duringReveal === 'before' ? '' : 'hidden');
+
+  return (
+    <div>
+      <h2>{props.searchResult.searchName}.eth</h2>
+      <div>
+        <div className={timelineState}>
+          <p>Reveal Bids On</p>
+          <div>{props.startsAt}</div>
+          <div>{()=>{fromNow(props.startsAt)}}</div>
+        </div>
+        <div>
+          <p>Auction Close On</p>
+          <div>{props.endsAt}</div>
+          <div>{()=>{fromNow(props.endsAt)}}</div>
+        </div>
+      </div>
+      { props.duringReveal === 'during' ? 
+        <FormComponent {...props} /> : '' }
+    </div>
+  );
+};

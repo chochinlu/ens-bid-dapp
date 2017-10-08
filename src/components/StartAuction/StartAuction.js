@@ -51,17 +51,13 @@ export class StartAuction extends Component {
   }
 
   startAuctionPage() {
-    if (this.state.auctionFormSent === 'sent') {
-      return (
-        <StartAuctionInfo
-          searchName={this.props.searchResult.searchName}
-          switchPage={this.props.switchPage}
-          {...this.state}
-        />
-      );
-    }
-    
-    return (
+    return (this.state.auctionFormSent === 'sent') ? (
+      <StartAuctionInfo
+        searchName={this.props.searchResult.searchName}
+        switchPage={this.props.switchPage}
+        {...this.state}
+      />
+    ) : (
       <StartAuctionForm
         {...this.props}
         setAuctionFormSent={this.setAuctionFormSent}
