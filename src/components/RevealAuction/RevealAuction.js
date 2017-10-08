@@ -70,28 +70,28 @@ export class RevealAuction extends Component {
     this.setRevealFormSent('sent');
   }
 
-  revealAuctionPage() {
-    return this.state.revealFormSent === 'sent' ? (
-        <RevealAuctionInfo
-          searchName={this.props.searchResult.searchName}
-          switchPage={this.props.switchPage}
-          {...this.state}
-        />
-      ) : (
-        <RevealAuctionForm
-          {...this.props}
-          duringReveal={this.state.duringReveal}
-          startsAt={this.state.startsAt}
-          endsAt={this.state.endsAt}
-          setRevealFormSent={this.setRevealFormSent}
-          setRevealTXHash={this.setRevealTXHash}
-          handleInputChange={this.handleInputChange}
-          handelRevealFormSubmit={this.handelRevealFormSubmit}
-        />
-      );
-  }
+  revealAutionInfo = () => (
+    <RevealAuctionForm
+      {...this.props}
+      duringReveal={this.state.duringReveal}
+      startsAt={this.state.startsAt}
+      endsAt={this.state.endsAt}
+      setRevealFormSent={this.setRevealFormSent}
+      setRevealTXHash={this.setRevealTXHash}
+      handleInputChange={this.handleInputChange}
+      handelRevealFormSubmit={this.handelRevealFormSubmit}
+    />
+  );
 
-  render() {
-    return this.revealAuctionPage();
-  }
+  revealAuctionForm = () => (
+    <RevealAuctionInfo
+      searchName={this.props.searchResult.searchName}
+      switchPage={this.props.switchPage}
+      setStep={this.props.setStep}
+      {...this.state}
+    />
+  );
+
+  render = () => this.state.revealFormSent === 'sent' ?
+  this.revealAutionInfo() : this.revealAuctionForm();
 }
