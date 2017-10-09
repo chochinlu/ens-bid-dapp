@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {isValidJsonString} from '../../lib/util';
 import Card from 'material-ui/Card';
-import {getPrivateKeyFromV3} from '../../lib/dAppService';
+import {getPrivateKeyFromV3, validAddress} from '../../lib/dAppService';
 import {JsonDropZone} from './JsonDropZone';
 import {CurrentWallet} from './CurrentWallet';
 import {PassphraseForm} from './PassphraseForm';
@@ -24,12 +24,6 @@ export class KeystoreUploader extends Component {
   state = {
     passpharse: 'Passphrase',
   };
-
-  validAddress(from) {
-    return from.slice(0,2) === '0x' 
-      ? from 
-      : '0x' + from
-  }
 
   onDrop(files) {
     const file = files[0];
@@ -58,7 +52,7 @@ export class KeystoreUploader extends Component {
             message: ''
           });
 
-          const address = this.validAddress(keystore.address);
+          const address = validAddress(keystore.address);
           this.props.setAddress(address);
         } else {
           self.setState({
@@ -102,12 +96,12 @@ export class KeystoreUploader extends Component {
       <h2>Unlock Another Wallet</h2>;
 
     const accountInfo = this.state.keystore && 
-      <p>Current Address: {this.validAddress(this.state.keystore.address)}</p>
+      <p>Current Address: {validAddress(this.state.keystore.address)}</p>
 
     return (
       <Card className='KeystoreUploader'>
         {msg}
-        <CurrentWallet privateKey={this.props.privateKey} />
+        <CurrentWallet address={this.props.address} privateKey={this.props.privateKey} />
         {title}
         {accountInfo}
         <JsonDropZone 

@@ -6,8 +6,8 @@ export const CurrentWallet = (props) => {
     ? (
       <div>
         <h2>Current Wallet</h2>
-        <p>Address: {this.props.address}</p>
-        <p>Balance: {getAddressBalance(this.props.address)}</p>
+        <p>Address: {props.address}</p>
+        <p>Balance: {getAddressBalance(props.address)}</p>
       </div>
     ) : null;
 };
