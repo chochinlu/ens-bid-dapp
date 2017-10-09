@@ -65,7 +65,7 @@ export class RevealAuction extends Component {
     event.preventDefault();
     const {email, ethBid, secret} = this.state;
     const privateKey = this.props.privateKey;
-    let txHash = unsealBid(email, ethBid, secret, privateKey)
+    let txHash = unsealBid(this.props.searchResult.searchName, ethBid, secret, privateKey)
     this.setRevealTXHash(txHash);
     this.setRevealFormSent('sent');
   }

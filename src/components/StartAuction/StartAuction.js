@@ -43,7 +43,7 @@ export class StartAuction extends Component {
   handleAuctionFormSubmit(event) {
     event.preventDefault();
     let txHash = startAuctionAndBid(
-      this.state.email, this.state.ethBid,
+      this.props.searchResult.searchName, this.state.ethBid,
       this.state.secret, this.props.privateKey
     )
     this.setAuctionTXHash(txHash);
