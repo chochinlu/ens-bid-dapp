@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import './SearchEns.css';
 
 const SearchDescription = () => (
-  <div>
+  <div className="SearchDescription">
     <h1>Your Identity on Ethereum</h1>
   </div>
 );

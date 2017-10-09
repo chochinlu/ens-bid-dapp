@@ -8,7 +8,7 @@ class Footer extends Component {
     const classes = this.props.classes;
     
     return (
-      <AppBar position="static" style={{ backgroundColor: blueGrey[900] }} className="Footer">
+      <AppBar position="static" className="Footer">
         <div>
           © Copyright 2017 ENS.BID - All Rights Reserved
         </div>

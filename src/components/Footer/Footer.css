@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  height: 64px; }
+  height: 64px;
+  background-color: #4A148C !important; }
 
 /*# sourceMappingURL=Footer.css.map */

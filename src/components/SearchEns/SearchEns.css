@@ -8,8 +8,12 @@
 
 .SearchEns input {
   font-size: 1.2em;
-  margin: auto 1em;
-  height: 2em; }
+  padding-left: 1em;
+  padding-right: 1em !important;
+  height: 2em;
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available; }
 
 .SearchEns-paper {
   display: flex;
@@ -57,5 +61,8 @@
 .SearchEns-result-action {
   flex: 1;
   font-size: 1.2em; }
+
+.SearchDescription {
+  color: #4A148C; }
 
 /*# sourceMappingURL=SearchEns.css.map */

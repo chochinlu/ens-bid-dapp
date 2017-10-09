@@ -5,18 +5,15 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import { blueGrey } from 'material-ui/colors';
 import {WalletDialog} from './WalletDialog';
 import IconButton from 'material-ui/IconButton';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import HomeIcon from 'material-ui-icons/Home';
 import {Menu} from './Menu';
-import classNames from 'classnames';
 import {Title} from './Title';
 import {Wallet} from './Wallet';
+import classNames from 'classnames';
 import './Top.css';
 
 const styles = {
@@ -62,7 +59,7 @@ const MenuDrawer = (props) => (
   <div className="Top-Drawer">
     <div className="Top-Drawer-Chevron">
       <IconButton onClick={props.handleDrawerClose}>
-        <ChevronLeftIcon />
+        <i className="material-icons">chevron_left</i>
       </IconButton>
     </div>
     <Divider />
@@ -100,7 +97,7 @@ class Top extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" style={{ backgroundColor: blueGrey[900] }}>
+        <AppBar position="static" className="AppBar">
           <Toolbar>
             <Menu handleDrawerOpen={this.handleDrawerOpen}/>
             <Title className={classes.flex} />

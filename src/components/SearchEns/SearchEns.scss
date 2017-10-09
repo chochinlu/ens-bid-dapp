@@ -9,9 +9,12 @@
 
 .SearchEns input {
   font-size: 1.2em;
-  margin: auto 1em;
+  padding-left: 1em;
+  padding-right: 1em !important;
   height: 2em;
-  //border: 1px solid black;
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
 }
 
 .SearchEns-paper {
@@ -72,4 +75,8 @@
 .SearchEns-result-action {
   flex: 1;
   font-size: 1.2em;
+}
+
+.SearchDescription {
+  color: #4A148C;
 }
