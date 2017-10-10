@@ -12,19 +12,6 @@ const SearchDescription = () => (
   </div>
 );
 
-/*const SearchInput = (props) => (
-  <div className="SearchEns-search">
-    <div>
-      <input
-        type="text"
-        placeholder='.eth'
-        value={props.value}
-        onChange={props.handleSearchChange}/>
-    </div>
-    <div className="SearchEns-btn" onClick={props.handleSearchClick}>Search</div>
-  </div>
-);*/
-
 const SearchInput = (props) => {
   return (
     <Paper className="SearchEns-paper">
