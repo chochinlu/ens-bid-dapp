@@ -58,6 +58,7 @@ class App extends Component {
         /> 
         {process.env.REACT_APP_PROVIDER
           ? <MainWrapper
+              className="App-content"
               {...this.state}
               switchPage={this.switchPage}
             />

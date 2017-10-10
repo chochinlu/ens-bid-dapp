@@ -45,7 +45,7 @@ export class AuctionWrapper extends Component {
 
   render() {
     return(
-      <div>
+      <div className="AuctionWrapper">
         <AuctionStepper
           {...this.state}
           setStep={this.setStep}

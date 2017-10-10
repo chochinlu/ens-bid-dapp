@@ -8,7 +8,7 @@ import {entries} from '../lib/ensService';
 import './MainWrapper.css';
 
 const Main = (props) => (
-  <div>
+  <div className="Main">
     <SearchEns
       {...props} />
     <Content />
