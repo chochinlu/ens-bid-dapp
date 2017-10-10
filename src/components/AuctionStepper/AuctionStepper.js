@@ -6,10 +6,7 @@ const Step = (props) => {
   let stepStyle = classNames('Step', props.currentStep === props.name ? 'Light' : 'Dark');
 
   return (
-    // TODO
-    // this is for temporary testing step change
-    <div className={stepStyle}
-         onClick={()=> props.setStep(props.name)} >
+    <div className={stepStyle}>
       <i className="material-icons">arrow_forward</i>
       <div className='StepNumber'>
         <div>
