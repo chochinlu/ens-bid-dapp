@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
 import {SearchResult} from './SearchResult';
+import Paper from 'material-ui/Paper';
+import Input from 'material-ui/Input';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
 import './SearchEns.css';
 
 const SearchDescription = () => (
-  <div>
+  <div className="SearchDescription">
     <h1>Your Identity on Ethereum</h1>
   </div>
 );
 
-const SearchInput = (props) => (
+/*const SearchInput = (props) => (
   <div className="SearchEns-search">
     <div>
       <input
@@ -19,7 +23,30 @@ const SearchInput = (props) => (
     </div>
     <div className="SearchEns-btn" onClick={props.handleSearchClick}>Search</div>
   </div>
-);
+);*/
+
+const SearchInput = (props) => {
+  return (
+    <Paper className="SearchEns-paper">
+      <Input
+        className="SearchEns-input"
+        placeholder="Search"
+        inputProps={{
+          'aria-label': 'Search',
+        }}
+        disableUnderline
+        value={props.value}
+        onChange={props.handleSearchChange}
+      />
+      <Typography type="title" component="p" className="SearchEns-typography">
+        .eth
+      </Typography>
+      <IconButton aria-label="Search" onClick={props.handleSearchClick}>
+        <i className="material-icons">search</i>
+      </IconButton>
+    </Paper>
+  );
+};
 
 export class SearchEns extends Component {
   constructor(props) {
