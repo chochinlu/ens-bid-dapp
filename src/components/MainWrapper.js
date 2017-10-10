@@ -11,9 +11,7 @@ const Main = (props) => (
   <div className="Main">
     <SearchEns
       {...props} />
-    <Content />
-    <FAQ />
-    <About />
+    <About/>
   </div>
 );
 
@@ -42,7 +40,6 @@ export class MainWrapper extends Component {
       searchResult.searchName = this.state.searchValue;
       this.setState({
         searchResult,
-        searchValue: '',
         searchFetching: false
       });
     }

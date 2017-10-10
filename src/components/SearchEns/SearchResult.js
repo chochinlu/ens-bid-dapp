@@ -32,6 +32,10 @@ export const SearchResult = (props) => {
           name={result.searchName} 
           state={result.state}
           switchPage={props.switchPage}/>
+        <SearchResultItem 
+          name={result.searchName} 
+          state={result.state}
+          switchPage={props.switchPage}/>
       </div>
     );
 };

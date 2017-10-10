@@ -1,3 +1,22 @@
 .Main {
   flex: 1;
 }
+
+.About {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+
+  h1 {
+    color: #4A148C;
+  }
+
+  p {
+    text-align: justify;
+    width: 70%;
+    min-width: 380px;
+    margin: 0;
+  }
+}

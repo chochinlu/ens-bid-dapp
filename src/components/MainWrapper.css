@@ -1,4 +1,18 @@
 .Main {
   flex: 1; }
 
+.About {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em; }
+  .About h1 {
+    color: #4A148C; }
+  .About p {
+    text-align: justify;
+    width: 70%;
+    min-width: 380px;
+    margin: 0; }
+
 /*# sourceMappingURL=MainWrapper.css.map */
