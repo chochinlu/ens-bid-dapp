@@ -25,7 +25,7 @@ const SearchResultItem = (props) => {
 
 export class SearchResult extends Component {
   handleClick() {
-    if ((this.props.result.searchName).length <= 7) return alert('should greater than 7 words');
+    if ((this.props.result.searchName).length < 7) return alert('should greater than 7 words');
     
     // validate user login
     if (!(this.props.address && this.props.privateKey)) return alert('should login first');
