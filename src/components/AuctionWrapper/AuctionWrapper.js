@@ -6,16 +6,8 @@ import {RevealAuction} from '../RevealAuction/RevealAuction';
 import {FinalizeAuction} from '../FinalizeAuction/FinalizeAuction';
 
 export class AuctionWrapper extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      step: 'StartAuction'
-    }
-    this.setStep = this.setStep.bind(this);
-  }
-
   switchStep() {
-    switch (this.state.step) {
+    switch (this.props.step) {
       case 'StartAuction':
         return (
           <StartAuction
@@ -39,16 +31,12 @@ export class AuctionWrapper extends Component {
     }
   }
 
-  setStep(name) {
-    this.setState({step: name});
-  }
-
   render() {
     return(
       <div className="AuctionWrapper">
         <AuctionStepper
-          {...this.state}
-          setStep={this.setStep}
+          {...this.props}
+          setStep={this.props.setStep}
         />
         {this.switchStep()}
       </div>
