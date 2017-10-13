@@ -18,6 +18,7 @@ const SearchInput = (props) => {
       <Input
         className="SearchEns-input"
         placeholder="Search"
+        minlength="7"
         inputProps={{
           'aria-label': 'Search',
         }}
@@ -53,11 +54,10 @@ export class SearchEns extends Component {
           handleSearchClick={this.props.handleSearchClick}
         />
 
-        {this.props.SearchFetching
+        {this.props.searchFetching
           ? <h3>Fetching...</h3>
           : <SearchResult
-            switchPage={this.props.switchPage}
-            result={this.props.searchResult} />
+            {...this.props} />
         }
       </div>
     );

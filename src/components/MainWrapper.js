@@ -21,10 +21,12 @@ export class MainWrapper extends Component {
     this.state = {
       searchValue: '',
       searchResult: null,
-      searchFetching: false
+      searchFetching: false,
+      step: 'StartAuction'
     };
     this.handleSearchChange = this.handleSearchChange.bind(this); 
     this.handleSearchClick = this.handleSearchClick.bind(this);
+    this.setStep = this.setStep.bind(this);
   }
 
   handleSearchChange(e) {
@@ -45,21 +47,28 @@ export class MainWrapper extends Component {
     }
   }
 
+  setStep(name) {
+    this.setState({step: name});
+  }
+
   getPage() {
     switch (this.props.page) {
       case 'main':
         return (
           <Main
             {...this.state}
+            {...this.props}
             handleSearchChange={this.handleSearchChange}
             handleSearchClick={this.handleSearchClick}
-            switchPage={this.props.switchPage}
+            setStep={this.setStep}
           />
         );
       case 'auction':
         return (
           <AuctionWrapper
             {...this.props}
+            step={this.state.step}
+            setStep={this.setStep}
             searchResult={this.state.searchResult}
           />
         );
