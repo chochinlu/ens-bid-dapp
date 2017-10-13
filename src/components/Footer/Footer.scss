@@ -1,10 +1,30 @@
 .Footer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row !important;
   align-items: center;
-  justify-content: flex-end;
-  height: 64px;
+  justify-content: center;
   background-color: #4A148C !important;
-  position: absolute !important;
-  bottom: 0;
+  height: 100%;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.Footer-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 2em 0 2em 0;
+}
+
+.Footer-copyright {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 5em;
+  flex: 0.6;
+  text-align: right;
+  font-weight: bold;
 }

@@ -1,0 +1,35 @@
+.SearchResult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3em;
+  margin-bottom: 2em;
+  width: 70%;
+  min-width: 380px; }
+
+.SearchResult-paper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 380px;
+  height: 3em;
+  margin: 0.5em; }
+
+.SearchResult-typography {
+  font-size: 1.2em !important;
+  color: rgba(0, 0, 0, 0.54) !important; }
+  .SearchResult-typography p {
+    font-size: 0.8em !important;
+    padding: 0;
+    margin: 0.3em; }
+
+.SearchResult-typography-front {
+  padding-left: 1em;
+  text-align: left;
+  flex: 0.8; }
+
+.SearchResultBtn {
+  background-color: lightgray; }
+
+/*# sourceMappingURL=SearchResult.css.map */

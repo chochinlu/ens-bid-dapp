@@ -34,7 +34,8 @@ const menu = [
 
 const info = [
   {icon: 'help_outline', name: 'FAQ'},
-  {icon: 'assignment', name: 'Terms & Service'},
+  {icon: 'assignment', name: 'Terms of Service'},
+  {icon: 'lock_outline', name: 'Privacy'},
 ]
 
 const MenuItem = (props) => (

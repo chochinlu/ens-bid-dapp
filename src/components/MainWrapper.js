@@ -8,12 +8,10 @@ import {entries} from '../lib/ensService';
 import './MainWrapper.css';
 
 const Main = (props) => (
-  <div>
+  <div className="Main">
     <SearchEns
       {...props} />
-    <Content />
-    <FAQ />
-    <About />
+    <About/>
   </div>
 );
 
@@ -42,7 +40,6 @@ export class MainWrapper extends Component {
       searchResult.searchName = this.state.searchValue;
       this.setState({
         searchResult,
-        searchValue: '',
         searchFetching: false
       });
     }
