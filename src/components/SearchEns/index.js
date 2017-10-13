@@ -57,9 +57,7 @@ export class SearchEns extends Component {
         {this.props.searchFetching
           ? <h3>Fetching...</h3>
           : <SearchResult
-            setStep={this.props.setStep}
-            switchPage={this.props.switchPage}
-            result={this.props.searchResult} />
+            {...this.props} />
         }
       </div>
     );
