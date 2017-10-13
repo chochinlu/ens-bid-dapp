@@ -26,11 +26,18 @@ export class MainWrapper extends Component {
     };
     this.handleSearchChange = this.handleSearchChange.bind(this); 
     this.handleSearchClick = this.handleSearchClick.bind(this);
+    this.handleSearchKeyPress = this.handleSearchKeyPress.bind(this);
     this.setStep = this.setStep.bind(this);
   }
 
   handleSearchChange(e) {
     this.setState({searchValue: e.target.value});
+  }
+
+  handleSearchKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.handleSearchClick(e);
+    }
   }
 
   handleSearchClick(e) {
@@ -60,6 +67,7 @@ export class MainWrapper extends Component {
             {...this.props}
             handleSearchChange={this.handleSearchChange}
             handleSearchClick={this.handleSearchClick}
+            handleSearchKeyPress={this.handleSearchKeyPress}
             setStep={this.setStep}
           />
         );
