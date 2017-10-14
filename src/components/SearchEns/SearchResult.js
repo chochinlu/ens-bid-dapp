@@ -36,7 +36,7 @@ class SearchResultItem extends Component {
   }
 
   render() {
-    const bidIcon = (this.props.searchResult.state === 'Auction' || 
+    const actionBtn = (this.props.searchResult.state === 'Auction' || 
       this.props.searchResult.state === 'Open' || 
       this.props.searchResult.state === 'Reveal') ?
       <div className="SearchResultBtn" onClick={() => this.handleClick()}>
@@ -59,7 +59,7 @@ class SearchResultItem extends Component {
           <p>Status</p>
           <p>{this.props.searchResult.state}</p>
         </Typography>
-        {bidIcon}
+        {actionBtn}
       </Paper>
     );
   }
