@@ -12,7 +12,6 @@ test('getAddressBalance should return a balance if using a valid address', () =>
 test('getAddressByPrivateKey should return a valid address by given private key', () => {
   const privateKey = process.env.PRIVATE_KEY;
   const address = getAddressByPrivateKey(privateKey);
-  console.log(typeof privateKey);
   console.log(address);
 }); 
 
