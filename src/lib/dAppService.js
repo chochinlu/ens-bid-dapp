@@ -122,5 +122,5 @@ export const getTransaction = (transactionHash) => {
  */
 export const getPrivateKeyFromV3 = (keystore, passpharse) => {
   const wallet = Wallet.fromV3(keystore, passpharse);
-  return wallet.getPrivateKeyString();
+  return wallet.getPrivateKey().toString('hex');
 }

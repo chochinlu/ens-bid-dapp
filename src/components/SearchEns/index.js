@@ -18,7 +18,7 @@ const SearchInput = (props) => {
       <Input
         className="SearchEns-input"
         placeholder="Search"
-        minlength="7"
+        minLength="7"
         inputProps={{
           'aria-label': 'Search',
         }}

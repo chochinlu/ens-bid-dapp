@@ -91,7 +91,7 @@ export const getAllowedTime = (name) => {
  * @param {*} secret 		
  * @param {*} privateKey 		
  */		
-export const startAuctionAndBid = (name, ether, secret, privateKey) => {		
+export const startAuctionAndBid = (name, ether, secret, privateKey) => {	
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);		
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));		
   let byteData = "0x" + 		
