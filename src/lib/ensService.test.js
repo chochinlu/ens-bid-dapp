@@ -15,8 +15,9 @@ test('getAddressByEns should  return a valid address if the given .eth exists.',
 });
 
 test('entries', () => {
-  const name = 'foobar';
+  const name = 'mytesting';
   const result = entries(name);
+  console.log(name, result);
   expect(result).toEqual(expect.objectContaining({
     state: expect.any(String),
     deed: expect.any(String),

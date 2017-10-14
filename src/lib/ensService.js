@@ -91,16 +91,18 @@ export const getAllowedTime = (name) => {
  * @param {*} secret 		
  * @param {*} privateKey 		
  */		
-export const startAuctionAndBid = (name, ether, secret, privateKey) => {		
+export const startAuctionAndBid = (name, ether, secret, privateKey) => {	
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);		
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));		
+  let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), fromAddress, web3.toWei(ether, "ether"), web3.sha3(secret));
   let byteData = "0x" + 		
-                abi.methodID("startAuctionsAndBid", [ "bytes32[]" ]).toString("hex") + 		
-               abi.rawEncode([ "bytes32[]" ], [ [web3.sha3(name)] ]).toString("hex");		
+                abi.methodID("startAuctionsAndBid", [ "bytes32[]", "bytes32" ]).toString("hex") + 		
+                abi.rawEncode([ "bytes32[]" ], [ web3.sha3(name) ]).toString("hex") +
+                abi.rawEncode([ "bytes32" ], [ bid ]).toString("hex");		
   const payload = {		
     from: fromAddress,		
     to: ethRegistrarAddress,		
-    value: '0x0',		
+    value: web3.toHex(web3.toWei(ether, "ether")),		
     data: byteData,		
     privateKey: privateKey		
   };		

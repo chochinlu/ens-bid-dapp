@@ -36,6 +36,20 @@ class SearchResultItem extends Component {
   }
 
   render() {
+    const actionBtn = (this.props.searchResult.state === 'Auction' || 
+      this.props.searchResult.state === 'Open' || 
+      this.props.searchResult.state === 'Reveal') ?
+      <div className="SearchResultBtn" onClick={() => this.handleClick()}>
+        <IconButton aria-label="Buy Now">
+          <i class="material-icons">shopping_cart</i>
+        </IconButton>
+      </div> : 
+      <div className="SearchResultBtn">
+        <IconButton aria-label="Owned">
+          <i class="material-icons">not_interested</i>
+        </IconButton>
+      </div>;
+
     return (
       <Paper className="SearchResult-paper">
         <Typography type="title" component="p" className="SearchResult-typography SearchResult-typography-front">
@@ -45,11 +59,7 @@ class SearchResultItem extends Component {
           <p>Status</p>
           <p>{this.props.searchResult.state}</p>
         </Typography>
-        <div className="SearchResultBtn" onClick={() => this.handleClick()}>
-          <IconButton aria-label="Buy Now">
-            <i className="material-icons">shopping_cart</i>
-          </IconButton>
-        </div>
+        {actionBtn}
       </Paper>
     );
   }

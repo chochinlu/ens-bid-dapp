@@ -62,8 +62,8 @@ export const sendRawTransaction = async payload => {
   const rawTx = {
     // 交易的編號的 Primary Key，呼叫的時候會自動轉成 AUTO_INFREMANT
     nonce: '0x' + web3.eth.getTransactionCount(from).toString(16),  
-    // 目前 Ethereum 網路的價格
-    gasPrice: web3.eth.gasPrice, 
+    // 目前 Ethereum 網路的價格, default 21 Gwei
+    gasPrice: web3.toWei(0.000000021, "ether"), 
     // sender
     from,
     // receiver
@@ -122,5 +122,5 @@ export const getTransaction = (transactionHash) => {
  */
 export const getPrivateKeyFromV3 = (keystore, passpharse) => {
   const wallet = Wallet.fromV3(keystore, passpharse);
-  return wallet.getPrivateKeyString();
+  return wallet.getPrivateKey().toString('hex');
 }

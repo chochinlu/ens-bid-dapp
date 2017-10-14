@@ -25,6 +25,7 @@ const SearchInput = (props) => {
         disableUnderline
         value={props.value}
         onChange={props.handleSearchChange}
+        onKeyPress={props.handleSearchKeyPress}
       />
       <Typography type="title" component="p" className="SearchEns-typography">
         .eth
@@ -52,6 +53,7 @@ export class SearchEns extends Component {
           value={this.props.searchValue}
           handleSearchChange={this.props.handleSearchChange}
           handleSearchClick={this.props.handleSearchClick}
+          handleSearchKeyPress={this.props.handleSearchKeyPress}
         />
 
         {this.props.searchFetching
