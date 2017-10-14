@@ -9,7 +9,8 @@ class SearchResultItem extends Component {
     if ((this.props.searchResult.searchName).length < 7) return alert('should greater than 7 words');
     
     // validate user login
-    //if (!(this.props.address && this.props.privateKey)) return alert('should login first');
+    // TODO move this check before Auction
+    if (!(this.props.address && this.props.privateKey)) return alert('should login first');
 
     let step = '';
     switch (this.props.searchResult.state) {
