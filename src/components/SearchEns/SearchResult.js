@@ -47,7 +47,7 @@ class SearchResultItem extends Component {
         </Typography>
         <div className="SearchResultBtn" onClick={() => this.handleClick()}>
           <IconButton aria-label="Buy Now">
-            <i class="material-icons">shopping_cart</i>
+            <i className="material-icons">shopping_cart</i>
           </IconButton>
         </div>
       </Paper>

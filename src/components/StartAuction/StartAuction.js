@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {StartAuctionForm} from './StartAuctionForm';
 import {StartAuctionInfo} from './StartAuctionInfo';
-import {startAuctionAndBid} from '../../lib/ensService';
+import {startAuctionAndBid, newBid} from '../../lib/ensService';
 import './StartAuction.css';
 
 export class StartAuction extends Component {
@@ -34,7 +34,7 @@ export class StartAuction extends Component {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-
+    
     this.setState({
       [name]: value
     });
@@ -42,12 +42,26 @@ export class StartAuction extends Component {
   
   handleAuctionFormSubmit(event) {
     event.preventDefault();
-    let txHash = startAuctionAndBid(
-      this.props.searchResult.searchName, this.state.ethBid,
-      this.state.secret, this.props.privateKey
-    )
-    this.setAuctionTXHash(txHash);
-    this.setAuctionFormSent('sent');
+
+    if (this.props.searchResult.state == 'Open') {
+      let txHash = startAuctionAndBid(
+        this.props.searchResult.searchName, this.state.ethBid,
+        this.state.secret, this.props.privateKey
+      )
+      this.setAuctionTXHash(txHash);
+      this.setAuctionFormSent('sent');
+      return;
+    }
+
+    if (this.props.searchResult.state == 'Auction') {
+      let txHash = newBid(
+        this.props.searchResult.searchName, this.state.ethBid,
+        this.state.secret, this.props.privateKey
+      )
+      this.setAuctionTXHash(txHash);
+      this.setAuctionFormSent('sent');
+      return;
+    }
   }
 
   startAuctionPage() {
