@@ -1,6 +1,8 @@
 .Stepper {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  margin-top: 2em;
+  margin-bottom: 1em; }
   .Stepper :first-child i {
     display: none; }
 

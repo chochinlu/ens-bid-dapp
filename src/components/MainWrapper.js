@@ -103,7 +103,7 @@ export class MainWrapper extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Main">
         {this.getPage()}
         <Snackbar
           anchorOrigin={{

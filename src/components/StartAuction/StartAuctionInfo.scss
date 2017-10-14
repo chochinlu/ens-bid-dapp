@@ -1,0 +1,16 @@
+.StartAuctionInfo {
+  margin-top: 1em;
+  text-align: left;
+  width: 70vw;
+  min-width: 350px;
+
+  div {
+    margin: 0.5em;
+  }
+}
+
+.StartAuctionInfo-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1em;
+}
