@@ -56,7 +56,7 @@ export class MainWrapper extends Component {
   handleSearchClick(e) {
     e.preventDefault();
     if ((this.state.searchValue).length < 7) {
-      this.handleMessageOpen('should greater than 7 words');
+      this.handleMessageOpen('ENS .eth should greater than 7 words');
     } else {
       if (this.state.searchValue) {
         this.setState({fetching: true}); //TODO: not work
