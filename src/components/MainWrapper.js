@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
-import {SearchEns} from './SearchEns';
+import {SearchEns} from './SearchEns/SearchEns';
 import {Content} from './Content';
 import {FAQ} from './FAQ';
 import {About} from './About';
