@@ -55,6 +55,7 @@ class App extends Component {
           setSource={this.setSource}
           setKeystore={this.setKeystore}
           setPrivateKey={this.setPrivateKey}
+          switchPage={this.switchPage}
         /> 
         {process.env.REACT_APP_PROVIDER
           ? <MainWrapper

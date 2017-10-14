@@ -1,6 +1,9 @@
 .AppBar {
   background-color: #6203B8 !important; }
 
+.Top {
+  width: 100vw; }
+
 .Top-info {
   margin-left: 1em; }
 

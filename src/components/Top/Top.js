@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import {WalletDialog} from './WalletDialog';
@@ -15,15 +14,6 @@ import {Title} from './Title';
 import {Wallet} from './Wallet';
 import classNames from 'classnames';
 import './Top.css';
-
-const styles = {
-  root: {
-    width: '100%'
-  },
-  flex: {
-    flex: 1
-  },
-};
 
 const menu = [
   {icon: 'home', name: 'ENS.BID'},
@@ -97,11 +87,11 @@ class Top extends Component {
     const classes = this.props.classes;
 
     return (
-      <div className={classes.root}>
+      <div className="Top">
         <AppBar position="static" className="AppBar">
           <Toolbar>
             <Menu handleDrawerOpen={this.handleDrawerOpen}/>
-            <Title className={classes.flex} />
+            <Title switchPage={this.props.switchPage} />
             <Wallet 
               privateKey={this.props.privateKey}
               onClick={() => this.setState({ open: true })} />
@@ -118,8 +108,4 @@ class Top extends Component {
   }
 }
 
-Top.propTypes = {
-  classes: PropTypes.object,
-};
-
-export default withStyles(styles)(Top);
+export default Top;
