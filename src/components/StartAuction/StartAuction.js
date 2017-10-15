@@ -1,5 +1,8 @@
 // @flow weak
 import React, {Component} from 'react';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import {StartAuctionForm} from './StartAuctionForm';
 import {StartAuctionInfo} from './StartAuctionInfo';
 import {startAuctionAndBid, newBid} from '../../lib/ensService';
@@ -14,7 +17,8 @@ export class StartAuction extends Component {
       secret: '',
       gas: '',
       auctionFormSent: '',
-      auctionTXHash: ''
+      auctionTXHash: '',
+      message: '',
     }
     this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
     this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
@@ -39,9 +43,22 @@ export class StartAuction extends Component {
       [name]: value
     });
   }
+
+  handleMessageOpen = msg => {
+    this.setState({ open: true, message: msg });
+  };
+
+  handleMessageClose = () => {
+    this.setState({ open: false });
+  };
   
   handleAuctionFormSubmit(event) {
     event.preventDefault();
+
+    if (!(this.props.address && this.props.privateKey)) {
+      this.handleMessageOpen('Please unlock wallet before bid ENS.');
+      return;
+    }
 
     if (this.props.searchResult.state == 'Open') {
       let txHash = startAuctionAndBid(
@@ -83,6 +100,32 @@ export class StartAuction extends Component {
   }
 
   render() {
-    return this.startAuctionPage();
+    return (
+      <div>
+        {this.startAuctionPage()}
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          autoHideDuration={6000}
+          open={this.state.open}
+          onRequestClose={this.handleMessageClose}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.state.message}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleMessageClose}>
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
+      </div>
+    );
   }
 }
