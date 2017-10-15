@@ -1,6 +1,8 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import { FormControlLabel } from 'material-ui/Form';
+import Checkbox from 'material-ui/Checkbox';
 import './StartAuctionForm.css';
 
 export const StartAuctionForm = (props) => (
@@ -41,9 +43,19 @@ export const StartAuctionForm = (props) => (
         onChange={props.handleInputChange}
         margin="normal"
       />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={props.checked}
+            onChange={props.handleAcceptTerms}
+            value="checked"
+          />
+        }
+        label="I understand how the process works and my risks and responsibilities involved."
+      />
     </div>
     <div className="StartAuctionForm-submit">
-      <Button raised color="primary" onClick={props.handleAuctionFormSubmit}>
+      <Button raised color="primary" onClick={props.handleAuctionFormSubmit} disabled={!props.checked}>
         SUBMIT
       </Button>
     </div>

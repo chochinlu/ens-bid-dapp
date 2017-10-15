@@ -19,11 +19,13 @@ export class StartAuction extends Component {
       auctionFormSent: '',
       auctionTXHash: '',
       message: '',
+      checked: false,
     }
     this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
     this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAuctionFormSubmit = this.handleAuctionFormSubmit.bind(this);
+    this.handleAcceptTerms = this.handleAcceptTerms.bind(this);
   }
 
   setAuctionTXHash(txHash) {
@@ -51,6 +53,12 @@ export class StartAuction extends Component {
   handleMessageClose = () => {
     this.setState({ open: false });
   };
+
+  handleAcceptTerms = () => {
+    (this.state.checked === true) ?
+      this.setState({ checked: false }) :
+      this.setState({ checked: true });
+  }; 
   
   handleAuctionFormSubmit(event) {
     event.preventDefault();
@@ -60,7 +68,7 @@ export class StartAuction extends Component {
       return;
     }
 
-    if (this.props.searchResult.state == 'Open') {
+    if (this.props.searchResult.state === 'Open') {
       let txHash = startAuctionAndBid(
         this.props.searchResult.searchName, this.state.ethBid,
         this.state.secret, this.props.privateKey
@@ -70,7 +78,7 @@ export class StartAuction extends Component {
       return;
     }
 
-    if (this.props.searchResult.state == 'Auction') {
+    if (this.props.searchResult.state === 'Auction') {
       let txHash = newBid(
         this.props.searchResult.searchName, this.state.ethBid,
         this.state.secret, this.props.privateKey
@@ -91,9 +99,11 @@ export class StartAuction extends Component {
     ) : (
       <StartAuctionForm
         {...this.props}
+        {...this.state}
         setAuctionFormSent={this.setAuctionFormSent}
         setAuctionTXHash={this.setAuctionTXHash}
         handleInputChange={this.handleInputChange}
+        handleAcceptTerms={this.handleAcceptTerms}
         handleAuctionFormSubmit={this.handleAuctionFormSubmit}
       />
     );
