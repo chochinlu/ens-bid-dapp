@@ -1,56 +1,51 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
 import './StartAuctionForm.css';
 
 export const StartAuctionForm = (props) => (
-  <form onSubmit={props.handleAuctionFormSubmit}>
+  <div className="StartAuctionForm">
     <h2>{props.searchResult.searchName}.eth</h2>
-    <div>
-      <div>
-        <lable>Email: 
-          <input 
-            name="email"
-            type="email" 
-            placeholder="youremail@example.com"
-            value={props.email}
-            onChange={props.handleInputChange}
-          />
-        </lable>
-      </div>
-      <div>
-        <lable>ETH: 
-          <input 
-            name="ethBid"
-            type="text"
-            placeholder="0.01"
-            value={props.ethBid}
-            onChange={props.handleInputChange}
-          />
-        </lable>
-      </div>
-      <div>
-        <lable>Secret:
-          <input
-            name="secret"
-            type="text"
-            placeholder="password"
-            value={props.secret}
-            onChange={props.handleInputChange}
-          />
-        </lable>
-      </div>
-      <div>
-        <label>Gas Price: 
-          <input
-            name="gas"
-            type="text"
-            value={props.gas}
-            onChange={props.handleInputChange}
-          />
-        </label>
-      </div>
+    <div className="StartAuctionForm-field">
+      <TextField
+        id="email"
+        label="Email"
+        value={props.email}
+        onChange={props.handleInputChange}
+        margin="normal"
+        placeholder="youremail@example.com"
+        helperText="The bid information will send to this email"
+      />
+      <TextField
+        id="ethBid"
+        label="ETH"
+        value={props.ethBid}
+        onChange={props.handleInputChange}
+        margin="normal"
+        placeholder="0.01"
+        helperText="Bid amount"
+      />
+      <TextField
+        id="secret"
+        label="Secret"
+        value={props.secret}
+        onChange={props.handleInputChange}
+        margin="normal"
+        placeholder="passphrase"
+        helperText="Please protect your bid with random numbers and characters"
+      />
+      <TextField
+        id="gas"
+        label="Gas Price"
+        value={props.gas}
+        onChange={props.handleInputChange}
+        margin="normal"
+      />
     </div>
-    <div>
-      <input type="submit" value="Submit" />
+    <div className="StartAuctionForm-submit">
+      <Button raised color="primary" onClick={props.handleAuctionFormSubmit}>
+        SUBMIT
+      </Button>
     </div>
-  </form>
+  </div>
 )

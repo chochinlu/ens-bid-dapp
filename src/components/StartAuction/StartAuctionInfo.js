@@ -1,44 +1,35 @@
 import React from 'react';
+import Button from 'material-ui/Button';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
 import './StartAuctionInfo.css';
 
 export const StartAuctionInfo = (props) => {
+  // TODO detect ropsten or mainnet
   const txHashUrl = `https://etherscan.io/tx/${props.auctionTXHash}`;
   return (
-    <div>
-      <h2>{props.searchName}.eth</h2>
-      <div>
-        <div>
-          <div>Email: </div>
-          <div>
-            {props.email}
-          </div>
-        </div>
-        <div>
-          <div>ETH: </div>
-          <div>
-            {props.ethBid}
-          </div>
-        </div>
-        <div>
-          <div>Secert: </div>
-          <div>
-            {props.secret}
-          </div>
-        </div>
-        <div>
-          <div>TxHash: </div>
-          <div>
-            <a target='_blank' href={txHashUrl}>
-              {props.auctionTXHash}
-            </a>
-          </div>
-        </div>
-        <p>We've send you the auction information Email.</p>
-      </div>
-      <div>
-        <button onClick={() => props.switchPage('main')}>Back to Search</button>
-        <button>My ENS List</button>
-      </div>
-    </div>
+    <Card raised className="StartAuctionInfo">
+      <CardContent>
+        <Typography type="title" component="div">
+          ENS: {props.searchName}.eth
+        </Typography>
+        <Typography type="title" component="div">
+          Email: {props.email}
+        </Typography>
+        <Typography type="title" component="div">
+          ETH: {props.ethBid}
+        </Typography>
+        <Typography type="title" component="div">
+          Secret: {props.secret}
+        </Typography>
+        <Typography type="title" component="div">
+          TxHash: <a target='_blank' href={txHashUrl}>{props.auctionTXHash}</a>
+        </Typography>
+        <CardActions className="StartAuctionInfo-button">
+          <Button raised onClick={() => props.switchPage('main')}>BACK TO SEARCH</Button>
+          <Button raised>MY ENS LIST</Button>
+        </CardActions>
+      </CardContent>
+    </Card>
   );
 };

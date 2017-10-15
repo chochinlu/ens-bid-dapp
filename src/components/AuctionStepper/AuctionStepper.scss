@@ -4,6 +4,8 @@ $circle-radius: $circle-diameter / 2;
 .Stepper {
   display: flex;
   justify-content: space-between;
+  margin-top: 2em;
+  margin-bottom: 1em;
 
   :first-child{
     i {

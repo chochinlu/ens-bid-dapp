@@ -1,0 +1,23 @@
+.StartAuctionForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  min-width: 350px;
+}
+
+.StartAuctionForm-field {
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+  min-width: 350px;
+}
+
+.StartAuctionForm-submit {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2em;
+  margin-top: 1em;
+  width: 70vw;
+}
