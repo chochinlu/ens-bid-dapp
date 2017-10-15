@@ -11,6 +11,7 @@ export const StartAuctionForm = (props) => (
     <div className="StartAuctionForm-field">
       <TextField
         id="email"
+        name="email"
         label="Email"
         value={props.email}
         onChange={props.handleInputChange}
@@ -20,6 +21,7 @@ export const StartAuctionForm = (props) => (
       />
       <TextField
         id="ethBid"
+        name="ethBid"
         label="ETH"
         value={props.ethBid}
         onChange={props.handleInputChange}
@@ -29,6 +31,7 @@ export const StartAuctionForm = (props) => (
       />
       <TextField
         id="secret"
+        name="secret"
         label="Secret"
         value={props.secret}
         onChange={props.handleInputChange}
@@ -38,12 +41,14 @@ export const StartAuctionForm = (props) => (
       />
       <TextField
         id="gas"
+        name="gas"
         label="Gas Price"
         value={props.gas}
         onChange={props.handleInputChange}
         margin="normal"
       />
       <FormControlLabel
+        className="StartAuctionForm-terms"
         control={
           <Checkbox
             checked={props.checked}
