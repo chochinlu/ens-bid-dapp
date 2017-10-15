@@ -3,13 +3,15 @@
   margin-bottom: 1em;
   text-align: left;
   width: 70vw;
-  min-width: 350px; }
-  .RevealAuctionInfo div {
-    margin: 0.5em; }
+  min-width: 350px;
+
+  div {
+    margin: 0.5em;
+  }
+}
 
 .RevealAuctionInfo-button {
   display: flex;
   justify-content: flex-end;
-  margin-top: 1em; }
-
-/*# sourceMappingURL=RevealAuctionInfo.css.map */
+  margin-top: 1em;
+}

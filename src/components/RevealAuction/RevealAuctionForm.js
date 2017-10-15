@@ -1,63 +1,57 @@
 import React from 'react';
 import moment from 'moment'
 import classNames from 'classnames/bind';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
 import {fromNow} from '../../lib/util';
 import './RevealAuctionForm.css';
 
 const FormComponent = (props) => (
-  <form onSubmit={props.handelRevealFormSubmit}>
-    <div>
-      <label>
-        Email:
-        <input
-          name="email"
-          type="email"
-          placeholder="youremail@example.com"
-          value={props.email}
-          onChange={props.handleInputChange}
-        />
-      </label>
+  <div className="RevealAuctionForm">
+    <h2>{props.searchResult.searchName}.eth</h2>
+    <div className="RevealAuctionForm-field">
+      <TextField
+        id="email"
+        label="Email"
+        value={props.email}
+        onChange={props.handleInputChange}
+        margin="normal"
+        placeholder="youremail@example.com"
+        helperText="The bid information will send to this email"
+      />
+      <TextField
+        id="ethBid"
+        label="ETH"
+        value={props.ethBid}
+        onChange={props.handleInputChange}
+        margin="normal"
+        placeholder="0.01"
+        helperText="Bid amount"
+      />
+      <TextField
+        id="secret"
+        label="Secret"
+        value={props.secret}
+        onChange={props.handleInputChange}
+        margin="normal"
+        placeholder="passphrase"
+        helperText="Please protect your bid with random numbers and characters"
+      />
+      <TextField
+        id="gas"
+        label="Gas Price"
+        value={props.gas}
+        onChange={props.handleInputChange}
+        margin="normal"
+      />
     </div>
-    <div>
-      <label>
-        ETH:
-        <input
-          name="ethBid"
-          type="text"
-          placeholder="0.01"
-          value={props.ethBid}
-          onChange={props.handleInputChange}
-        />
-      </label>
+    <div className="RevealAuctionForm-submit">
+      <Button raised color="primary" onClick={props.handleAuctionFormSubmit}>
+        SUBMIT
+      </Button>
     </div>
-    <div>
-      <label>
-        Secret:
-        <input
-          name="secret"
-          type="text"
-          placeholder="password"
-          value={props.secret}
-          onChange={props.handleInputChange}
-        />
-      </label>
-    </div>
-    <div>
-      <label>
-        Gas Price:
-        <input
-          name="gas"
-          type="text"
-          value={props.gas}
-          onChange={props.handleInputChange}
-        />
-      </label>
-    </div>
-    <div>
-      <input type="submit" value="Submit" />
-    </div>
-  </form>
-)
+  </div>
+);
 
 export const RevealAuctionForm = (props) => {
   const timelineState = classNames(props.duringReveal === 'before' ? '' : 'hidden');
