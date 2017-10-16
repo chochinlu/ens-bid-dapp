@@ -1,7 +1,6 @@
 // @flow weak
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import {WalletDialog} from './WalletDialog';
@@ -12,7 +11,6 @@ import Drawer from 'material-ui/Drawer';
 import {Menu} from './Menu';
 import {Title} from './Title';
 import {Wallet} from './Wallet';
-import classNames from 'classnames';
 import './Top.css';
 
 const menu = [
@@ -84,8 +82,6 @@ class Top extends Component {
   };
 
   render () {
-    const classes = this.props.classes;
-
     return (
       <div className="Top">
         <AppBar position="static" className="AppBar">

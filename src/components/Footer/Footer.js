@@ -7,9 +7,9 @@ class Footer extends Component {
     return (
       <AppBar position="static" className="Footer">
         <div className="Footer-info">
-          <a href="#">FAQ</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Privacy</a>
+          <a>FAQ</a>
+          <a>Terms of Service</a>
+          <a>Privacy</a>
         </div>
         <div className="Footer-copyright">
           © Copyright 2017 ENS.BID
