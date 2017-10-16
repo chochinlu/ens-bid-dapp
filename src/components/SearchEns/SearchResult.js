@@ -6,15 +6,10 @@ import './SearchResult.css';
 
 class SearchResultItem extends Component {
   handleClick() {
-    if ((this.props.searchResult.searchName).length < 7) return alert('should greater than 7 words');
-    
-    // validate user login
-    // TODO move this check before Auction
-    if (!(this.props.address && this.props.privateKey)) return alert('should login first');
-
     let step = '';
     switch (this.props.searchResult.state) {
-      case 'Auction', 'Open':
+      case 'Open':
+      case 'Auction':
         // 1. aution / open go to start acution
         step = 'StartAuction';
         break;

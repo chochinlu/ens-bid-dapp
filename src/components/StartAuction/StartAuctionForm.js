@@ -1,6 +1,8 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import { FormControlLabel } from 'material-ui/Form';
+import Checkbox from 'material-ui/Checkbox';
 import './StartAuctionForm.css';
 
 export const StartAuctionForm = (props) => (
@@ -9,6 +11,7 @@ export const StartAuctionForm = (props) => (
     <div className="StartAuctionForm-field">
       <TextField
         id="email"
+        name="email"
         label="Email"
         value={props.email}
         onChange={props.handleInputChange}
@@ -18,6 +21,7 @@ export const StartAuctionForm = (props) => (
       />
       <TextField
         id="ethBid"
+        name="ethBid"
         label="ETH"
         value={props.ethBid}
         onChange={props.handleInputChange}
@@ -27,6 +31,7 @@ export const StartAuctionForm = (props) => (
       />
       <TextField
         id="secret"
+        name="secret"
         label="Secret"
         value={props.secret}
         onChange={props.handleInputChange}
@@ -36,14 +41,26 @@ export const StartAuctionForm = (props) => (
       />
       <TextField
         id="gas"
+        name="gas"
         label="Gas Price"
         value={props.gas}
         onChange={props.handleInputChange}
         margin="normal"
       />
+      <FormControlLabel
+        className="StartAuctionForm-terms"
+        control={
+          <Checkbox
+            checked={props.checked}
+            onChange={props.handleAcceptTerms}
+            value="checked"
+          />
+        }
+        label="I understand how the process works and my risks and responsibilities involved."
+      />
     </div>
     <div className="StartAuctionForm-submit">
-      <Button raised color="primary" onClick={props.handleAuctionFormSubmit}>
+      <Button raised color="primary" onClick={props.handleAuctionFormSubmit} disabled={!props.checked}>
         SUBMIT
       </Button>
     </div>

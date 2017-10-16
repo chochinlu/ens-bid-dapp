@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment'
-import classNames from 'classnames/bind';
 import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';

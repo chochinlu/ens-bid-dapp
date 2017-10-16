@@ -1,5 +1,8 @@
 // @flow weak
 import React, {Component} from 'react';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import {StartAuctionForm} from './StartAuctionForm';
 import {StartAuctionInfo} from './StartAuctionInfo';
 import {startAuctionAndBid, newBid} from '../../lib/ensService';
@@ -14,12 +17,15 @@ export class StartAuction extends Component {
       secret: '',
       gas: '',
       auctionFormSent: '',
-      auctionTXHash: ''
+      auctionTXHash: '',
+      message: '',
+      checked: false,
     }
     this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
     this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAuctionFormSubmit = this.handleAuctionFormSubmit.bind(this);
+    this.handleAcceptTerms = this.handleAcceptTerms.bind(this);
   }
 
   setAuctionTXHash(txHash) {
@@ -39,11 +45,30 @@ export class StartAuction extends Component {
       [name]: value
     });
   }
+
+  handleMessageOpen = msg => {
+    this.setState({ open: true, message: msg });
+  };
+
+  handleMessageClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleAcceptTerms = () => {
+    (this.state.checked === true) ?
+      this.setState({ checked: false }) :
+      this.setState({ checked: true });
+  }; 
   
   handleAuctionFormSubmit(event) {
     event.preventDefault();
 
-    if (this.props.searchResult.state == 'Open') {
+    if (!(this.props.address && this.props.privateKey)) {
+      this.handleMessageOpen('Please unlock wallet before bid ENS.');
+      return;
+    }
+
+    if (this.props.searchResult.state === 'Open') {
       let txHash = startAuctionAndBid(
         this.props.searchResult.searchName, this.state.ethBid,
         this.state.secret, this.props.privateKey
@@ -53,7 +78,7 @@ export class StartAuction extends Component {
       return;
     }
 
-    if (this.props.searchResult.state == 'Auction') {
+    if (this.props.searchResult.state === 'Auction') {
       let txHash = newBid(
         this.props.searchResult.searchName, this.state.ethBid,
         this.state.secret, this.props.privateKey
@@ -74,15 +99,43 @@ export class StartAuction extends Component {
     ) : (
       <StartAuctionForm
         {...this.props}
+        {...this.state}
         setAuctionFormSent={this.setAuctionFormSent}
         setAuctionTXHash={this.setAuctionTXHash}
         handleInputChange={this.handleInputChange}
+        handleAcceptTerms={this.handleAcceptTerms}
         handleAuctionFormSubmit={this.handleAuctionFormSubmit}
       />
     );
   }
 
   render() {
-    return this.startAuctionPage();
+    return (
+      <div>
+        {this.startAuctionPage()}
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          autoHideDuration={6000}
+          open={this.state.open}
+          onRequestClose={this.handleMessageClose}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.state.message}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleMessageClose}>
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
+      </div>
+    );
   }
 }
