@@ -1,7 +1,7 @@
 import {
   ensAbiArray,
   auctionRegistrarAbiArray,
-  deedAbiArray,
+  // deedAbiArray,
   fifsRegistrarAbiArray,
   resolverAbiArray,
   reverseRegistrarAbiArray
@@ -111,7 +111,7 @@ const auctionRegistrarContract = web3.eth.contract(auctionRegistrarAbiArray);
 
 Contracts.prototype.ethRegistrar = auctionRegistrarContract.at(Contracts.prototype.ens.owner(Contracts.prototype.namehash('eth')));
 
-const deedContract = web3.eth.contract(deedAbiArray);
+// const deedContract = web3.eth.contract(deedAbiArray);
 
 const fifsRegistrarContract = web3.eth.contract(fifsRegistrarAbiArray);
 

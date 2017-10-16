@@ -1,6 +1,5 @@
 // @flow weak
 import React, {Component} from 'react';
-import moment from 'moment'
 import classNames from 'classnames/bind';
 import {finalizeAuction} from '../../lib/ensService';
 import {fromNow, getDuringReveal} from '../../lib/util';
@@ -81,7 +80,6 @@ export class FinalizeAuction extends Component {
   // only success scenario and no async
   handleFormSubmit(event) {
     event.preventDefault();
-    const email = this.state.email;
     const privateKey = this.props.privateKey;
     finalizeAuction(this.props.searchResult.searchName, privateKey);
     this.setFinalFormSent('sent');

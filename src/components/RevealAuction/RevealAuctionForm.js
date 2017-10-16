@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment'
 import classNames from 'classnames/bind';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';

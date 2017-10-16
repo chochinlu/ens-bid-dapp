@@ -1,6 +1,5 @@
 // @flow weak
 import React, {Component} from 'react';
-import moment from 'moment'
 import {RevealAuctionForm} from './RevealAuctionForm';
 import {RevealAuctionInfo} from './RevealAuctionInfo';
 import {unsealBid} from '../../lib/ensService';
@@ -63,7 +62,7 @@ export class RevealAuction extends Component {
 
   handelRevealFormSubmit(event) {
     event.preventDefault();
-    const {email, ethBid, secret} = this.state;
+    const {ethBid, secret} = this.state;
     const privateKey = this.props.privateKey;
     let txHash = unsealBid(this.props.searchResult.searchName, ethBid, secret, privateKey)
     this.setRevealTXHash(txHash);
