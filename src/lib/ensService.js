@@ -97,7 +97,7 @@ export const startAuctionAndBid = (name, ether, secret, privateKey) => {
   let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), fromAddress, web3.toWei(ether, "ether"), web3.sha3(secret));
   let byteData = "0x" + 		
                 abi.methodID("startAuctionsAndBid", [ "bytes32[]", "bytes32" ]).toString("hex") + 		
-                abi.rawEncode([ "bytes32[]" ], [ web3.sha3(name) ]).toString("hex") +
+                abi.rawEncode([ "bytes32[]" ], [ [web3.sha3(name)] ]).toString("hex") +
                 abi.rawEncode([ "bytes32" ], [ bid ]).toString("hex");		
   const payload = {		
     from: fromAddress,		
