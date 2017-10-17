@@ -69,7 +69,7 @@ export class RevealAuction extends Component {
     this.setRevealFormSent('sent');
   }
 
-  revealAutionInfo = () => (
+  revealAuctionForm = () => (
     <RevealAuctionForm
       {...this.props}
       duringReveal={this.state.duringReveal}
@@ -82,7 +82,7 @@ export class RevealAuction extends Component {
     />
   );
 
-  revealAuctionForm = () => (
+  revealAutionInfo = () => (
     <RevealAuctionInfo
       searchName={this.props.searchResult.searchName}
       switchPage={this.props.switchPage}
