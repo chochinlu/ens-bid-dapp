@@ -8,8 +8,7 @@ class SearchResultItem extends Component {
   handleClick() {
     let step = '';
     switch (this.props.searchResult.state) {
-      case 'Open':
-      case 'Auction':
+      case 'Open' || 'Auction':
         // 1. aution / open go to start acution
         step = 'StartAuction';
         break;
