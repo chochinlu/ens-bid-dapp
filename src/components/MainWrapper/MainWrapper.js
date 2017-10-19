@@ -2,19 +2,18 @@ import React, {Component} from 'react';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
-import {SearchEns} from './SearchEns/SearchEns';
+import {SearchEns} from '../SearchEns/SearchEns';
 // import {Content} from './Content';
 // import {FAQ} from './FAQ';
 import {About} from './About';
-import {AuctionWrapper} from './AuctionWrapper/AuctionWrapper';
-import {entries} from '../lib/ensService';
+import {AuctionWrapper} from '../AuctionWrapper/AuctionWrapper';
+import {entries} from '../../lib/ensService';
 import './MainWrapper.css';
 
 const Main = (props) => (
   <div className="Main">
-    <SearchEns
-      {...props} />
-    <About/>
+    <SearchEns {...props} />
+    <About />
   </div>
 );
 
