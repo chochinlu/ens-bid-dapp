@@ -1,13 +1,31 @@
 import React from 'react';
+import {fromNow} from '../../lib/util';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { FormControlLabel } from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import './StartAuctionForm.css';
 
+const TimeDuration = (props) => (
+  <div>
+    <div>
+      <p>Reveal Bids On</p>
+      <div>{props.unsealStartsAt.toString()}</div>
+      <div>{()=>{fromNow(props.unsealStartsAt).toString()}}</div>
+    </div>
+    <div>
+      <p>Auction Finalizes On</p>
+      <div>{props.registratesAt.toString()}</div>
+      <div>{()=>{fromNow(props.registratesAt).toString()}}</div>
+    </div>
+  </div>
+);
+
 export const StartAuctionForm = (props) => (
   <div className="StartAuctionForm">
     <h2>{props.searchResult.searchName}.eth</h2>
+    { props.searchResult.state === 'Auction' ?
+      <TimeDuration {...props} /> : '' }
     <div className="StartAuctionForm-field">
       <TextField
         id="email"
@@ -65,4 +83,4 @@ export const StartAuctionForm = (props) => (
       </Button>
     </div>
   </div>
-)
+);

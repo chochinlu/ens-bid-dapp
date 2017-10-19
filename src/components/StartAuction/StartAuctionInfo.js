@@ -1,17 +1,24 @@
 import React from 'react';
+import {fromNow} from '../../lib/util';
 import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import './StartAuctionInfo.css';
 
 export const StartAuctionInfo = (props) => {
-  // TODO detect ropsten or mainnet
+  const endsFromNow = fromNow(props.unsealStartsAt);
   const txHashUrl = process.env.REACT_APP_ETHERSCAN_URL + props.auctionTXHash;
+
   return (
     <Card raised className="StartAuctionInfo">
       <CardContent>
         <Typography type="title" component="div">
-          ENS: {props.searchName}.eth
+          ENS: {props.searchResult.searchName}.eth
+        </Typography>
+        <Typography type="title" component="div">
+          <p>Reveal Auction On</p>
+          <div>{props.unsealStartsAt.toString()}</div>
+          <div>{endsFromNow.toString()}</div>
         </Typography>
         <Typography type="title" component="div">
           Email: {props.email}

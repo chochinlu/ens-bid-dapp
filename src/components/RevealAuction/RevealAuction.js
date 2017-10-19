@@ -12,8 +12,6 @@ export class RevealAuction extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      startsAt: '',
-      endsAt: '',
       duringReveal: '',
       email: '',
       ethdBid: '',
@@ -29,18 +27,7 @@ export class RevealAuction extends Component {
   }
 
   componentDidMount() {
-    // TODO
-    // request api to get startsAt and endsAt
-    // for instance :
-    // const startsAt = moment().add(3, 'days').format('dddd, MMMM D YYYY, h:mm:ss a z');
-    // const endsAt = moment().add(6, 'days').format('dddd, MMMM D YYYY, h:mm:ss a z');
-    const startsAt = '';
-    const endsAt = '';
-    this.setState({
-      startsAt,
-      endsAt
-    });
-    const duringReveal = getDuringReveal(startsAt, endsAt);
+    const duringReveal = getDuringReveal(this.props.startsAt, this.props.registratesAt);
     this.setState({duringReveal});
   }
 
@@ -80,7 +67,6 @@ export class RevealAuction extends Component {
     <RevealAuctionForm
       {...this.props}
       duringReveal={this.state.duringReveal}
-      startsAt={this.state.startsAt}
       endsAt={this.state.endsAt}
       setRevealFormSent={this.setRevealFormSent}
       setRevealTXHash={this.setRevealTXHash}
@@ -91,10 +77,8 @@ export class RevealAuction extends Component {
 
   revealAutionInfo = () => (
     <RevealAuctionInfo
-      searchName={this.props.searchResult.searchName}
-      switchPage={this.props.switchPage}
-      setStep={this.props.setStep}
       {...this.state}
+      {...this.props}
     />
   );
 
