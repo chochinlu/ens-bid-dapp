@@ -1,0 +1,19 @@
+// Base
+@import url('http://fonts.googleapis.com/earlyaccess/notosanstc.css');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+// Font weights
+$light: 100;
+$regular: 400;
+$bold: 600;
+
+$base-font-family: 'Noto Sans TC';
+$base-font-weight: $regular;
+$base-font-size: 12px;
+$base-line-height: 1.4;
+
+//TODO: Color 
+
+body {
+  font-family: 'Noto Sans TC', 'Open Sans', sans-serif;
+}
