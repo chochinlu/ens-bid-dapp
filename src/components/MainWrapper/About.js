@@ -1,6 +1,5 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import './MainWrapper.css';
 
 export const About = () => (
   <Paper className="About">

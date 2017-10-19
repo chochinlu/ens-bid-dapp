@@ -10,9 +10,9 @@
   .About h1 {
     color: #6203B8; }
   .About p {
-    text-align: justify;
+    line-height: 1.4;
+    text-align: left;
     width: 70%;
-    min-width: 350px;
     margin: 0; }
 
 /*# sourceMappingURL=MainWrapper.css.map */
