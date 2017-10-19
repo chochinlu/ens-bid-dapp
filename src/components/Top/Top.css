@@ -2,7 +2,8 @@
   background-color: #6203B8 !important; }
 
 .Top {
-  width: 100vw; }
+  width: 100vw;
+  position: fixed; }
 
 .Top-info {
   margin-left: 1em; }
