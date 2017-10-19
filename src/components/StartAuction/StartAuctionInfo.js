@@ -6,7 +6,7 @@ import './StartAuctionInfo.css';
 
 export const StartAuctionInfo = (props) => {
   // TODO detect ropsten or mainnet
-  const txHashUrl = `https://etherscan.io/tx/${props.auctionTXHash}`;
+  const txHashUrl = process.env.REACT_APP_ETHERSCAN_URL + props.auctionTXHash;
   return (
     <Card raised className="StartAuctionInfo">
       <CardContent>
