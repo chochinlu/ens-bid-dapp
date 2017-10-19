@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {MainWrapper} from './components/MainWrapper';
-import Warnings from './components/Warnings';
-import Top from './components/Top/Top';
-import Footer from './components/Footer/Footer';
-import {getAddressBalance} from './lib/dAppService';
+import {MainWrapper} from './MainWrapper/MainWrapper';
+import Warnings from './Warnings';
+import Top from './Top/Top';
+import Footer from './Footer/Footer';
+import {getAddressBalance} from '../lib/dAppService';
 import 'typeface-roboto';
 import './App.css';
 
