@@ -37,12 +37,12 @@ class SearchResultItem extends Component {
       this.props.searchResult.state === 'Reveal') ?
       <div className="SearchResultBtn" onClick={() => this.handleClick()}>
         <IconButton aria-label="Buy Now">
-          <i class="material-icons">shopping_cart</i>
+          <i className="material-icons">shopping_cart</i>
         </IconButton>
       </div> : 
       <div className="SearchResultBtn">
         <IconButton aria-label="Owned">
-          <i class="material-icons">not_interested</i>
+          <i className="material-icons">not_interested</i>
         </IconButton>
       </div>;
 
@@ -51,7 +51,7 @@ class SearchResultItem extends Component {
         <Typography type="title" component="p" className="SearchResult-typography SearchResult-typography-front">
           {this.props.searchResult.searchName}.eth
         </Typography>
-        <Typography type="title" component="p" className="SearchResult-typography SearchResult-typography-status">
+        <Typography type="title" component="div" className="SearchResult-typography SearchResult-typography-status">
           <p>Status</p>
           <p>{this.props.searchResult.state}</p>
         </Typography>
