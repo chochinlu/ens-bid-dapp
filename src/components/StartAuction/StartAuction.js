@@ -68,24 +68,31 @@ export class StartAuction extends Component {
       return;
     }
 
+    let component = this;
+    let txHash = '';
+
     if (this.props.searchResult.state === 'Open') {
-      let txHash = startAuctionAndBid(
+      startAuctionAndBid(
         this.props.searchResult.searchName, this.state.ethBid,
         this.state.secret, this.props.privateKey
-      )
-      this.setAuctionTXHash(txHash);
-      this.setAuctionFormSent('sent');
+      ).then(function(result) {
+        txHash = result;
+        component.setAuctionTXHash(txHash);
+        component.setAuctionFormSent('sent');
+      });
       return;
     }
 
     if (this.props.searchResult.state === 'Auction') {
-      let txHash = newBid(
+      newBid(
         this.props.searchResult.searchName, this.state.ethBid,
         this.state.secret, this.props.privateKey
-      )
-      this.setAuctionTXHash(txHash);
-      this.setAuctionFormSent('sent');
-      return;
+      ).then(function(result) {
+        txHash = result;
+        component.setAuctionTXHash(txHash);
+        component.setAuctionFormSent('sent');
+        return;
+      })
     }
   }
 
