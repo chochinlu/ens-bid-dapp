@@ -1,31 +1,12 @@
+@import url("http://fonts.googleapis.com/earlyaccess/notosanstc.css");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+body {
+  font-family: 'Noto Sans TC', 'Open Sans', sans-serif; }
+
 .App {
   text-align: center;
   display: flex;
   min-height: 100vh;
-  flex-direction: column;
-}
+  flex-direction: column; }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #585f87;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-content {
-  flex: 1;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+/*# sourceMappingURL=App.css.map */
