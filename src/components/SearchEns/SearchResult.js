@@ -1,32 +1,37 @@
 import React, {Component} from 'react';
+import {checkBeforeNow} from '../../lib/util';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import './SearchResult.css';
 
+const getStep = (state) => {
+  switch (state) {
+    case 'Open':
+    case 'Auction':
+      return 'StartAuction';
+    case 'Reveal':
+      // check the current time is before registration date or not
+      // check this person if he is the first price bidder of this domain
+      return checkBeforeNow(this.props.searchResult.registratesAt) 
+      ? 'RevealAuction' : 'FinalizeAuction';
+    // case 'Owned':
+    //   TODO 
+    //     - check after reveal state
+    //     - to start another auction request 
+    //   break;
+    default:
+      // forbidden / not yet available do nothing
+      return undefined;
+  }
+}
+
 class SearchResultItem extends Component {
   handleClick() {
     let step = '';
-    switch (this.props.searchResult.state) {
-      case 'Open':
-      case 'Auction':
-        // 1. aution / open go to start acution
-        step = 'StartAuction';
-        break;
-      case 'Reveal':
-        // 2. reveal go to reveal auction
-        step = 'RevealAuction';
-        break;
-      case 'Owned':
-        // 3. owned go to finialze auction 
-        // TODO check if the person should be the one finalize it
-        step = 'FinalizeAuction';
-        break;
-      default:
-        // 4. forbidden / not yet available do nothing
-        alert('the domain name service is not available');
-    }
+    step = getStep(this.props.searchResult.state);
 
+    if(step === undefined) alert('the domain name service is not available');
     this.props.setStep(step);
     this.props.switchPage('auction');
   }
