@@ -7,8 +7,6 @@ import {getDuringReveal} from '../../lib/util';
 import './RevealAuction.css';
 
 export class RevealAuction extends Component {
-  // TODO gets startsAt and endsAt time by query
-  // the auction data
   constructor(props) {
     super(props)
     this.state = {

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {getBeforeNow} from '../../lib/util';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
@@ -10,20 +11,24 @@ class SearchResultItem extends Component {
     switch (this.props.searchResult.state) {
       case 'Open':
       case 'Auction':
-        // 1. aution / open go to start acution
         step = 'StartAuction';
         break;
       case 'Reveal':
-        // 2. reveal go to reveal auction
+        // check the current time is before registration date or not
         step = 'RevealAuction';
+
+        if (!getBeforeNow(this.props.searchResult.registratesAt)) {
+          // check this person if he is the first price bidder of this domain
+          step = 'FinalizeAuction';
+        }
         break;
-      case 'Owned':
-        // 3. owned go to finialze auction 
-        // TODO check if the person should be the one finalize it
-        step = 'FinalizeAuction';
-        break;
+      // case 'Owned':
+      //   TODO 
+      //     - check after reveal state
+      //     - to start another auction request 
+      //   break;
       default:
-        // 4. forbidden / not yet available do nothing
+        // forbidden / not yet available do nothing
         alert('the domain name service is not available');
     }
 
