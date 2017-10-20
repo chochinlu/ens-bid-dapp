@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import {fromNow} from '../../lib/util';
+import {momentFromNow} from '../../lib/util';
 import './RevealAuctionForm.css';
 
 const FormComponent = (props) => (
@@ -65,12 +65,12 @@ export const RevealAuctionForm = (props) => {
         <div className={timelineState}>
           <p>Reveal Auction On</p>
           <div>{props.unsealStartsAt.toString()}</div>
-          <div>{()=>{fromNow(props.unsealStartsAt).toString()}}</div>
+          <div>{()=>{momentFromNow(props.unsealStartsAt).toString()}}</div>
         </div>
         <div>
           <p>Finalize Auction On</p>
           <div>{props.registratesAt.toString()}</div>
-          <div>{()=>{fromNow(props.registratesAt).toString()}}</div>
+          <div>{()=>{momentFromNow(props.registratesAt).toString()}}</div>
         </div>
       </div>
       { props.duringReveal === 'during' ? 

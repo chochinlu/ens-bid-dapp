@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getBeforeNow} from '../../lib/util';
+import {checkBeforeNow} from '../../lib/util';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
@@ -17,7 +17,7 @@ class SearchResultItem extends Component {
         // check the current time is before registration date or not
         step = 'RevealAuction';
 
-        if (!getBeforeNow(this.props.searchResult.registratesAt)) {
+        if (!checkBeforeNow(this.props.searchResult.registratesAt)) {
           // check this person if he is the first price bidder of this domain
           step = 'FinalizeAuction';
         }

@@ -1,12 +1,12 @@
 import React from 'react';
-import {fromNow} from '../../lib/util';
+import {momentFromNow} from '../../lib/util';
 import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import './StartAuctionInfo.css';
 
 export const StartAuctionInfo = (props) => {
-  const endsFromNow = fromNow(props.unsealStartsAt);
+  const endsmomentFromNow = momentFromNow(props.unsealStartsAt);
   const txHashUrl = process.env.REACT_APP_ETHERSCAN_URL + props.auctionTXHash;
 
   return (
@@ -18,7 +18,7 @@ export const StartAuctionInfo = (props) => {
         <Typography type="title" component="div">
           <p>Reveal Auction On</p>
           <div>{props.unsealStartsAt.toString()}</div>
-          <div>{endsFromNow.toString()}</div>
+          <div>{endsmomentFromNow.toString()}</div>
         </Typography>
         <Typography type="title" component="div">
           Email: {props.email}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {fromNow} from '../../lib/util';
+import {momentFromNow} from '../../lib/util';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { FormControlLabel } from 'material-ui/Form';
@@ -11,12 +11,12 @@ const TimeDuration = (props) => (
     <div>
       <p>Reveal Bids On</p>
       <div>{props.unsealStartsAt.toString()}</div>
-      <div>{()=>{fromNow(props.unsealStartsAt).toString()}}</div>
+      <div>{()=>{momentFromNow(props.unsealStartsAt).toString()}}</div>
     </div>
     <div>
       <p>Auction Finalizes On</p>
       <div>{props.registratesAt.toString()}</div>
-      <div>{()=>{fromNow(props.registratesAt).toString()}}</div>
+      <div>{()=>{momentFromNow(props.registratesAt).toString()}}</div>
     </div>
   </div>
 );
