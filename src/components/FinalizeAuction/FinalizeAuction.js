@@ -1,8 +1,6 @@
 // @flow weak
 import React, {Component} from 'react';
-import classNames from 'classnames/bind';
 import {finalizeAuction} from '../../lib/ensService';
-import {momentFromNow, getDuringReveal} from '../../lib/util';
 import {FinalizeAuctionInfo} from './FinalizeAuctionInfo';
 import './FinalizeAuction.css';
 

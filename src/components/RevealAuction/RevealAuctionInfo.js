@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import {momentFromNow} from '../../lib/util';
 import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';

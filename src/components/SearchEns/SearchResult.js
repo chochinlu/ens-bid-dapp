@@ -5,33 +5,33 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import './SearchResult.css';
 
+const getStep = (state) => {
+  switch (state) {
+    case 'Open':
+    case 'Auction':
+      return 'StartAuction';
+    case 'Reveal':
+      // check the current time is before registration date or not
+      // check this person if he is the first price bidder of this domain
+      return checkBeforeNow(this.props.searchResult.registratesAt) 
+      ? 'RevealAuction' : 'FinalizeAuction';
+    // case 'Owned':
+    //   TODO 
+    //     - check after reveal state
+    //     - to start another auction request 
+    //   break;
+    default:
+      // forbidden / not yet available do nothing
+      return undefined;
+  }
+}
+
 class SearchResultItem extends Component {
   handleClick() {
     let step = '';
-    switch (this.props.searchResult.state) {
-      case 'Open':
-      case 'Auction':
-        step = 'StartAuction';
-        break;
-      case 'Reveal':
-        // check the current time is before registration date or not
-        step = 'RevealAuction';
+    step = getStep(this.props.searchResult.state);
 
-        if (!checkBeforeNow(this.props.searchResult.registratesAt)) {
-          // check this person if he is the first price bidder of this domain
-          step = 'FinalizeAuction';
-        }
-        break;
-      // case 'Owned':
-      //   TODO 
-      //     - check after reveal state
-      //     - to start another auction request 
-      //   break;
-      default:
-        // forbidden / not yet available do nothing
-        alert('the domain name service is not available');
-    }
-
+    if(step === undefined) alert('the domain name service is not available');
     this.props.setStep(step);
     this.props.switchPage('auction');
   }
