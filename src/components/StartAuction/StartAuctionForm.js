@@ -24,8 +24,7 @@ const TimeDuration = (props) => (
 export const StartAuctionForm = (props) => (
   <div className="StartAuctionForm">
     <h2>{props.searchResult.searchName}.eth</h2>
-    { props.searchResult.state === 'Auction' ?
-      <TimeDuration {...props} /> : '' }
+    { props.searchResult.state === 'Auction' && <TimeDuration {...props} /> }
     <div className="StartAuctionForm-field">
       <TextField
         id="email"
