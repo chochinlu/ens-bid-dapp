@@ -3,14 +3,12 @@ import React, {Component} from 'react';
 import {RevealAuctionForm} from './RevealAuctionForm';
 import {RevealAuctionInfo} from './RevealAuctionInfo';
 import {unsealBid} from '../../lib/ensService';
-import {getDuringReveal} from '../../lib/util';
 import './RevealAuction.css';
 
 export class RevealAuction extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      duringReveal: '',
       email: '',
       ethdBid: '',
       secret: '',
@@ -22,11 +20,6 @@ export class RevealAuction extends Component {
     this.setRevealTXHash = this.setRevealTXHash.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handelRevealFormSubmit = this.handelRevealFormSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    const duringReveal = getDuringReveal(this.props.startsAt, this.props.registratesAt);
-    this.setState({duringReveal});
   }
 
   setRevealFormSent(state) {
@@ -64,7 +57,6 @@ export class RevealAuction extends Component {
   revealAuctionForm = () => (
     <RevealAuctionForm
       {...this.props}
-      duringReveal={this.state.duringReveal}
       endsAt={this.state.endsAt}
       setRevealFormSent={this.setRevealFormSent}
       setRevealTXHash={this.setRevealTXHash}
