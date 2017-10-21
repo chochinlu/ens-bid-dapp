@@ -47,7 +47,11 @@ const FormComponent = (props) => (
       />
     </div>
     <div className="RevealAuctionForm-submit">
-      <Button raised color="primary" onClick={props.handleAuctionFormSubmit}>
+      <Button
+        raised
+        color="primary"
+        onClick={props.handelRevealFormSubmit}
+      >
         SUBMIT
       </Button>
     </div>
