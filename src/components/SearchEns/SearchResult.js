@@ -5,15 +5,15 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import './SearchResult.css';
 
-const getStep = (state) => {
-  switch (state) {
+const getStep = (props) => {
+  switch (props.searchResult.state) {
     case 'Open':
     case 'Auction':
       return 'StartAuction';
     case 'Reveal':
       // check the current time is before registration date or not
       // check this person if he is the first price bidder of this domain
-      return checkBeforeNow(this.props.searchResult.registratesAt) 
+      return checkBeforeNow(props.searchResult.registrationDate)
       ? 'RevealAuction' : 'FinalizeAuction';
     // case 'Owned':
     //   TODO 
@@ -29,7 +29,7 @@ const getStep = (state) => {
 class SearchResultItem extends Component {
   handleClick() {
     let step = '';
-    step = getStep(this.props.searchResult.state);
+    step = getStep(this.props);
 
     if(step === undefined) alert('the domain name service is not available');
     this.props.setStep(step);

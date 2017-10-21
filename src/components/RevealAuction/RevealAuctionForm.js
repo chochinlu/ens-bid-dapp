@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames/bind';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import {momentFromNow} from '../../lib/util';
@@ -56,13 +55,11 @@ const FormComponent = (props) => (
 );
 
 export const RevealAuctionForm = (props) => {
-  const timelineState = classNames(props.duringReveal === 'before' ? '' : 'hidden');
-
   return (
     <div>
       <h2>{props.searchResult.searchName}.eth</h2>
       <div>
-        <div className={timelineState}>
+        <div>
           <p>Reveal Auction On</p>
           <div>{props.unsealStartsAt.toString()}</div>
           <div>{()=>{momentFromNow(props.unsealStartsAt).toString()}}</div>
@@ -73,8 +70,7 @@ export const RevealAuctionForm = (props) => {
           <div>{()=>{momentFromNow(props.registratesAt).toString()}}</div>
         </div>
       </div>
-      { props.duringReveal === 'during' ? 
-        <FormComponent {...props} /> : '' }
+      <FormComponent {...props} />
     </div>
   );
 };

@@ -36,17 +36,4 @@ export const urlQueryParamsObject = (url) => {
 export const checkBeforeNow = (time) => format(moment()).diff(format(time)) < 0;
 export const format = (date) => moment(date, 'dddd, MMMM D YYYY, h:mm:ss a z');
 
-export const getDuringReveal = (start, end) => {
-  const beforeStartsAt = start && checkBeforeNow(start);
-  const beforeEndsAt = end && checkBeforeNow(end);
-
-  if (beforeStartsAt && beforeEndsAt) {
-    return 'before';
-  } else if (!beforeStartsAt && beforeEndsAt) {
-    return 'during';
-  } else {
-    return 'expired';
-  }
-}
-
 export const momentFromNow = (thisTime) => moment(thisTime).momentFromNow();
