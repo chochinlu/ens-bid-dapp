@@ -82,6 +82,16 @@ export const getAllowedTime = (name) => {
   return new Date(contracts.ethRegistrar.getAllowedTime(web3.sha3(name)) * 1000);
 }
 
+/**
+ * @description 檢查是否有相對應的 sealed bid
+ * 
+ */
+export const sealedBids = (nameSHA3, ether, secretSHA3, privateKey) => {
+  let fromAddress = dAppService.getAddressByPrivateKey(privateKey);	
+  let bid = contracts.ethRegistrar.shaBid(nameSHA3, fromAddress, web3.fromWei(ether, "wei"), secretSHA3);
+  return contracts.ethRegistrar.sealedBids(fromAddress, bid);
+}
+
 /**	
  * @description STEP 2: 同時開標並且投標，整合 startAuction + newBid		
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L369		
@@ -91,21 +101,20 @@ export const getAllowedTime = (name) => {
  * @param {*} secret 		
  * @param {*} privateKey 		
  */		
-export const startAuctionAndBid = (name, ether, secret, privateKey) => {	
+export const startAuctionAndBid = (name, ether, secret, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);		
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));		
   let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), fromAddress, web3.toWei(ether, "ether"), web3.sha3(secret));
   let byteData = "0x" + 		
                 abi.methodID("startAuctionsAndBid", [ "bytes32[]", "bytes32" ]).toString("hex") + 		
-                abi.rawEncode([ "bytes32[]" ], [ [web3.sha3(name)] ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ bid ]).toString("hex");		
+                abi.rawEncode([ "bytes32[]", "bytes32" ], [ [web3.sha3(name)], bid ]).toString("hex");
   const payload = {		
     from: fromAddress,		
     to: ethRegistrarAddress,		
     value: web3.toHex(web3.toWei(ether, "ether")),		
     data: byteData,		
     privateKey: privateKey		
-  };		
+  };	
   return dAppService.sendRawTransaction(payload);		
 }
 
@@ -126,7 +135,7 @@ export const startAuction = (name, privateKey) => {
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -189,13 +198,12 @@ export const unsealBid = (name, ether, secret, privateKey) => {
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" +
                 abi.methodID("unsealBid", [ "bytes32", "uint", "bytes32" ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(name) ]).toString("hex") +
-                abi.rawEncode([ "uint" ], [ web3.toWei(ether, "ether") ]).toString("hex") + 
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(secret) ]).toString("hex");
+                abi.rawEncode([ "bytes32", "uint", "bytes32" ], 
+                [ web3.sha3(name), web3.toWei(ether, "ether") ,web3.sha3(secret) ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -218,7 +226,7 @@ export const finalizeAuction = (name, privateKey) => {
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -238,12 +246,11 @@ export const transfer = (name, toAddress, privateKey) => {
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" +
                 abi.methodID("transfer", [ "bytes32", "address" ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(name) ]).toString("hex") + 
-                abi.rawEncode([ "address" ], [ toAddress ]).toString("hex");
+                abi.rawEncode([ "bytes32", "address" ], [ web3.sha3(name), toAddress ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -265,12 +272,11 @@ export const cancelBid = (name, ether, secret, privateKey) => {
   let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), web3.toWei(ether, "ether"), web3.sha3(secret));
   let byteData = "0x" +
                 abi.methodID("cancelBid", [ "address", "bytes32" ]).toString("hex") +
-                abi.rawEncode([ "address" ], [ fromAddress ]).toString("hex") + 
-                abi.rawEncode([ "bytes32" ], [ bid ]).toString("hex");
+                abi.rawEncode([ "address", "bytes32" ], [ fromAddress, bid ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -289,11 +295,11 @@ export const releaseDeed = (name, privateKey) => {
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" +
                 abi.methodID("releaseDeed", [ "bytes32", "address" ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(name) ]).toString("hex");
+                abi.rawEncode([ "bytes32", "address" ], [ web3.sha3(name), fromAddress ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -312,12 +318,11 @@ export const setEnsOwner = (name, toAddress, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let byteData = "0x" +
                 abi.methodID("setOwner", [ "bytes32", "address" ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(name) ]).toString("hex") +
-                abi.rawEncode([ "address" ], [ toAddress ]).toString("hex");
+                abi.rawEncode([ "bytes32", "address" ], [ web3.sha3(name), toAddress ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: process.env.REACT_APP_ENS_ADDRESS,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -341,13 +346,11 @@ export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let byteData = "0x" +
                 abi.methodID("setSubnodeOwner", [ "bytes32", "address" ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(name) ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(sub) ]).toString("hex") +
-                abi.rawEncode([ "address" ], [ toAddress ]).toString("hex");
+                abi.rawEncode([ "bytes32", "bytes32", "address" ], [ web3.sha3(name), web3.sha3(sub), toAddress ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: process.env.REACT_APP_ENS_ADDRESS,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -366,12 +369,11 @@ export const setEnsResolver = (name, resolver, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let byteData = "0x" +
                 abi.methodID("setResolver", [ "bytes32", "address" ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(name) ]).toString("hex") +
-                abi.rawEncode([ "address" ], [ resolver ]).toString("hex");
+                abi.rawEncode([ "bytes32", "address" ], [ web3.sha3(name), resolver ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: process.env.REACT_APP_ENS_ADDRESS,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -390,12 +392,11 @@ export const setEnsTTL = (name, ttl, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let byteData = "0x" +
                 abi.methodID("setTTL", [ "bytes32", "address" ]).toString("hex") +
-                abi.rawEncode([ "bytes32" ], [ web3.sha3(name) ]).toString("hex") +
-                abi.rawEncode([ "uint64" ], [ ttl ]).toString("hex");
+                abi.rawEncode([ "bytes32", "uint64" ], [ web3.sha3(name), ttl ]).toString("hex");
   const payload = {
     from: fromAddress,
     to: process.env.REACT_APP_ENS_ADDRESS,
-    value: '0x0',
+    value: web3.toHex(0),
     data: byteData,
     privateKey: privateKey
   };
@@ -416,4 +417,8 @@ export const registryStarted = () => {
  */
 export const state = (name) => {
   return contracts.ethRegistrar.state(web3.sha3(name));
+}
+
+export const sha3 = (name) => {
+  return web3.sha3(name);
 }
