@@ -41,9 +41,11 @@ const FormComponent = (props) => (
         id="gas"
         name="gas"
         label="Gas Price"
+        type="number"
         value={props.gas}
         onChange={props.handleInputChange}
         margin="normal"
+        helperText="Recommend use 21 Gwei"
       />
     </div>
     <div className="RevealAuctionForm-submit">

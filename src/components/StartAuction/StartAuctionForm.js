@@ -60,9 +60,11 @@ export const StartAuctionForm = (props) => (
         id="gas"
         name="gas"
         label="Gas Price"
+        type="number"
         value={props.gas}
         onChange={props.handleInputChange}
         margin="normal"
+        helperText="Recommend use 21 Gwei"
       />
       <FormControlLabel
         className="StartAuctionForm-terms"

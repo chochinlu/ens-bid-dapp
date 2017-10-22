@@ -12,7 +12,7 @@ export class RevealAuction extends Component {
       email: '',
       ethdBid: '',
       secret: '',
-      gas: '',
+      gas: '21',
       revealFormSent: '',
       revealTXHash: ''
     }
@@ -40,13 +40,13 @@ export class RevealAuction extends Component {
 
   handelRevealFormSubmit(event) {
     event.preventDefault();
-    const {ethBid, secret} = this.state;
+    const {ethBid, secret, gas} = this.state;
     const privateKey = this.props.privateKey;
     let txHash = '';
     let component = this;
     unsealBid(
       this.props.searchResult.searchName, ethBid,
-      secret, privateKey
+      secret, privateKey, gas
     ).then(function(result) {
       txHash = result;
       component.setRevealTXHash(txHash);

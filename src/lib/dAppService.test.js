@@ -1,4 +1,4 @@
-import {getAddressBalance, getAddressByPrivateKey} from './dAppService';
+import {getAddressBalance, getAddressByPrivateKey, ensJsonExport} from './dAppService';
 
 test('getAddressBalance should return a balance if using a valid address', () => {
   const address = '0x7c20badacd20f09f972013008b5e5dae82670c8d';
@@ -20,3 +20,11 @@ test.skip('getAddressBalance should return a 0 balance if the given address is n
   const result = getAddressBalance(address);
   console.log(result);
 });  
+
+test('ensJsonExport', () => {
+  const name = "mytesting";
+  const secret = "testing";
+  const ether = 0.01;
+  const address = getAddressByPrivateKey(process.env.PRIVATE_KEY);
+  console.log(ensJsonExport(name, ether, secret, address));
+});
