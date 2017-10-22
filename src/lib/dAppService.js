@@ -9,6 +9,8 @@ const setWeb3Provider = () => {
   web3.setProvider(new web3.providers.HttpProvider(process.env.REACT_APP_PROVIDER));
 };
 
+const CHAIN_ID = process.env.REACT_APP_CHAINID || 3;
+
 setWeb3Provider();
 
 export const getBlockNumber = () => web3.eth.blockNumber;
@@ -63,7 +65,7 @@ export const sendRawTransaction = async payload => {
     // 交易的編號的 Primary Key，呼叫的時候會自動轉成 AUTO_INFREMANT
     nonce: '0x' + web3.eth.getTransactionCount(from).toString(16),  
     // 目前 Ethereum 網路的價格, default 21 Gwei
-    gasPrice: web3.toWei(0.000000021, "ether"), 
+    gasPrice: web3.toHex(web3.toWei(0.000000021, "ether")), 
     // sender
     from,
     // receiver
@@ -71,12 +73,15 @@ export const sendRawTransaction = async payload => {
     // 多少以太幣，以 wei 為單位
     value, 
     // 打 contract 的時候需要認的 function call bytecode，或者 direct message
-    data
+    data,
+
+    chainId: CHAIN_ID
   };
-  console.log("rawTx", rawTx);
   // 偵測要花多少 gas 才可以將 transaction 送出
-  rawTx.gasLimit = web3.eth.estimateGas(rawTx);
-  console.log("gasLimit", rawTx.gasLimit);
+  //rawTx.gasLimit = web3.toHex(getEstimateGas(rawTx));
+  //console.log("estimateGas", getEstimateGas(rawTx));
+  rawTx.gasLimit = web3.toHex(getEstimateGas(rawTx));
+  //console.log("rawTx", rawTx);
   const tx = new Tx(rawTx);
   tx.sign(hexPivateKey);
 
@@ -89,6 +94,7 @@ export const sendRawTransaction = async payload => {
     else 
       console.log(`err: ${err}`);
   });*/
+  //console.log('0x' + serializedTx.toString('hex'));
   let transactionHash = await web3.eth.sendRawTransaction('0x' + serializedTx.toString('hex'));
   console.log("transactionHash", transactionHash)
   return transactionHash;
