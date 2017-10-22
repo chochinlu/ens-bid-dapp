@@ -84,7 +84,10 @@ export const getAllowedTime = (name) => {
 
 /**
  * @description 檢查是否有相對應的 sealed bid
- * 
+ * @param {*} name 		
+ * @param {*} ether 		
+ * @param {*} secret 		
+ * @param {*} privateKey  
  */
 export const sealedBids = (nameSHA3, ether, secretSHA3, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);	

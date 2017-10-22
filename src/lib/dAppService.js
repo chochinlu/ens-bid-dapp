@@ -117,6 +117,10 @@ export const getTransactionReceipt = (transactionHash) => {
   return web3.eth.getTransactionReceipt(transactionHash);
 };
 
+/**
+ * @description search transactionHans for transaction info
+ * @param {*} transactionHash 
+ */
 export const getTransaction = (transactionHash) => {
   return web3.eth.getTransaction(transactionHash);
 }
@@ -129,4 +133,27 @@ export const getTransaction = (transactionHash) => {
 export const getPrivateKeyFromV3 = (keystore, passpharse) => {
   const wallet = Wallet.fromV3(keystore, passpharse);
   return wallet.getPrivateKey().toString('hex');
+}
+
+/**
+ * @description export ens json 
+ * @param {*} name 
+ * @param {*} ether 
+ * @param {*} secret 
+ * @param {*} address 
+ */
+export const ensJsonExport = (name, ether, secret, address) => {
+  const nameSHA3 = web3.sha3(name);
+  const secretSHA3 = web3.sha3(secret);
+  const value = web3.toWei(ether, "ether");
+  let result = {
+    name,
+    nameSHA3,
+    value,
+    address,
+    secret,
+    secretSHA3,
+    owner: address,
+  };
+  return result;
 }
