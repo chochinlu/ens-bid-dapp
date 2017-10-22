@@ -104,7 +104,8 @@ export const sealedBids = (nameSHA3, ether, secretSHA3, privateKey) => {
  * @param {*} secret 		
  * @param {*} privateKey 		
  */		
-export const startAuctionAndBid = (name, ether, secret, privateKey) => {
+export const startAuctionAndBid = (name, ether, secret, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);		
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));		
   let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), fromAddress, web3.toWei(ether, "ether"), web3.sha3(secret));
@@ -116,7 +117,8 @@ export const startAuctionAndBid = (name, ether, secret, privateKey) => {
     to: ethRegistrarAddress,		
     value: web3.toHex(web3.toWei(ether, "ether")),		
     data: byteData,		
-    privateKey: privateKey		
+    privateKey: privateKey,
+    gasPrice: customGasPrice		
   };	
   return dAppService.sendRawTransaction(payload);		
 }
@@ -129,7 +131,8 @@ export const startAuctionAndBid = (name, ether, secret, privateKey) => {
  * @param {*} privateKey
  * @returns {string} transactionHash
  */
-export const startAuction = (name, privateKey) => {
+export const startAuction = (name, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" + 
@@ -140,7 +143,8 @@ export const startAuction = (name, privateKey) => {
     to: ethRegistrarAddress,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload);
 }
@@ -170,7 +174,8 @@ export const shaBid = (name, ether, secret, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const newBid = (name, ether, secret, privateKey) => {
+export const newBid = (name, ether, secret, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), fromAddress, web3.toWei(ether, "ether"), web3.sha3(secret));
@@ -182,7 +187,8 @@ export const newBid = (name, ether, secret, privateKey) => {
     to: ethRegistrarAddress,
     value: web3.toHex(web3.toWei(ether, "ether")),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload);
 }
@@ -196,7 +202,8 @@ export const newBid = (name, ether, secret, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const unsealBid = (name, ether, secret, privateKey) => {
+export const unsealBid = (name, ether, secret, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" +
@@ -208,7 +215,8 @@ export const unsealBid = (name, ether, secret, privateKey) => {
     to: ethRegistrarAddress,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload);
 }
@@ -220,7 +228,8 @@ export const unsealBid = (name, ether, secret, privateKey) => {
  * @param {*} privateKey
  * @returns {string} transactionHash
  */
-export const finalizeAuction = (name, privateKey) => {
+export const finalizeAuction = (name, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" +
@@ -231,7 +240,8 @@ export const finalizeAuction = (name, privateKey) => {
     to: ethRegistrarAddress,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload);
 }
@@ -244,7 +254,8 @@ export const finalizeAuction = (name, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const transfer = (name, toAddress, privateKey) => {
+export const transfer = (name, toAddress, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" +
@@ -255,7 +266,8 @@ export const transfer = (name, toAddress, privateKey) => {
     to: ethRegistrarAddress,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload);
 }
@@ -269,7 +281,8 @@ export const transfer = (name, toAddress, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const cancelBid = (name, ether, secret, privateKey) => {
+export const cancelBid = (name, ether, secret, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let bid = contracts.ethRegistrar.shaBid(web3.sha3(name), web3.toWei(ether, "ether"), web3.sha3(secret));
@@ -281,7 +294,8 @@ export const cancelBid = (name, ether, secret, privateKey) => {
     to: ethRegistrarAddress,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload);
 }
@@ -293,7 +307,8 @@ export const cancelBid = (name, ether, secret, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const releaseDeed = (name, privateKey) => {
+export const releaseDeed = (name, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
   let byteData = "0x" +
@@ -304,7 +319,8 @@ export const releaseDeed = (name, privateKey) => {
     to: ethRegistrarAddress,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload); 
 }
@@ -317,7 +333,8 @@ export const releaseDeed = (name, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const setEnsOwner = (name, toAddress, privateKey) => {
+export const setEnsOwner = (name, toAddress, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let byteData = "0x" +
                 abi.methodID("setOwner", [ "bytes32", "address" ]).toString("hex") +
@@ -327,7 +344,8 @@ export const setEnsOwner = (name, toAddress, privateKey) => {
     to: process.env.REACT_APP_ENS_ADDRESS,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload); 
 }
@@ -345,7 +363,8 @@ export const setEnsOwner = (name, toAddress, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey) => {
+export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let byteData = "0x" +
                 abi.methodID("setSubnodeOwner", [ "bytes32", "address" ]).toString("hex") +
@@ -355,7 +374,8 @@ export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey) => {
     to: process.env.REACT_APP_ENS_ADDRESS,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload); 
 }
@@ -368,7 +388,8 @@ export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const setEnsResolver = (name, resolver, privateKey) => {
+export const setEnsResolver = (name, resolver, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let byteData = "0x" +
                 abi.methodID("setResolver", [ "bytes32", "address" ]).toString("hex") +
@@ -378,7 +399,8 @@ export const setEnsResolver = (name, resolver, privateKey) => {
     to: process.env.REACT_APP_ENS_ADDRESS,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload); 
 }
@@ -391,7 +413,8 @@ export const setEnsResolver = (name, resolver, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const setEnsTTL = (name, ttl, privateKey) => {
+export const setEnsTTL = (name, ttl, privateKey, gasPrice) => {
+  let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let byteData = "0x" +
                 abi.methodID("setTTL", [ "bytes32", "address" ]).toString("hex") +
@@ -401,7 +424,8 @@ export const setEnsTTL = (name, ttl, privateKey) => {
     to: process.env.REACT_APP_ENS_ADDRESS,
     value: web3.toHex(0),
     data: byteData,
-    privateKey: privateKey
+    privateKey: privateKey,
+    gasPrice: customGasPrice
   };
   return dAppService.sendRawTransaction(payload); 
 }

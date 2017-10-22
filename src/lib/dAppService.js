@@ -57,15 +57,16 @@ export const getAddressByPrivateKey = (privateKey) => {
  * @param {*} payload 
  */
 export const sendRawTransaction = async payload => {
-  const {privateKey, from, to, value, data} = payload;
+  const {privateKey, from, to, value, data, gasPrice} = payload;
 
   const hexPivateKey = new Buffer(privateKey, 'hex');
+  const customGasPrice = gasPrice || 21; 
 
   const rawTx = {
     // 交易的編號的 Primary Key，呼叫的時候會自動轉成 AUTO_INFREMANT
     nonce: '0x' + web3.eth.getTransactionCount(from).toString(16),  
     // 目前 Ethereum 網路的價格, default 21 Gwei
-    gasPrice: web3.toHex(web3.toWei(0.000000021, "ether")), 
+    gasPrice: web3.toHex(web3.toWei(customGasPrice, "shannon")), 
     // sender
     from,
     // receiver

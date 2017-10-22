@@ -66,31 +66,31 @@ test.skip('sha3', () => {
 
 test.skip('startAuctionAndBid', () => {
   const name = 'mytesting2';
-  const result = startAuctionAndBid(name, 0.01, 'testing', process.env.PRIVATE_KEY);
+  const result = startAuctionAndBid(name, 0.01, 'testing', process.env.PRIVATE_KEY, 21);
   console.log("startAuctionAndBid, txHash", result);
 });
 
 test.skip('startAuction', () => {
   const name = 'mytesting';
-  const result = startAuction(name, process.env.PRIVATE_KEY);
+  const result = startAuction(name, process.env.PRIVATE_KEY, 21);
   console.log("startAuction, txHash", result);
 });
 
 test.skip('newBid', async () => {
   const name = "mytesing";
-  const result = await newBid(name, 0.011, "testing", process.env.PRIVATE_KEY);
+  const result = await newBid(name, 0.011, "testing", process.env.PRIVATE_KEY, 21);
   console.log("newBid, txHash", result);
 });
 
 test.skip('unsealBid', () => {
   const name = 'testens';
-  const result = unsealBid(name, 0.01, 'testing', process.env.PRIVATE_KEY);
+  const result = unsealBid(name, 0.01, 'testing', process.env.PRIVATE_KEY, 21);
   console.log("unsealBid, txHash", result);
 });
 
 test('sealedBids', () => {
   const name = "testabc";
   const secret = "testing";
-  const result = sealedBids(sha3(name), 10000000000000000, sha3(secret), process.env.PRIVATE_KEY);
+  const result = sealedBids(sha3(name), 10000000000000000, sha3(secret), process.env.PRIVATE_KEY, 21);
   console.log("sealedBids result", result);
 });

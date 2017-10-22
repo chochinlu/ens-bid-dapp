@@ -15,7 +15,7 @@ export class StartAuction extends Component {
       email: '',
       ethBid: '',
       secret: '',
-      gas: '',
+      gas: '21',
       auctionFormSent: '',
       auctionTXHash: '',
       message: '',
@@ -74,7 +74,7 @@ export class StartAuction extends Component {
     if (this.props.searchResult.state === 'Open') {
       startAuctionAndBid(
         this.props.searchResult.searchName, this.state.ethBid,
-        this.state.secret, this.props.privateKey
+        this.state.secret, this.props.privateKey, this.props.gas
       ).then(function(result) {
         txHash = result;
         component.setAuctionTXHash(txHash);
@@ -86,7 +86,7 @@ export class StartAuction extends Component {
     if (this.props.searchResult.state === 'Auction') {
       newBid(
         this.props.searchResult.searchName, this.state.ethBid,
-        this.state.secret, this.props.privateKey
+        this.state.secret, this.props.privateKey, this.props.gas
       ).then(function(result) {
         txHash = result;
         component.setAuctionTXHash(txHash);
