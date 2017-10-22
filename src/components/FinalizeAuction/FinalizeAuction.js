@@ -60,7 +60,7 @@ export class FinalizeAuction extends Component {
   handleFormSubmit(event) {
     event.preventDefault();
     const privateKey = this.props.privateKey;
-    finalizeAuction(this.props.searchResult.searchName, privateKey, this.props.gas);
+    finalizeAuction(this.props.searchResult.searchName, privateKey, this.state.gas);
     // TODO
     //   if success turn to info component
     //   if not show error
