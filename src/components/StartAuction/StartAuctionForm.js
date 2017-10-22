@@ -64,7 +64,7 @@ export const StartAuctionForm = (props) => (
         value={props.gas}
         onChange={props.handleInputChange}
         margin="normal"
-        helperText="Default use 21 Gwei"
+        helperText="Recommend use 21 Gwei"
       />
       <FormControlLabel
         className="StartAuctionForm-terms"
