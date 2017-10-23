@@ -14,8 +14,7 @@ export class KeystoreUploader extends Component {
       files: [],
       dragDiabled: false,
       unlock: false,
-      passpharse: '',
-      hasError: false
+      passpharse: ''
     };
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
@@ -70,8 +69,6 @@ export class KeystoreUploader extends Component {
   unlockWallet() {
     try {
       const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
-      console.log(privateKey);
-
       this.props.setKeystore(this.state.keystore);
       this.props.setPrivateKey(privateKey);
       this.props.handleRequestClose();
@@ -106,7 +103,6 @@ export class KeystoreUploader extends Component {
           onDrop={this.onDrop}
         />
         <PassphraseForm
-          address={this.state.address}
           keystore={this.state.keystore}
           passpharse={this.state.passpharse}
           handleChange={this.handleChange}
