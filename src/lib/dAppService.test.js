@@ -1,4 +1,5 @@
-import {getAddressBalance, getAddressByPrivateKey, ensJsonExport} from './dAppService';
+import {getAddressBalance, getAddressByPrivateKey, ensJsonExport, getTransactionFee, getEstimateGas} from './dAppService';
+import {startAuctionAndBid} from './ensService';
 
 test('getAddressBalance should return a balance if using a valid address', () => {
   const address = '0x7c20badacd20f09f972013008b5e5dae82670c8d';
@@ -28,3 +29,12 @@ test('ensJsonExport', () => {
   const address = getAddressByPrivateKey(process.env.PRIVATE_KEY);
   console.log(ensJsonExport(name, ether, secret, address));
 });
+
+test('getTransactionFee', () => {
+  const name = "mytestingy";
+  const secret = "testing";
+  const ether = 0.01;
+  const gas = 21;
+  const payload = startAuctionAndBid(name, ether, secret, process.env.PRIVATE_KEY, gas);
+  console.log(getTransactionFee(gas, getEstimateGas(payload)));
+})

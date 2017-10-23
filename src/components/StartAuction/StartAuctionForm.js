@@ -4,7 +4,7 @@ import {
   startAuctionAndBid,
   newBid, getRegistrarAddress
 } from '../../lib/ensService';
-import {getEstimateGas} from '../../lib/dAppService';
+import {getEstimateGas, getTransactionFee} from '../../lib/dAppService';
 
 import { FormControlLabel } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
@@ -50,7 +50,7 @@ const StartAuctionConfirmDiaglog = (props) => {
   const FormInfo = {
     From: `${props.address}`,
     To:   getRegistrarAddress(),
-    Fee:  `${props.gas * getEstimateGas(payload)} ETH`,
+    Fee:  `${getTransactionFee(props.gas, getEstimateGas(payload))} ETH`,
     ETH:  `${props.ethBid} ETH`,
   }
 
@@ -136,6 +136,7 @@ export class StartAuctionForm extends Component {
             placeholder="passphrase"
             helperText="Please protect your bid with random numbers and characters"
           />
+          {/* not lower than 1 Gwei */}
           <TextField
             id="gas"
             name="gas"
