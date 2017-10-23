@@ -1,12 +1,34 @@
 // @flow weak
 import React, {Component} from 'react';
+import {startAuctionAndBid, newBid} from '../../lib/ensService';
+import {sendRawTransaction} from '../../lib/dAppService';
+import {StartAuctionForm} from './StartAuctionForm';
+import {StartAuctionInfo} from './StartAuctionInfo';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
-import {StartAuctionForm} from './StartAuctionForm';
-import {StartAuctionInfo} from './StartAuctionInfo';
-import {startAuctionAndBid, newBid} from '../../lib/ensService';
 import './StartAuction.css';
+
+const handleStartAuctionProcess = async (inputObject) => {
+  const {state, domainName, ethBid, secret, privateKey, gas} = inputObject;
+
+  let returnObj = {
+    txHash: '',
+    errMsg: undefined
+  }
+
+  const payload = (state === 'Auction') ? 
+    newBid(domainName, ethBid, secret, privateKey, gas) :
+    startAuctionAndBid(domainName, ethBid, secret, privateKey, gas)
+
+  try {
+    returnObj.txHash = await sendRawTransaction(payload);
+  } catch (error) {
+    returnObj.errMsg = `${state} async error : ${error}`;
+  }
+
+  return returnObj;      
+};
 
 export class StartAuction extends Component {
   constructor(props) {
@@ -68,31 +90,23 @@ export class StartAuction extends Component {
       return;
     }
 
-    let component = this;
-    let txHash = '';
-
-    if (this.props.searchResult.state === 'Open') {
-      startAuctionAndBid(
-        this.props.searchResult.searchName, this.state.ethBid,
-        this.state.secret, this.props.privateKey, this.props.gas
-      ).then(function(result) {
-        txHash = result;
-        component.setAuctionTXHash(txHash);
-        component.setAuctionFormSent('sent');
-      });
-      return;
+    const inputObject = {
+      state:      this.props.searchResult.state,
+      domainName: this.props.searchResult.searchName,
+      ethBid:     this.state.ethBid,
+      secret:     this.state.secret,
+      privateKey: this.props.privateKey,
+      gas:        this.state.gas
     }
+    const resultObj = handleStartAuctionProcess(inputObject);
 
-    if (this.props.searchResult.state === 'Auction') {
-      newBid(
-        this.props.searchResult.searchName, this.state.ethBid,
-        this.state.secret, this.props.privateKey, this.props.gas
-      ).then(function(result) {
-        txHash = result;
-        component.setAuctionTXHash(txHash);
-        component.setAuctionFormSent('sent');
-        return;
-      })
+    if (resultObj.errMsg === undefined) {
+      this.setAuctionTXHash(resultObj.txHash);
+      this.setAuctionFormSent('sent');  
+    } else {
+      // TODO
+      // not yet refactoring error message
+      this.handleMessageOpen(resultObj.errMsg);
     }
   }
 
@@ -111,6 +125,7 @@ export class StartAuction extends Component {
         handleInputChange={this.handleInputChange}
         handleAcceptTerms={this.handleAcceptTerms}
         handleAuctionFormSubmit={this.handleAuctionFormSubmit}
+        handleMessageOpen={this.handleMessageOpen}
       />
     );
   }
