@@ -6,7 +6,8 @@ import Typography from 'material-ui/Typography';
 import './StartAuctionInfo.css';
 
 export const StartAuctionInfo = (props) => {
-  const endsmomentFromNow = momentFromNow(props.unsealStartsAt);
+  const endsMomentFromNow = momentFromNow(props.unsealStartsAt);
+  const hidden = props.unsealStartsAt.year() === 1970
   const txHashUrl = process.env.REACT_APP_ETHERSCAN_URL + props.auctionTXHash;
 
   return (
@@ -15,11 +16,15 @@ export const StartAuctionInfo = (props) => {
         <Typography type="title" component="div">
           ENS: {props.searchResult.searchName}.eth
         </Typography>
-        <Typography type="title" component="div">
-          <p>Reveal Auction On</p>
-          <div>{props.unsealStartsAt.toString()}</div>
-          <div>{endsmomentFromNow.toString()}</div>
-        </Typography>
+        { hidden ? null :
+          (
+            <Typography type="title" component="div">
+              <p>Reveal Auction On</p>
+              <div>{props.unsealStartsAt.toString()}</div>
+              <div>{endsMomentFromNow.toString()}</div>
+            </Typography>
+          )
+        }
         <Typography type="title" component="div">
           Email: {props.email}
         </Typography>
