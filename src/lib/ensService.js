@@ -89,22 +89,6 @@ export const getAllowedTime = (name) => {
 }
 
 /**
- * @description passing function then get esimate gas
- * @param {*} func 
- */
-export const getEstimateGas = (func) => {
-  return dAppService.getEstimateGas(func);
-}
-
-/**
- * @description passing function then send raw transaction
- * @param {*} func 
- */
-export const sendRawTransaction = (func) => {
-  return dAppService.sendRawTransaction(func);
-}
-
-/**
  * @description 檢查是否有相對應的 sealed bid
  * @param {*} name 		
  * @param {*} ether 		

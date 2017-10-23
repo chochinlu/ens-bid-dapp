@@ -1,4 +1,5 @@
-import {getAddressByEns, entries, startAuctionAndBid, startAuction, newBid, unsealBid, sha3, shaBid, sealedBids, getEstimateGas} from './ensService';
+import {getAddressByEns, entries, startAuctionAndBid, startAuction, newBid, unsealBid, sha3, shaBid, sealedBids} from './ensService';
+import {getEstimateGas} from './dAppService';
 const abi = require('ethereumjs-abi');
 
 test('getAddressByEns should not return "ENS not found" if the given .eth exists.', async () => {
