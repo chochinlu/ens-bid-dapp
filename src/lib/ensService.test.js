@@ -1,4 +1,5 @@
 import {getAddressByEns, entries, startAuctionAndBid, startAuction, newBid, unsealBid, sha3, shaBid, sealedBids} from './ensService';
+import {getEstimateGas} from './dAppService';
 const abi = require('ethereumjs-abi');
 
 test('getAddressByEns should not return "ENS not found" if the given .eth exists.', async () => {
@@ -64,10 +65,10 @@ test.skip('sha3', () => {
   expect(secretSHA3).toEqual("0x5f16f4c7f149ac4f9510d9cf8cf384038ad348b3bcdc01915f95de12df9d1b02");
 });
 
-test.skip('startAuctionAndBid', () => {
-  const name = 'mytesting2';
-  const result = startAuctionAndBid(name, 0.01, 'testing', process.env.PRIVATE_KEY, 21);
-  console.log("startAuctionAndBid, txHash", result);
+test('startAuctionAndBid estimateGas', () => {
+  const name = 'mytestingx';
+  const result = getEstimateGas(startAuctionAndBid(name, 0.01, 'testing', process.env.PRIVATE_KEY, 21));
+  console.log("startAuctionAndBid, estimateGas", result);
 });
 
 test.skip('startAuction', () => {

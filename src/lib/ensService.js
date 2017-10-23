@@ -50,6 +50,12 @@ export const getAddressByEns = async (address) => {
   }
 }
 
+/**
+ * @description get registar address
+ */
+export const getRegistrarAddress = () => {
+  return contracts.ens.owner(contracts.namehash('eth'));
+}
 
 /**
  * @description STEP 1: 確認一下該.eth狀態，回傳 tuple 多維度資訊
@@ -120,7 +126,7 @@ export const startAuctionAndBid = (name, ether, secret, privateKey, gasPrice) =>
     privateKey: privateKey,
     gasPrice: customGasPrice		
   };	
-  return dAppService.sendRawTransaction(payload);		
+  return payload;		
 }
 
 /**
@@ -146,7 +152,7 @@ export const startAuction = (name, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload);
+  return payload;
 }
 
 /**
@@ -190,7 +196,7 @@ export const newBid = (name, ether, secret, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload);
+  return payload;
 }
 
 /**
@@ -218,7 +224,7 @@ export const unsealBid = (name, ether, secret, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload);
+  return payload;
 }
 
 /**
@@ -243,7 +249,7 @@ export const finalizeAuction = (name, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload);
+  return payload;
 }
 
 /**
@@ -269,7 +275,7 @@ export const transfer = (name, toAddress, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload);
+  return payload;
 }
 
 /**
@@ -297,7 +303,7 @@ export const cancelBid = (name, ether, secret, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload);
+  return payload;
 }
 
 /**
@@ -322,7 +328,7 @@ export const releaseDeed = (name, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload); 
+  return payload; 
 }
 
 /**
@@ -347,7 +353,7 @@ export const setEnsOwner = (name, toAddress, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload); 
+  return payload; 
 }
 
 /**
@@ -377,7 +383,7 @@ export const setEnsSubnodeOwner = (name, sub, toAddress, privateKey, gasPrice) =
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload); 
+  return payload; 
 }
 
 /**
@@ -402,7 +408,7 @@ export const setEnsResolver = (name, resolver, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload); 
+  return payload; 
 }
 
 /**
@@ -427,7 +433,7 @@ export const setEnsTTL = (name, ttl, privateKey, gasPrice) => {
     privateKey: privateKey,
     gasPrice: customGasPrice
   };
-  return dAppService.sendRawTransaction(payload); 
+  return payload; 
 }
 
 /**
