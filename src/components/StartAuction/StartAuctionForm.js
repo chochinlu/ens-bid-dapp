@@ -4,7 +4,7 @@ import {
   startAuctionAndBid,
   newBid, getRegistrarAddress
 } from '../../lib/ensService';
-import {getEstimateGas, getFeeEther, getTransactionFee} from '../../lib/dAppService';
+import {getEstimateGas, getTransactionFee} from '../../lib/dAppService';
 
 import { FormControlLabel } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
