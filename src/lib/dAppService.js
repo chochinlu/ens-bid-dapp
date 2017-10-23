@@ -158,3 +158,12 @@ export const ensJsonExport = (name, ether, secret, address) => {
   };
   return result;
 }
+
+/**
+ * @description export gas fee with ether unit
+ * @param {*} gasPrice
+ * @param {*} estimateGas 
+ */
+export const getTransactionFee = (gasPrice, estimateGas) => {
+  return web3.fromWei(web3.toWei(gasPrice, "shannon") * estimateGas, 'ether')
+}
