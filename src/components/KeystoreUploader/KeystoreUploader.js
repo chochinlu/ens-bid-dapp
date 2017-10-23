@@ -14,16 +14,14 @@ export class KeystoreUploader extends Component {
       files: [],
       dragDiabled: false,
       unlock: false,
+      passpharse: '',
+      hasError: false
     };
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
     this.unlockWallet = this.unlockWallet.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
-  state = {
-    passpharse: 'Passphrase',
-  };
 
   onDrop(files) {
     const file = files[0];
@@ -72,11 +70,12 @@ export class KeystoreUploader extends Component {
   unlockWallet() {
     try {
       const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
+      console.log(privateKey);
+
       this.props.setKeystore(this.state.keystore);
       this.props.setPrivateKey(privateKey);
       this.props.handleRequestClose();
     } catch(err) {
-      // TODO show exception using snackbars
       console.log("err", err);
     }
   }
@@ -86,8 +85,6 @@ export class KeystoreUploader extends Component {
   };
 
   render() {    
-
-    // TODO using snackbars handle message
     const msg = this.state.message && 
       <p>{this.state.message}</p>;
 
@@ -109,6 +106,7 @@ export class KeystoreUploader extends Component {
           onDrop={this.onDrop}
         />
         <PassphraseForm
+          address={this.state.address}
           keystore={this.state.keystore}
           passpharse={this.state.passpharse}
           handleChange={this.handleChange}
