@@ -10,12 +10,7 @@ import CloseIcon from 'material-ui-icons/Close';
 import './StartAuction.css';
 
 const handleStartAuctionProcess = async (inputObject) => {
-  const state       = inputObject.state;
-  const domainName  = inputObject.domainName;
-  const ethBid      = inputObject.ethBid;
-  const secret      = inputObject.secret;
-  const privateKey  = inputObject.privateKey;
-  const gas         = inputObject.gas;
+  const {state, domainName, ethBid, secret, privateKey, gas} = inputObject;
 
   let returnObj = {
     txHash: '',
