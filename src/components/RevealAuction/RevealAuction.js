@@ -16,7 +16,11 @@ const handleRevealAuctionProcess = async (inputObject) => {
 
   const checkValue = sealedBids(domainName, ethBid, secret, privateKey);
   if (checkValue === '0x0000000000000000000000000000000000000000') {
+<<<<<<< HEAD
     returnObj.errMsg = 'Invalid sealed bids';
+=======
+    return returnObj.errMsg = "Invalid sealed bids";
+>>>>>>> fix bug and syntax error
   }
 
   const payload = unsealBid(domainName, ethBid, secret, privateKey, gas);
