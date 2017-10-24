@@ -40,7 +40,6 @@ export const RevealAuctionConfirmDialog = (props) => {
           Cancel
         </Button>
         <Button
-          keyboardFocused={true}
           onClick={props.handelRevealFormSubmit}
         >
           Submit
