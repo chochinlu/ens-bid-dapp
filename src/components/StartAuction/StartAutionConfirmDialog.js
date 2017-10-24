@@ -6,26 +6,30 @@ import List, {ListItem, ListItemText} from 'material-ui/List';
 import Button from 'material-ui/Button';
 
 export const StartAuctionConfirmDiaglog = (props) => {
-  const payload = (props.state === 'Open')
-    ? startAuctionAndBid(props.searchResult.searchName, props.ethBid, props.secret, props.privateKey, props.gas)
-    : newBid(props.searchResult.searchName, props.ethBid, props.secret, props.privateKey, props.gas)
+
+  const {searchResult: {searchName}, ethBid, secret, privateKey, gas, address, state} = props;
+  const {open, handleClose} = props;
+
+  const payload = (state === 'Open')
+    ? startAuctionAndBid(searchName, ethBid, secret, privateKey, gas)
+    : newBid(searchName, ethBid, secret, privateKey, gas)
 
   const FormInfo = {
-    From: `${props.address}`,
+    From: `${address}`,
     To: getRegistrarAddress(),
-    Fee: `${getTransactionFee(props.gas, getEstimateGas(payload))} ETH`,
-    ETH: `${props.ethBid} ETH`
+    Fee: `${getTransactionFee(gas, getEstimateGas(payload))} ETH`,
+    ETH: `${ethBid} ETH`
   }
 
   return (
-    <Dialog open={props.open} onRequestClose={props.handleClose}>
+    <Dialog open={open} onRequestClose={handleClose}>
       <DialogTitle>Confirm auction bid information</DialogTitle>
       <DialogContent>
         <List>
           {Object
             .keys(FormInfo)
             .map((key, index) => (
-              <ListItem>
+              <ListItem key={`input-${index}`}>
                 <ListItemText primary={key}/>
                 <ListItemText primary={FormInfo[key]}/>
               </ListItem>
@@ -33,7 +37,7 @@ export const StartAuctionConfirmDiaglog = (props) => {
         </List>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.handleClose}>
+        <Button onClick={handleClose}>
           Cancel
         </Button>
         <Button
