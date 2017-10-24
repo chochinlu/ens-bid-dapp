@@ -101,7 +101,7 @@ export class RevealAuctionForm extends Component {
         />
 
         {
-          (this.props.address && this.props.privateKey) &&
+          (this.state.open && this.props.address && this.props.privateKey) &&
           <RevealAuctionConfirmDialog
             {...this.props}
             open={this.state.open}
