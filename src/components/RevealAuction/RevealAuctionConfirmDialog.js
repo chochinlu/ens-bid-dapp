@@ -15,7 +15,7 @@ export const RevealAuctionConfirmDialog = (props) => {
   const FormInfo = {
     From: `${address}`,
     To: getRegistrarAddress(),
-    Fee: `${getTransactionFee(gas, getEstimateGas(payload))} ETH`,
+    "Fee(gasPrice * esitimateGas)": `${getTransactionFee(gas, getEstimateGas(payload))} ETH`,
     ETH: `${ethBid} ETH`
   }
 
