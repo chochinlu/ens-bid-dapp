@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {momentFromNow} from '../../lib/util';
 import {
   startAuctionAndBid,
   newBid, getRegistrarAddress
@@ -16,23 +15,8 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import List, { ListItem, ListItemText } from 'material-ui/List';
-
+import {TimeDuration} from './TimeDuration';
 import './StartAuctionForm.css';
-
-const TimeDuration = (props) => (
-  <div>
-    <div>
-      <p>Reveal Bids On</p>
-      <div>{props.unsealStartsAt.toString()}</div>
-      <div>{()=>{momentFromNow(props.unsealStartsAt).toString()}}</div>
-    </div>
-    <div>
-      <p>Auction Finalizes On</p>
-      <div>{props.registratesAt.toString()}</div>
-      <div>{()=>{momentFromNow(props.registratesAt).toString()}}</div>
-    </div>
-  </div>
-);
 
 const StartAuctionConfirmDiaglog = (props) => {
   const payload = (props.state === 'Open') ? 
