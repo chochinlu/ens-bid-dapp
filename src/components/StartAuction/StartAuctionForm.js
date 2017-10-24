@@ -85,8 +85,7 @@ export class StartAuctionForm extends Component {
             Confirm Submit
           </Button>
         </div>
-        { 
-          (this.props.address && this.props.privateKey) &&
+        {this.state.open &&
           <StartAuctionConfirmDiaglog
             {...this.props}
             open={this.state.open}
