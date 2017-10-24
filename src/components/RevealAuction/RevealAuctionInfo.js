@@ -8,7 +8,8 @@ import './RevealAuctionInfo.css';
 export const RevealAuctionInfo = (props) => {
   const endsmomentFromNow = momentFromNow(props.registratesAt);
   const hidden = props.unsealStartsAt.year() === 1970;
-  const txHashUrl = process.env.REACT_APP_ETHERSCAN_URL + props.revealTXHash;
+  const ethersacnUrl = process.env.REACT_APP_ETHERSCAN_URL || 'https://ropsten.etherscan.io/tx/';
+  const txHashUrl = ethersacnUrl + props.revealTXHash;
 
   return (
     <Card raised className="RevealAuctionInfo">
