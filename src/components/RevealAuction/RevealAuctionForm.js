@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import {momentFromNow} from '../../lib/util';
+import {RevealAuctionConfirmDialog} from './RevealAuctionConfirmDialog';
 import './RevealAuctionForm.css';
 
 const FormComponent = (props) => (
@@ -17,6 +18,7 @@ const FormComponent = (props) => (
         placeholder="youremail@example.com"
         helperText="The bid information will send to this email"
       />
+
       <TextField
         id="ethBid"
         name="ethBid"
@@ -51,32 +53,62 @@ const FormComponent = (props) => (
     <div className="RevealAuctionForm-submit">
       <Button
         raised
+        label="Dialog"
         color="primary"
-        onClick={props.handelRevealFormSubmit}
+        onClick={props.handleOpen}
       >
-        SUBMIT
+        Confirm Submit
       </Button>
     </div>
   </div>
 );
 
-export const RevealAuctionForm = (props) => {
-  return (
-    <div>
-      <h2>{props.searchResult.searchName}.eth</h2>
+export class RevealAuctionForm extends Component {
+  state = {
+    open: false
+  };
+
+  handleOpen = () => {
+    (this.props.address && this.props.privateKey) ?
+      this.setState({open: true}) :
+      this.props.handleWarningMessageOpen("Should login first")
+  }
+
+  handleClose = () => {
+    this.setState({open: false});
+  }
+
+  render() {
+    return (
       <div>
+        <h2>{this.props.searchResult.searchName}.eth</h2>
         <div>
-          <p>Reveal Auction On</p>
-          <div>{props.unsealStartsAt.toString()}</div>
-          <div>{()=>{momentFromNow(props.unsealStartsAt).toString()}}</div>
+          <div>
+            <p>Reveal Auction On</p>
+            <div>{this.props.unsealStartsAt.toString()}</div>
+            <div>{momentFromNow(this.props.unsealStartsAt).toString()}</div>
+          </div>
+          <div>
+            <p>Finalize Auction On</p>
+            <div>{this.props.registratesAt.toString()}</div>
+            <div>{momentFromNow(this.props.registratesAt).toString()}</div>
+          </div>
         </div>
-        <div>
-          <p>Finalize Auction On</p>
-          <div>{props.registratesAt.toString()}</div>
-          <div>{()=>{momentFromNow(props.registratesAt).toString()}}</div>
-        </div>
+
+        <FormComponent 
+          {...this.props}
+          handleOpen={this.handleOpen}
+        />
+
+        {
+          (this.state.open && this.props.address && this.props.privateKey) &&
+          <RevealAuctionConfirmDialog
+            {...this.props}
+            open={this.state.open}
+            handleClose={this.handleClose}
+          />
+        }
       </div>
-      <FormComponent {...props} />
-    </div>
-  );
+    );
+  }
 };

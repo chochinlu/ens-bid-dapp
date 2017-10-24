@@ -7,6 +7,7 @@ import './RevealAuctionInfo.css';
 
 export const RevealAuctionInfo = (props) => {
   const endsmomentFromNow = momentFromNow(props.registratesAt);
+  const hidden = props.unsealStartsAt.year() === 1970;
   const txHashUrl = process.env.REACT_APP_ETHERSCAN_URL + props.revealTXHash;
 
   return (
@@ -15,11 +16,15 @@ export const RevealAuctionInfo = (props) => {
         <Typography type="title" component="div">
           ENS: {props.searchResult.searchName}.eth
         </Typography>
-        <Typography type="title" component="div">
-          <p>Finalize Auction On</p>
-          <div>{props.registratesAt.toString()}</div>
-          <div>{endsmomentFromNow.toString()}</div>
-        </Typography>
+        { hidden ? null :
+          (
+            <Typography type="title" component="div">
+              <p>Finalize Auction On</p>
+              <div>{props.registratesAt.toString()}</div>
+              <div>{endsmomentFromNow.toString()}</div>
+            </Typography>
+          )
+        }
         <Typography type="title" component="div">
           Email: {props.email}
         </Typography>

@@ -16,7 +16,7 @@ const handleRevealAuctionProcess = async (inputObject) => {
 
   const checkValue = sealedBids(domainName, ethBid, secret, privateKey);
   if (checkValue === '0x0000000000000000000000000000000000000000') {
-    returnObj.errMsg = 'Invalid sealed bids';
+    return returnObj.errMsg = "Invalid sealed bids";
   }
 
   const payload = unsealBid(domainName, ethBid, secret, privateKey, gas);
@@ -109,6 +109,7 @@ export class RevealAuction extends Component {
       setRevealTXHash={this.setRevealTXHash}
       handleInputChange={this.handleInputChange}
       handelRevealFormSubmit={this.handelRevealFormSubmit}
+      handleWarningMessageOpen={this.handleWarningMessageOpen}
     />
   );
 
