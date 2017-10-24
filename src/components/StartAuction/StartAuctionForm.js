@@ -12,15 +12,11 @@ export class StartAuctionForm extends Component {
     open: false,
   };
 
-  handleOpen = () => {
-    (this.props.address && this.props.privateKey) ?
-      this.setState({open: true}) :
-      this.props.handleMessageOpen("Should login first")
-  };
+  handleOpen = () => this.props.address && this.props.privateKey
+    ? this.setState({open: true}) 
+    : this.props.handleMessageOpen('Please Unlock Wallet First.');
 
-  handleClose = () => {
-    this.setState({open: false});
-  };
+  handleClose = () => this.setState({open: false});
 
   render() {
     return (

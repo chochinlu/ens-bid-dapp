@@ -19,7 +19,7 @@ const handleStartAuctionProcess = async (inputObject) => {
 
   const payload = (state === 'Auction') ? 
     newBid(domainName, ethBid, secret, privateKey, gas) :
-    startAuctionAndBid(domainName, ethBid, secret, privateKey, gas)
+    startAuctionAndBid(domainName, ethBid, secret, privateKey, gas);
 
   try {
     returnObj.txHash = await sendRawTransaction(payload);
@@ -52,11 +52,11 @@ export class StartAuction extends Component {
   }
 
   setAuctionTXHash(txHash) {
-    this.setState({auctionTXHash: txHash})
+    this.setState({auctionTXHash: txHash});
   }
 
   setAuctionFormSent(state) {
-    this.setState({auctionFormSent: state})
+    this.setState({auctionFormSent: state});
   }
 
   handleInputChange(event) {
@@ -69,19 +69,11 @@ export class StartAuction extends Component {
     });
   }
 
-  handleMessageOpen = msg => {
-    this.setState({ open: true, message: msg });
-  };
+  handleMessageOpen = msg => this.setState({ open: true, message: msg });
 
-  handleMessageClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleAcceptTerms = () => {
-    (this.state.checked === true) ?
-      this.setState({ checked: false }) :
-      this.setState({ checked: true });
-  }; 
+  handleMessageClose = () => this.setState({ open: false });
+  
+  handleAcceptTerms = () => this.setState({checked: !this.state.checked});
   
   handleAuctionFormSubmit(event) {
     event.preventDefault();

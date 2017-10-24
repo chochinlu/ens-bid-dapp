@@ -3,7 +3,7 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import {SearchEns} from '../SearchEns/SearchEns';
-// import {Content} from './Content';
+// import {Content} from './Content'; 
 // import {FAQ} from './FAQ';
 import {About} from './About';
 import {AuctionWrapper} from '../AuctionWrapper/AuctionWrapper';
@@ -26,9 +26,9 @@ export class MainWrapper extends Component {
       searchFetching: false,
       step: 'StartAuction',
       message: '',
-      open: false,
+      open: false
     };
-    this.handleSearchChange = this.handleSearchChange.bind(this); 
+    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleSearchKeyPress = this.handleSearchKeyPress.bind(this);
     this.setStep = this.setStep.bind(this);
@@ -44,13 +44,9 @@ export class MainWrapper extends Component {
     }
   }
 
-  handleMessageOpen = msg => {
-    this.setState({ open: true, message: msg });
-  };
+  handleMessageOpen = msg => this.setState({open: true, message: msg});
 
-  handleMessageClose = () => {
-    this.setState({ open: false });
-  };
+  handleMessageClose = () => this.setState({open: false});
 
   handleSearchClick(e) {
     e.preventDefault();
@@ -61,10 +57,7 @@ export class MainWrapper extends Component {
         this.setState({fetching: true}); //TODO: not work
         const searchResult = entries(this.state.searchValue);
         searchResult.searchName = this.state.searchValue;
-        this.setState({
-          searchResult,
-          searchFetching: false
-        });
+        this.setState({searchResult, searchFetching: false});
       }
     }
   }
@@ -73,59 +66,42 @@ export class MainWrapper extends Component {
     this.setState({step: name});
   }
 
-  getPage() {
-    switch (this.props.page) {
-      case 'main':
-        return (
-          <Main
-            {...this.state}
-            {...this.props}
-            handleSearchChange={this.handleSearchChange}
-            handleSearchClick={this.handleSearchClick}
-            handleSearchKeyPress={this.handleSearchKeyPress}
-            setStep={this.setStep}
-          />
-        );
-      case 'auction':
-        return (
-          <AuctionWrapper
-            {...this.props}
-            step={this.state.step}
-            setStep={this.setStep}
-            searchResult={this.state.searchResult}
-          />
-        );
-      default:
-        return <Main/>;
-    }
+  mainPage() {
+    return this.props.page === 'main'
+      ? (<Main
+        {...this.state}
+        {...this.props}
+        handleSearchChange={this.handleSearchChange}
+        handleSearchClick={this.handleSearchClick}
+        handleSearchKeyPress={this.handleSearchKeyPress}
+        setStep={this.setStep}/>)
+      : (<AuctionWrapper
+        {...this.props}
+        step={this.state.step}
+        setStep={this.setStep}
+        searchResult={this.state.searchResult}/>);
   }
 
   render() {
+    const mainPage = this.mainPage();
     return (
       <div className="Main">
-        {this.getPage()}
+        {mainPage}
         <Snackbar
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           autoHideDuration={6000}
           open={this.state.open}
           onRequestClose={this.handleMessageClose}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">{this.state.message}</span>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleMessageClose}>
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
+          SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
+          message={< span id = "message-id">{this.state.message}</span>}
+          action={[ 
+            < IconButton 
+              key="close" 
+              aria-label="Close" 
+              color="inherit" 
+              onClick={this.handleMessageClose}> 
+              <CloseIcon/> 
+            </IconButton>]}/>
       </div>
     );
   }
