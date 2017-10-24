@@ -7,7 +7,7 @@ import './StartAuctionInfo.css';
 
 export const StartAuctionInfo = (props) => {
   const endsMomentFromNow = momentFromNow(props.unsealStartsAt);
-  const hidden = props.unsealStartsAt.year() === 1970
+  const hidden = props.unsealStartsAt.year() === 1970;
   const txHashUrl = process.env.REACT_APP_ETHERSCAN_URL + props.auctionTXHash;
 
   return (
