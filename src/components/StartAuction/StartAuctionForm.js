@@ -1,89 +1,11 @@
 import React, {Component} from 'react';
-import {momentFromNow} from '../../lib/util';
-import {
-  startAuctionAndBid,
-  newBid, getRegistrarAddress
-} from '../../lib/ensService';
-import {getEstimateGas, getTransactionFee} from '../../lib/dAppService';
-
 import { FormControlLabel } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import Button from 'material-ui/Button';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-
+import {TimeDuration} from './TimeDuration';
+import {StartAuctionConfirmDiaglog} from './StartAutionConfirmDialog';
 import './StartAuctionForm.css';
-
-const TimeDuration = (props) => (
-  <div>
-    <div>
-      <p>Reveal Bids On</p>
-      <div>{props.unsealStartsAt.toString()}</div>
-      <div>{()=>{momentFromNow(props.unsealStartsAt).toString()}}</div>
-    </div>
-    <div>
-      <p>Auction Finalizes On</p>
-      <div>{props.registratesAt.toString()}</div>
-      <div>{()=>{momentFromNow(props.registratesAt).toString()}}</div>
-    </div>
-  </div>
-);
-
-const StartAuctionConfirmDiaglog = (props) => {
-  const payload = (props.state === 'Open') ? 
-    startAuctionAndBid(
-      props.searchResult.searchName,
-      props.ethBid, props.secret, props.privateKey,
-      props.gas
-    ) :
-    newBid(
-      props.searchResult.searchName,
-      props.ethBid, props.secret, props.privateKey,
-      props.gas
-    )
-
-  const FormInfo = {
-    From: `${props.address}`,
-    To:   getRegistrarAddress(),
-    Fee:  `${getTransactionFee(props.gas, getEstimateGas(payload))} ETH`,
-    ETH:  `${props.ethBid} ETH`,
-  }
-
-  return (
-    <Dialog open={props.open} onRequestClose={props.handleClose}>
-      <DialogTitle>Confirm auction bid information</DialogTitle>
-      <DialogContent>
-        <List>
-          {
-            Object.keys(FormInfo).map((key, index) =>(
-              <ListItem>
-                <ListItemText primary={key} />
-                <ListItemText primary={FormInfo[key]} />
-              </ListItem>    
-            ))
-          }
-        </List>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={props.handleClose}>
-          Cancel
-        </Button>
-        <Button
-          keyboardFocused={true}
-          disabled={!props.checked}
-          onClick={props.handleAuctionFormSubmit}
-        >
-          Submit
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
 
 export class StartAuctionForm extends Component {
   state = {
