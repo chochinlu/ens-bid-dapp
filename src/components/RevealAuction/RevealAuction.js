@@ -109,6 +109,7 @@ export class RevealAuction extends Component {
       setRevealTXHash={this.setRevealTXHash}
       handleInputChange={this.handleInputChange}
       handelRevealFormSubmit={this.handelRevealFormSubmit}
+      handleWarningMessageOpen={this.handleWarningMessageOpen}
     />
   );
 
