@@ -14,10 +14,13 @@ export const StartAuctionConfirmDiaglog = (props) => {
     ? startAuctionAndBid(searchName, ethBid, secret, privateKey, gas)
     : newBid(searchName, ethBid, secret, privateKey, gas)
 
+  const feeString =
+    `${gas} Gwei * ${getEstimateGas(payload)} = ${getTransactionFee(gas, getEstimateGas(payload))} ETH`
+
   const FormInfo = {
     From: `${address}`,
     To: getRegistrarAddress(),
-    "Fee(gasPrice * esitimateGas)": `${getTransactionFee(gas, getEstimateGas(payload))} ETH`,
+    Fee:  feeString,
     ETH: `${ethBid} ETH`
   }
 
