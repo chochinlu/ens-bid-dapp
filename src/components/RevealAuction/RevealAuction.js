@@ -15,8 +15,8 @@ const handleRevealAuctionProcess = async (inputObject) => {
   }
 
   const checkValue = sealedBids(domainName, ethBid, secret, privateKey);
-  if (checkValue = '0x0000000000000000000000000000000000000000') {
-    return returnObj.errMsg = "Invalid sealed bids";
+  if (checkValue === '0x0000000000000000000000000000000000000000') {
+    returnObj.errMsg = 'Invalid sealed bids';
   }
 
   const payload = unsealBid(domainName, ethBid, secret, privateKey, gas);
@@ -84,7 +84,7 @@ export class RevealAuction extends Component {
     const resultObj = handleRevealAuctionProcess(inputObject);
 
     if (resultObj.errMsg === undefined) {
-      this.setRevealTXHash(txHash);
+      this.setRevealTXHash(resultObj.txHash);
       this.setRevealFormSent('sent');  
     } else {
       // TODO
@@ -122,7 +122,7 @@ export class RevealAuction extends Component {
   render() { 
     return(
       <div>
-        {this.state.revealFormSent === 'sent' ? this.revealAutionInfo() : this.revealAuctionForm();}
+        {this.state.revealFormSent === 'sent' ? this.revealAutionInfo() : this.revealAuctionForm()}
         <Warnings
           warningOpen={this.state.warningOpen}
           warningMessage={this.state.warningMessage}
