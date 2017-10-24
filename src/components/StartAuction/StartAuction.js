@@ -40,6 +40,7 @@ export class StartAuction extends Component {
       gas: '21',
       auctionFormSent: '',
       auctionTXHash: '',
+      open: false,
       message: '',
       checked: false,
     }

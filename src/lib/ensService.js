@@ -91,13 +91,18 @@ export const getAllowedTime = (name) => {
 /**
  * @description 檢查是否有相對應的 sealed bid
  * @param {*} name 		
- * @param {*} ether 		
+ * @param {*} ether  - unit eth
  * @param {*} secret 		
  * @param {*} privateKey  
  */
-export const sealedBids = (nameSHA3, ether, secretSHA3, privateKey) => {
+export const sealedBids = (name, ether, secret, privateKey) => {
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);	
-  let bid = contracts.ethRegistrar.shaBid(nameSHA3, fromAddress, web3.fromWei(ether, "wei"), secretSHA3);
+  let bid = contracts.ethRegistrar.shaBid(
+    web3.sha3(name),
+    fromAddress,
+    web3.toWei(ether, 'ether'),
+    web3.sha3(secret)
+  );
   return contracts.ethRegistrar.sealedBids(fromAddress, bid);
 }
 
