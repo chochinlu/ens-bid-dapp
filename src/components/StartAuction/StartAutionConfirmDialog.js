@@ -41,7 +41,6 @@ export const StartAuctionConfirmDiaglog = (props) => {
           Cancel
         </Button>
         <Button
-          keyboardFocused={true}
           disabled={!props.checked}
           onClick={props.handleAuctionFormSubmit}>
           Submit
