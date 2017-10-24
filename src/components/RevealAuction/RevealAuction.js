@@ -81,16 +81,17 @@ export class RevealAuction extends Component {
       privateKey: this.state.privateKey,
       gas:        this.state.gas
     }
-    const resultObj = handleRevealAuctionProcess(inputObject);
 
-    if (resultObj.errMsg === undefined) {
-      this.setRevealTXHash(resultObj.txHash);
-      this.setRevealFormSent('sent');  
-    } else {
-      // TODO
-      // not yet refactoring error message
-      this.handleWarningMessageOpen(resultObj.errMsg);
-    }
+    handleRevealAuctionProcess(inputObject).then((result) => {
+      if (result.errMsg === undefined) {
+        this.setRevealTXHash(result.txHash);
+        this.setRevealFormSent('sent');  
+      } else {
+        // TODO
+        // not yet refactoring error message
+        this.handleWarningMessageOpen(result.errMsg);
+      }
+    });
   }
 
   handleWarningMessageClose() {

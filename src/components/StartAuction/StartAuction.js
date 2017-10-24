@@ -91,16 +91,17 @@ export class StartAuction extends Component {
       privateKey: this.props.privateKey,
       gas:        this.state.gas
     }
-    const resultObj = handleStartAuctionProcess(inputObject);
-
-    if (resultObj.errMsg === undefined) {
-      this.setAuctionTXHash(resultObj.txHash);
-      this.setAuctionFormSent('sent');  
-    } else {
-      // TODO
-      // not yet refactoring error message
-      this.handleMessageOpen(resultObj.errMsg);
-    }
+    
+    handleStartAuctionProcess(inputObject).then((result) => {
+      if (result.errMsg === undefined) {
+        this.setAuctionTXHash(result.txHash);
+        this.setAuctionFormSent('sent');  
+      } else {
+        // TODO
+        // not yet refactoring error message
+        this.handleMessageOpen(result.errMsg);
+      }
+    });
   }
 
   startAuctionPage() {
