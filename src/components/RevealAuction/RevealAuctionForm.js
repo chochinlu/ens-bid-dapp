@@ -8,15 +8,6 @@ import './RevealAuctionForm.css';
 const FormComponent = (props) => (
   <div className="RevealAuctionForm">
     <div className="RevealAuctionForm-field">
-      <input
-        type="email"
-        id="email"
-        name="email"
-        label="Email"
-        value={props.email}
-        onChange={props.handleInputChange}
-        placeholder="youremail@example.com"
-      />
       <TextField
         id="email"
         name="email"
