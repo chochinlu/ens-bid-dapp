@@ -70,7 +70,7 @@ export class RevealAuctionForm extends Component {
   };
 
   handleOpen = () => {
-    if (this.props.address && this.props.privateKey) {
+    if (!(this.props.address && this.props.privateKey)) {
       this.props.handleWarningMessageOpen("Should login first");
     }
 
