@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import {momentFromNow} from '../../lib/util';
+import {sealedBids} from '../../lib/ensService';
 import {RevealAuctionConfirmDialog} from './RevealAuctionConfirmDialog';
 import './RevealAuctionForm.css';
 
@@ -69,9 +70,21 @@ export class RevealAuctionForm extends Component {
   };
 
   handleOpen = () => {
-    (this.props.address && this.props.privateKey) ?
-      this.setState({open: true}) :
-      this.props.handleWarningMessageOpen("Should login first")
+    if (this.props.address && this.props.privateKey) {
+      this.props.handleWarningMessageOpen("Should login first");
+    }
+
+    const checkValue = sealedBids(
+      this.props.searchResult.searchName,
+      this.props.ethBid,
+      this.props.secret,
+      this.props.privateKey
+    );
+    if (checkValue === '0x0000000000000000000000000000000000000000') {
+      this.props.handleWarningMessageOpen("Invalid sealed bids");
+    }
+
+    this.setState({open: true});
   }
 
   handleClose = () => {
