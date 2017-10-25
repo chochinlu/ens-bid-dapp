@@ -60,13 +60,9 @@ export class StartAuction extends Component {
   }
 
   handleInputChange(event) {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
+    const {name, value} = event.target;
     
-    this.setState({
-      [name]: value
-    });
+    this.setState({ [name]: value });
   }
 
   handleMessageOpen = msg => this.setState({ open: true, message: msg });
@@ -124,32 +120,40 @@ export class StartAuction extends Component {
     );
   }
 
+  snack() {
+    return (
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        autoHideDuration={6000}
+        open={this.state.open}
+        onRequestClose={this.handleMessageClose}
+        SnackbarContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{this.state.message}</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            onClick={this.handleMessageClose}>
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
+    );
+  }
+
   render() {
+    const startAuctionPage = this.startAuctionPage();
+    const snack = this.snack();
     return (
       <div>
-        {this.startAuctionPage()}
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          autoHideDuration={6000}
-          open={this.state.open}
-          onRequestClose={this.handleMessageClose}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">{this.state.message}</span>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleMessageClose}>
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
+        {startAuctionPage}
+        {snack}
       </div>
     );
   }
