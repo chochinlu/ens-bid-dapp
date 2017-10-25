@@ -21,7 +21,7 @@ export const Warnings = (props) => (
         key="close"
         aria-label="Close"
         color="inherit"
-        onClick={this.handleWarningMessageClose}>
+        onClick={props.handleWarningMessageClose}>
         <CloseIcon />
       </IconButton>,
     ]}
