@@ -240,6 +240,13 @@ export class StartAuctionForm extends Component {
     return ethBidErr || secretErr || gasErr || !checked;
   }
 
+  inputResult = () => ({
+    email: this.state.email,
+    ethBid: this.state.ethBid,
+    secret: this.state.secret,
+    gas: this.state.gas
+  })
+
   render() {
     const domainName = <h2>{this.props.searchResult.searchName}.eth</h2>;
 
@@ -251,6 +258,7 @@ export class StartAuctionForm extends Component {
     const startAuctionConfirmDiaglog = this.state.open &&
       <StartAuctionConfirmDiaglog
         {...this.props}
+        inputResult={this.inputResult()}
         open={this.state.open}
         handleClose={this.handleClose}
       />;

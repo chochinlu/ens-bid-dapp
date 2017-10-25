@@ -7,7 +7,8 @@ import Button from 'material-ui/Button';
 
 export const StartAuctionConfirmDiaglog = (props) => {
 
-  const {searchResult: {searchName}, ethBid, secret, privateKey, gas, address, state} = props;
+  const {searchResult: {searchName}, privateKey, address, state} = props;
+  const {ethBid, secret, gas} = props.inputResult;
   const {open, handleClose} = props;
 
   const payload = (state === 'Open')
@@ -44,7 +45,6 @@ export const StartAuctionConfirmDiaglog = (props) => {
           Cancel
         </Button>
         <Button
-          disabled={!props.checked}
           onClick={props.handleAuctionFormSubmit}>
           Submit
         </Button>
