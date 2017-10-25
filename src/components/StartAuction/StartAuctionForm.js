@@ -79,9 +79,10 @@ const ConfirmTermsCheckBox = (props) => (
 const FormSubmit = (props) => (
   <div className='StartAuctionForm-submit'>
     <Button
+      disabled={props.disabled}
       raised
       label='Dialog'
-      onClick={this.handleOpen} >
+      onClick={props.onClick} >
       Confirm Submit
     </Button>
   </div>
@@ -176,7 +177,7 @@ export class StartAuctionForm extends Component {
       gasErrMsg: ''
     });
 
-  };
+  }
 
   handleInputChange = (e) => {
     const {name, value} = e.target;
@@ -194,11 +195,11 @@ export class StartAuctionForm extends Component {
         break;
       default:
     }
-  };
+  }
 
   handleSubmit = () => {
     //TODO: if no error , call this.props.handleAuctionFormSubmit
-  };
+  }
 
   textFields = () => (
     <div className="StartAuctionForm-field">
@@ -229,7 +230,12 @@ export class StartAuctionForm extends Component {
         onChange={this.props.handleAcceptTerms}
       />
     </div>
-  );
+  )
+
+  submitDisabled = () => {
+    const {ethBidErr, secretErr, gasErr} = this.state;
+    return ethBidErr || secretErr || gasErr;
+  }
 
   render() {
     const domainName = <h2>{this.props.searchResult.searchName}.eth</h2>;
@@ -251,7 +257,7 @@ export class StartAuctionForm extends Component {
         {domainName}
         {timeDuration}
         {testFields}
-        <FormSubmit onClick={this.handleOpen} />
+        <FormSubmit onClick={this.handleOpen} disabled={this.submitDisabled()} />
         {startAuctionConfirmDiaglog}
       </div>
     );
