@@ -36,6 +36,7 @@ const EthBidTextField = (props) => (
 
 const SecretTextField = (props) => (
   <TextField
+    error={props.error}
     id="secret"
     name="secret"
     label="Secret"
@@ -43,21 +44,21 @@ const SecretTextField = (props) => (
     onChange={props.onChange}
     margin='normal'
     placeholder='0.0'
-    helperText='Please protect your bid with random numbers and characters'
+    helperText={props.error ? props.errMsg : 'Protect your bid with random numbers and characters'}
   />
 );
 
-//TODO: need more than 1 GWei
 const GasTextField = (props) => (
   <TextField
+    error={props.error}
     id='gas'
     name='gas'
-    label='Gas Price'
+    label='Gas Price (Gwei)'
     type='number'
     value={props.value}
     onChange={props.onChange}
     margin='normal'
-    helperText='Recommend use 21 Gwei'
+    helperText={props.error ? props.errMsg : 'Recommend use 21 Gwei'}
   />
 );
 
@@ -85,13 +86,21 @@ const FormSubmit = (props) => (
     </Button>
   </div>
 );
+
 export class StartAuctionForm extends Component {
-  state = {
+  state = { 
     open: false,
+    email: '',
     ethBid: '0.01',
+    secret: '0',
+    gas: '21',
+    emailErr: false,
     ethBidErr: false,
+    secretErr: false,
     gasErr: false,
-    ethBidErrMsg: ''
+    ethBidErrMsg: '',
+    secretErrMsg: '',
+    gasErrMsg: ''
   };
 
   handleOpen = () => this.props.address && this.props.privateKey
@@ -127,6 +136,48 @@ export class StartAuctionForm extends Component {
     });
   }
 
+  checkSecret = (v) => {
+    //not empty
+    if (v === '') {
+      this.setState({
+        secretErr: true,
+        secretErrMsg: 'Please input random numbers and characters.'
+      });
+      return;
+    }
+
+    this.setState({
+      secretErr: false,
+      secretErrMsg: ''
+    });
+  }
+
+  checkGas = (v) => {
+    //not empty
+    if (v === '') {
+      this.setState({
+        gasErr: true,
+        gasErrMsg: 'Please input a number.'
+      });
+      return;
+    }
+
+    //value >= 1
+    if (parseFloat(v, 10) <= 1) {
+      this.setState({
+        gasErr: true,
+        gasErrMsg: 'Please input a number large than 1'
+      });
+      return;
+    }
+
+    this.setState({
+      gasErr: false,
+      gasErrMsg: ''
+    });
+
+  };
+
   handleInputChange = (e) => {
     const {name, value} = e.target;
     this.setState({ [name]: value });
@@ -135,34 +186,49 @@ export class StartAuctionForm extends Component {
       case 'ethBid': 
         this.checkEthBid(value);
         break;
+      case 'secret':
+        this.checkSecret(value);
+        break;
+      case 'gas':
+        this.checkGas(value);
+        break;
       default:
     }
   };
+
+  handleSubmit = () => {
+    //TODO: if no error , call this.props.handleAuctionFormSubmit
+  };
+
   textFields = () => (
-        <div className="StartAuctionForm-field">
+    <div className="StartAuctionForm-field">
       <EmailTextField 
-            value={this.props.email}
-            onChange={this.props.handleInputChange}
-          />
+        value={this.props.email}
+        onChange={this.handleInputChange}
+      />
       <EthBidTextField 
         error={this.state.ethBidErr}
         errMsg={this.state.ethBidErrMsg}
         value={this.state.ethBid}
         onChange={this.handleInputChange}
-          />
+      />
       <SecretTextField 
-            value={this.props.secret}
-            onChange={this.props.handleInputChange}
-          />
+        error={this.state.secretErr}
+        errMsg={this.state.secretErrMsg}
+        value={this.state.secret}
+        onChange={this.handleInputChange}
+      />
       <GasTextField 
-            value={this.props.gas}
-            onChange={this.props.handleInputChange}
-          />
+        error={this.state.gasErr}
+        errMsg={this.state.gasErrMsg}
+        value={this.state.gas}
+        onChange={this.handleInputChange}
+      />
       <ConfirmTermsCheckBox 
-                checked={this.props.checked}
-                onChange={this.props.handleAcceptTerms}
-          />
-        </div>
+        checked={this.props.checked}
+        onChange={this.props.handleAcceptTerms}
+      />
+    </div>
   );
 
   render() {
@@ -174,10 +240,10 @@ export class StartAuctionForm extends Component {
     const testFields = this.textFields();
 
     const startAuctionConfirmDiaglog = this.state.open &&
-          <StartAuctionConfirmDiaglog
-            {...this.props}
-            open={this.state.open}
-            handleClose={this.handleClose}
+      <StartAuctionConfirmDiaglog
+        {...this.props}
+        open={this.state.open}
+        handleClose={this.handleClose}
       />;
 
     return (
