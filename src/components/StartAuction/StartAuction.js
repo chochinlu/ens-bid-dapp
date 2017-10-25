@@ -34,10 +34,6 @@ export class StartAuction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      ethBid: '',
-      secret: '',
-      gas: '21',
       auctionFormSent: '',
       auctionTXHash: '',
       open: false,
@@ -46,9 +42,7 @@ export class StartAuction extends Component {
     }
     this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
     this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAuctionFormSubmit = this.handleAuctionFormSubmit.bind(this);
-    this.handleAcceptTerms = this.handleAcceptTerms.bind(this);
   }
 
   setAuctionTXHash(txHash) {
@@ -59,45 +53,36 @@ export class StartAuction extends Component {
     this.setState({auctionFormSent: state});
   }
 
-  handleInputChange(event) {
-    const {name, value} = event.target;
-    
-    this.setState({ [name]: value });
-  }
-
   handleMessageOpen = msg => this.setState({ open: true, message: msg });
 
   handleMessageClose = () => this.setState({ open: false });
   
-  handleAcceptTerms = () => this.setState({checked: !this.state.checked});
-  
-  handleAuctionFormSubmit(event) {
-    event.preventDefault();
+  handleAuctionFormSubmit(inputResult) {
 
     if (!(this.props.address && this.props.privateKey)) {
       this.handleMessageOpen('Please unlock wallet before bid ENS.');
       return;
     }
 
-    const inputObj = {
+    const {ethBid, secret, gas} = inputResult;    
+    const inputObject = {
       state:      this.props.searchResult.state,
       domainName: this.props.searchResult.searchName,
-      ethBid:     this.state.ethBid,
-      secret:     this.state.secret,
+      ethBid,
+      secret,
       privateKey: this.props.privateKey,
-      gas:        this.state.gas
+      gas
+    };
+    const resultObj = handleStartAuctionProcess(inputObject);
+
+    if (resultObj.errMsg === undefined) {
+      this.setAuctionTXHash(resultObj.txHash);
+      this.setAuctionFormSent('sent');  
+    } else {
+      // TODO
+      // not yet refactoring error message
+      this.handleMessageOpen(resultObj.errMsg);
     }
-    
-    handleStartAuctionProcess(inputObj).then((result) => {
-      if (result.errMsg === undefined) {
-        this.setAuctionTXHash(result.txHash);
-        this.setAuctionFormSent('sent');  
-      } else {
-        // TODO
-        // not yet refactoring error message
-        this.handleMessageOpen(result.errMsg);
-      }
-    });
   }
 
   startAuctionPage() {

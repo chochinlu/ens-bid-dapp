@@ -45,7 +45,7 @@ export const StartAuctionConfirmDiaglog = (props) => {
           Cancel
         </Button>
         <Button
-          onClick={props.handleAuctionFormSubmit}>
+          onClick={props.handleAuctionFormSubmit(props.inputResult)}>
           Submit
         </Button>
       </DialogActions>
