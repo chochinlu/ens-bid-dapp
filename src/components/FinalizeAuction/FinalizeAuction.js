@@ -1,8 +1,10 @@
 // @flow weak
 import React, {Component} from 'react';
+import {Warnings} from '../Common/Warnings';
 import {finalizeAuction} from '../../lib/ensService';
 import {sendRawTransaction} from '../../lib/dAppService';
 import {FinalizeAuctionInfo} from './FinalizeAuctionInfo';
+import {FinalizeAuctionForm} from './FinalizeAuctionForm';
 import './FinalizeAuction.css';
 
 const handleFinalizeAuctionProcess = async (inputObj) => {
@@ -21,36 +23,6 @@ const handleFinalizeAuctionProcess = async (inputObj) => {
 
   return returnObj;
 }
-
-const FinalizeAuctionForm = (props) => (
-  <div>
-    <h2>{props.searchResult.searchName}.eth</h2>
-    <div>
-      <p>Finalize Auction On</p>
-      <div>{props.registratesAt.toString()}</div>
-      <div>Finalization</div>
-    </div>
-    <div>
-      <form onSubmit={props.handleFormSubmit}>
-        <div>
-          <label>
-            Email:
-            <input
-              name="email"
-              type="email"
-              placeholder="youremail@example.com"
-              value={props.email}
-              onChange={props.handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    </div>
-  </div>
-);
 
 export class FinalizeAuction extends Component {
   constructor(props) {
@@ -120,12 +92,24 @@ export class FinalizeAuction extends Component {
   finalizeAuctionForm = () => (
     <FinalizeAuctionForm
       {...this.props}
+      {...this.state}
       setFinalFormSent={this.setFinalFormSent}
       handleChange={this.handleChange}
       handleFormSubmit={this.handleFormSubmit}
     />
   )
 
-  render = () => this.state.finalFormSent === 'sent' ?
-  this.finalizeAuctionInfo() : this.finalizeAuctionForm();
+  render() {
+    return(
+      <div>
+        {this.state.finalFormSent === 'sent' ?
+        this.finalizeAuctionInfo() : this.finalizeAuctionForm()}
+        <Warnings
+          warningOpen={this.state.warningOpen}
+          warningMessage={this.state.warningMessage}
+          handleWarningMessageClose={this.handleWarningMessageClose}
+        />
+      </div>
+    )
+  }
 }
