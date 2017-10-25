@@ -13,7 +13,7 @@ const handleRevealAuctionProcess = async (inputObj) => {
     txHash: '',
     errMsg: undefined
   }
-  console.log(inputObj);
+
   const checkValue = sealedBids(domainName, ethBid, secret, privateKey);
   if (checkValue === '0x0000000000000000000000000000000000000000') {
     return returnObj.errMsg = "Invalid sealed bids";
