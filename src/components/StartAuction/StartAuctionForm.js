@@ -7,6 +7,84 @@ import {TimeDuration} from './TimeDuration';
 import {StartAuctionConfirmDiaglog} from './StartAutionConfirmDialog';
 import './StartAuctionForm.css';
 
+const EmailTextField = (props) => (
+  <TextField
+    id='email'
+    name='email'
+    label='Email'
+    value={props.value}
+    onChange={props.onChange}
+    margin='normal'
+    placeholder='youremail@example.com'
+    helperText='The bid information will send to this email'
+  />
+);
+
+const EthBidTextField = (props) => (
+  <TextField
+    error={props.error}
+    id='ethBid'
+    name='ethBid'
+    label='ETH'
+    value={props.value}
+    onChange={props.onChange}
+    margin='normal'
+    placeholder='0.01'
+    helperText='Bid amount'
+  />
+);
+
+const SecretTextField = (props) => (
+  <TextField
+    id="secret"
+    name="secret"
+    label="Secret"
+    value={props.value}
+    onChange={props.onChange}
+    margin='normal'
+    placeholder='0.0'
+    helperText='Please protect your bid with random numbers and characters'
+  />
+);
+
+//TODO: need more than 1 GWei
+const GasTextField = (props) => (
+  <TextField
+    id='gas'
+    name='gas'
+    label='Gas Price'
+    type='number'
+    value={props.value}
+    onChange={props.onChange}
+    margin='normal'
+    helperText='Recommend use 21 Gwei'
+  />
+);
+
+const ConfirmTermsCheckBox = (props) => (
+  <FormControlLabel
+    className='StartAuctionForm-terms'
+    control={
+      <Checkbox
+        checked={props.checked}
+        onChange={props.onChange}
+        value='checked'
+      />
+    }
+    label='I understand how the process works and my risks and responsibilities involved.'
+  />
+);
+
+const FormSubmit = (props) => (
+  <div className='StartAuctionForm-submit'>
+    <Button
+      raised
+      label='Dialog'
+      onClick={this.handleOpen} >
+      Confirm Submit
+    </Button>
+  </div>
+);
 export class StartAuctionForm extends Component {
   state = {
     open: false,
@@ -18,80 +96,54 @@ export class StartAuctionForm extends Component {
 
   handleClose = () => this.setState({open: false});
 
-  render() {
-    return (
-      <div className="StartAuctionForm">
-        <h2>{this.props.searchResult.searchName}.eth</h2>
-        { this.props.searchResult.state === 'Auction' && <TimeDuration {...this.props} /> }
+  textFields = () => (
         <div className="StartAuctionForm-field">
-          <TextField
-            id="email"
-            name="email"
-            label="Email"
+      <EmailTextField 
             value={this.props.email}
             onChange={this.props.handleInputChange}
-            margin="normal"
-            placeholder="youremail@example.com"
-            helperText="The bid information will send to this email"
           />
-          <TextField
-            id="ethBid"
-            name="ethBid"
-            label="ETH"
+      <EthBidTextField 
+        error={this.state.ethBidErr}
             value={this.props.ethBid}
-            onChange={this.props.handleInputChange}
-            margin="normal"
-            placeholder="0.01"
-            helperText="Bid amount"
+        onChange={this.handleInputChange}
           />
-          <TextField
-            id="secret"
-            name="secret"
-            label="Secret"
+      <SecretTextField 
             value={this.props.secret}
             onChange={this.props.handleInputChange}
-            margin="normal"
-            placeholder="passphrase"
-            helperText="Please protect your bid with random numbers and characters"
           />
-          {/* not lower than 1 Gwei */}
-          <TextField
-            id="gas"
-            name="gas"
-            label="Gas Price"
-            type="number"
+      <GasTextField 
             value={this.props.gas}
             onChange={this.props.handleInputChange}
-            margin="normal"
-            helperText="Recommend use 21 Gwei"
           />
-          <FormControlLabel
-            className="StartAuctionForm-terms"
-            control={
-              <Checkbox
+      <ConfirmTermsCheckBox 
                 checked={this.props.checked}
                 onChange={this.props.handleAcceptTerms}
-                value="checked"
-              />
-            }
-            label="I understand how the process works and my risks and responsibilities involved."
           />
         </div>
-        <div className="StartAuctionForm-submit">
-          <Button
-            raised
-            label="Dialog"
-            onClick={this.handleOpen} >
-            Confirm Submit
-          </Button>
-        </div>
-        {this.state.open &&
+  );
+
+  render() {
+    const domainName = <h2>{this.props.searchResult.searchName}.eth</h2>;
+
+    const timeDuration =  this.props.searchResult.state === 'Auction' && 
+      <TimeDuration {...this.props} />;
+    
+    const testFields = this.textFields();
+
+    const startAuctionConfirmDiaglog = this.state.open &&
           <StartAuctionConfirmDiaglog
             {...this.props}
             open={this.state.open}
             handleClose={this.handleClose}
-          />
-        }
+      />;
+
+    return (
+      <div className="StartAuctionForm">
+        {domainName}
+        {timeDuration}
+        {testFields}
+        <FormSubmit onClick={this.handleOpen} />
+        {startAuctionConfirmDiaglog}
       </div>
     );
   };
