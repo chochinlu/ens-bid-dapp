@@ -78,7 +78,7 @@ export class RevealAuction extends Component {
       domainName: this.props.searchResult.searchName,
       ethBid:     this.state.ethBid,
       secret:     this.state.secret,
-      privateKey: this.state.privateKey,
+      privateKey: this.props.privateKey,
       gas:        this.state.gas
     }
 
@@ -105,6 +105,7 @@ export class RevealAuction extends Component {
   revealAuctionForm = () => (
     <RevealAuctionForm
       {...this.props}
+      {...this.state}
       endsAt={this.state.endsAt}
       setRevealFormSent={this.setRevealFormSent}
       setRevealTXHash={this.setRevealTXHash}
