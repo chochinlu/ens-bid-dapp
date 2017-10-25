@@ -95,6 +95,7 @@ export class StartAuctionForm extends Component {
     ethBid: '0.01',
     secret: '0',
     gas: '21',
+    checked: false,
     emailErr: false,
     ethBidErr: false,
     secretErr: false,
@@ -201,6 +202,8 @@ export class StartAuctionForm extends Component {
     //TODO: if no error , call this.props.handleAuctionFormSubmit
   }
 
+  handleAcceptTerms = () => this.setState({checked: !this.state.checked});
+
   textFields = () => (
     <div className="StartAuctionForm-field">
       <EmailTextField 
@@ -226,15 +229,15 @@ export class StartAuctionForm extends Component {
         onChange={this.handleInputChange}
       />
       <ConfirmTermsCheckBox 
-        checked={this.props.checked}
-        onChange={this.props.handleAcceptTerms}
+        checked={this.state.checked}
+        onChange={this.handleAcceptTerms}
       />
     </div>
   )
 
   submitDisabled = () => {
-    const {ethBidErr, secretErr, gasErr} = this.state;
-    return ethBidErr || secretErr || gasErr;
+    const {ethBidErr, secretErr, gasErr, checked} = this.state;
+    return ethBidErr || secretErr || gasErr || !checked;
   }
 
   render() {
