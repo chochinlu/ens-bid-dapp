@@ -7,8 +7,8 @@ import {sealedBids, unsealBid} from '../../lib/ensService';
 import {sendRawTransaction} from '../../lib/dAppService';
 import './RevealAuction.css';
 
-const handleRevealAuctionProcess = async (inputObject) => {
-  const {domainName, ethBid, secret, privateKey, gas} = inputObject;
+const handleRevealAuctionProcess = async (inputObj) => {
+  const {domainName, ethBid, secret, privateKey, gas} = inputObj;
   let returnObj = {
     txHash: '',
     errMsg: undefined
@@ -74,7 +74,7 @@ export class RevealAuction extends Component {
       return;
     }
 
-    const inputObject = {
+    const inputObj = {
       domainName: this.props.searchResult.searchName,
       ethBid:     this.state.ethBid,
       secret:     this.state.secret,
@@ -82,7 +82,7 @@ export class RevealAuction extends Component {
       gas:        this.state.gas
     }
 
-    handleRevealAuctionProcess(inputObject).then((result) => {
+    handleRevealAuctionProcess(inputObj).then((result) => {
       if (result.errMsg === undefined) {
         this.setRevealTXHash(result.txHash);
         this.setRevealFormSent('sent');  
@@ -106,7 +106,6 @@ export class RevealAuction extends Component {
     <RevealAuctionForm
       {...this.props}
       {...this.state}
-      endsAt={this.state.endsAt}
       setRevealFormSent={this.setRevealFormSent}
       setRevealTXHash={this.setRevealTXHash}
       handleInputChange={this.handleInputChange}

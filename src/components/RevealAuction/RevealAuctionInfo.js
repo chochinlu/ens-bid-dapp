@@ -7,7 +7,7 @@ import './RevealAuctionInfo.css';
 
 export const RevealAuctionInfo = (props) => {
   const endsmomentFromNow = momentFromNow(props.registratesAt);
-  const hidden = props.unsealStartsAt.year() === 1970;
+  const hidden = props.registratesAt.year() === 1970;
   const ethersacnUrl = process.env.REACT_APP_ETHERSCAN_URL || 'https://ropsten.etherscan.io/tx/';
   const txHashUrl = ethersacnUrl + props.revealTXHash;
 

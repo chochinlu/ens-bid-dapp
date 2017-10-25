@@ -9,8 +9,8 @@ import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import './StartAuction.css';
 
-const handleStartAuctionProcess = async (inputObject) => {
-  const {state, domainName, ethBid, secret, privateKey, gas} = inputObject;
+const handleStartAuctionProcess = async (inputObj) => {
+  const {state, domainName, ethBid, secret, privateKey, gas} = inputObj;
 
   let returnObj = {
     txHash: '',
@@ -83,7 +83,7 @@ export class StartAuction extends Component {
       return;
     }
 
-    const inputObject = {
+    const inputObj = {
       state:      this.props.searchResult.state,
       domainName: this.props.searchResult.searchName,
       ethBid:     this.state.ethBid,
@@ -92,7 +92,7 @@ export class StartAuction extends Component {
       gas:        this.state.gas
     }
     
-    handleStartAuctionProcess(inputObject).then((result) => {
+    handleStartAuctionProcess(inputObj).then((result) => {
       if (result.errMsg === undefined) {
         this.setAuctionTXHash(result.txHash);
         this.setAuctionFormSent('sent');  
