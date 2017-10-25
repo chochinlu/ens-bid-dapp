@@ -30,7 +30,7 @@ const EthBidTextField = (props) => (
     onChange={props.onChange}
     margin='normal'
     placeholder='0.01'
-    helperText='Bid amount'
+    helperText={props.error ? props.errMsg : 'Bid amount'}
   />
 );
 
@@ -88,6 +88,10 @@ const FormSubmit = (props) => (
 export class StartAuctionForm extends Component {
   state = {
     open: false,
+    ethBid: '0.01',
+    ethBidErr: false,
+    gasErr: false,
+    ethBidErrMsg: ''
   };
 
   handleOpen = () => this.props.address && this.props.privateKey
@@ -96,6 +100,44 @@ export class StartAuctionForm extends Component {
 
   handleClose = () => this.setState({open: false});
 
+  checkEthBid = (v) => {
+    
+    //only number
+    const reg = /^[+-]?\d+(\.\d+)?$/;
+    if (!reg.test(v)) {
+      this.setState({
+        ethBidErr: true,
+        ethBidErrMsg: 'Bid amount: Please input a valid number'
+      });
+      return;
+    } 
+
+    //value !== 0
+    if (parseFloat(v, 10) === 0) {
+      this.setState({
+        ethBidErr: true,
+        ethBidErrMsg: 'Bid amount: Please input a non-zero number'
+      });
+      return;
+    }
+    
+    this.setState({
+      ethBidErr: false,
+      ethBidErrMsg: ''
+    });
+  }
+
+  handleInputChange = (e) => {
+    const {name, value} = e.target;
+    this.setState({ [name]: value });
+
+    switch (name) {
+      case 'ethBid': 
+        this.checkEthBid(value);
+        break;
+      default:
+    }
+  };
   textFields = () => (
         <div className="StartAuctionForm-field">
       <EmailTextField 
@@ -104,7 +146,8 @@ export class StartAuctionForm extends Component {
           />
       <EthBidTextField 
         error={this.state.ethBidErr}
-            value={this.props.ethBid}
+        errMsg={this.state.ethBidErrMsg}
+        value={this.state.ethBid}
         onChange={this.handleInputChange}
           />
       <SecretTextField 
