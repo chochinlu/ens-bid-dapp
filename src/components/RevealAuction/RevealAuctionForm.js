@@ -72,6 +72,7 @@ export class RevealAuctionForm extends Component {
   handleOpen = () => {
     if (!(this.props.address && this.props.privateKey)) {
       this.props.handleWarningMessageOpen("Should login first");
+      return
     }
 
     const checkValue = sealedBids(
@@ -82,6 +83,7 @@ export class RevealAuctionForm extends Component {
     );
     if (checkValue === '0x0000000000000000000000000000000000000000') {
       this.props.handleWarningMessageOpen("Invalid sealed bids");
+      return
     }
 
     this.setState({open: true});
