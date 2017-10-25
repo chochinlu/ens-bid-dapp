@@ -2,6 +2,11 @@
   "name": "ens-bid-dapp",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "8.x.x",
+    "npm": "5.x.x",
+    "yarn": "1.x.x"
+  },
   "dependencies": {
     "classnames": "^2.2.5",
     "ethereum-ens": "^0.4.2",
