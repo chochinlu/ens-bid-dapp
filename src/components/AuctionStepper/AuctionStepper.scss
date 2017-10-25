@@ -4,7 +4,7 @@ $circle-radius: $circle-diameter / 2;
 .Stepper {
   display: flex;
   justify-content: space-between;
-  margin-top: 2em;
+  margin-top: 5em;
   margin-bottom: 1em;
 
   :first-child{
@@ -24,8 +24,8 @@ $circle-radius: $circle-diameter / 2;
   justify-content: center;
   border: 2px solid #252c3e;
   border-radius: 50%;
-  min-width: $circle-diameter;
-  max-height: $circle-diameter;
+  width: $circle-diameter;
+  height: $circle-diameter;
 }
 
 .Light {
