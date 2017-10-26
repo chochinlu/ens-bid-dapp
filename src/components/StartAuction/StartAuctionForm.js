@@ -198,18 +198,14 @@ export class StartAuctionForm extends Component {
     }
   }
 
-  handleSubmit = () => {
-    //TODO: if no error , call this.props.handleAuctionFormSubmit
-  }
-
   handleAcceptTerms = () => this.setState({checked: !this.state.checked});
 
   textFields = () => (
     <div className="StartAuctionForm-field">
-      <EmailTextField 
+      {/* <EmailTextField 
         value={this.props.email}
         onChange={this.handleInputChange}
-      />
+      /> */}
       <EthBidTextField 
         error={this.state.ethBidErr}
         errMsg={this.state.ethBidErrMsg}
