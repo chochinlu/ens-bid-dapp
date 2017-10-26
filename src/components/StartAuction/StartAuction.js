@@ -39,6 +39,7 @@ export class StartAuction extends Component {
       open: false,
       message: '',
       checked: false,
+      formResult: {}
     }
     this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
     this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
@@ -78,6 +79,7 @@ export class StartAuction extends Component {
       if (result.errMsg === undefined) {
         this.setAuctionTXHash(result.txHash);
         this.setAuctionFormSent('sent');
+        // this.setAuctionFormResult(inputResult);
       } else {
         // TODO
         // not yet refactoring error message

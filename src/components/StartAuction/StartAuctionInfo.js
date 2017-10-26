@@ -26,9 +26,9 @@ export const StartAuctionInfo = (props) => {
             </Typography>
           )
         }
-        <Typography type="title" component="div">
+        {/* <Typography type="title" component="div">
           Email: {props.email}
-        </Typography>
+        </Typography> */}
         <Typography type="title" component="div">
           ETH: {props.ethBid}
         </Typography>

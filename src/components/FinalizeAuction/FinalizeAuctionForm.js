@@ -100,8 +100,8 @@ export class FinalizeAuctionForm extends Component {
   }
 
   handleInputChange(event) {
-    const {name, vaule} = event.target;
-    this.state({ [name]: value });
+    const {name, value} = event.target;
+    this.setState({ [name]: value });
 
     switch (name) {
       case 'gas':
