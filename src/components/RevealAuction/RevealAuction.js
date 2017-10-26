@@ -33,10 +33,6 @@ export class RevealAuction extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: '',
-      ethBid: '',
-      secret: '',
-      gas: '21',
       revealFormSent: '',
       revealTXHash: '',
       warningOpen: false,
@@ -44,7 +40,6 @@ export class RevealAuction extends Component {
     }
     this.setRevealFormSent = this.setRevealFormSent.bind(this);
     this.setRevealTXHash = this.setRevealTXHash.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.handelRevealFormSubmit = this.handelRevealFormSubmit.bind(this);
     this.handleWarningMessageClose = this.handleWarningMessageClose.bind(this);
     this.handleWarningMessageOpen = this.handleWarningMessageOpen.bind(this);
@@ -58,20 +53,19 @@ export class RevealAuction extends Component {
     this.setState({revealTXHash: txHash})
   }
 
-  handelRevealFormSubmit(event) {
-    event.preventDefault();
-
+  handelRevealFormSubmit(inputResult) {
     if (!(this.props.address && this.props.privateKey)) {
       this.handleWarningMessageOpen('Please unlock wallet before bid ENS.');
       return;
     }
 
+    const {ethBid, secret, gas} = inputResult;
     const inputObj = {
       domainName: this.props.searchResult.searchName,
-      ethBid:     this.state.ethBid,
-      secret:     this.state.secret,
       privateKey: this.props.privateKey,
-      gas:        this.state.gas
+      ethBid,
+      secret,
+      gas
     }
 
     handleRevealAuctionProcess(inputObj).then((result) => {

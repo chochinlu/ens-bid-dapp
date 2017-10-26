@@ -7,7 +7,8 @@ import List, {ListItem, ListItemText} from 'material-ui/List';
 
 export const RevealAuctionConfirmDialog = (props) => {
 
-  const {searchResult: {searchName}, ethBid, secret, privateKey, gas, address} = props;
+  const {searchResult: {searchName}, privateKey, address} = props;
+  const {ethBid, secret, gas} = props.inputResult;
   const {open, handleClose} = props;
 
   const payload = unsealBid(searchName, ethBid, secret, privateKey, gas);
@@ -43,7 +44,7 @@ export const RevealAuctionConfirmDialog = (props) => {
           Cancel
         </Button>
         <Button
-          onClick={props.handelRevealFormSubmit}
+          onClick={() => props.handelRevealFormSubmit(props.inputResult)}
         >
           Submit
         </Button>
