@@ -1,5 +1,7 @@
+@import '../scss/_color.scss';
+
 .AppBar {
-  background-color: #6203B8 !important;
+  background-color: $primary-color-light !important;
 }
 
 .Top {
@@ -19,7 +21,7 @@
 }
 
 .selected {
-  background: #585f87;
+  background: $accent-color-blue;
   color: white;
 }
 
