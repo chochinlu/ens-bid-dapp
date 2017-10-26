@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import './RevealAuctionInfo.css';
 
 export const RevealAuctionInfo = (props) => {
-  const endsmomentFromNow = momentFromNow(props.registratesAt);
+  const endsMomentFromNow = momentFromNow(props.registratesAt);
   const hidden = props.registratesAt.year() === 1970;
   const ethersacnUrl = process.env.REACT_APP_ETHERSCAN_URL || 'https://ropsten.etherscan.io/tx/';
   const txHashUrl = ethersacnUrl + props.revealTXHash;
@@ -22,7 +22,7 @@ export const RevealAuctionInfo = (props) => {
             <Typography type="title" component="div">
               <p>Finalize Auction On</p>
               <div>{props.registratesAt.toString()}</div>
-              <div>{endsmomentFromNow.toString()}</div>
+              <div>{endsMomentFromNow.toString()}</div>
             </Typography>
           )
         }
