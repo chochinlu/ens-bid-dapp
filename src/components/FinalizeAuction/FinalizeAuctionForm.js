@@ -66,26 +66,6 @@ const FormComponent = (props) => (
   </div>
 );
 
-const handleFinalizeAuctionProcess = async (inputObj) => {
-  const {domainName, privateKey, gas} = inputObj;
-  let returnObj = {
-    txHash: '',
-    errMsg: undefined
-  }
-
-  const payload = finalizeAuction(domainName, privateKey, gas);
-  //  TODO
-  //  - should validate if the user can finalize the auction
-  //  getEstimateGas(payload)
-
-  try {
-    returnObj.txHash = await sendRawTransaction(payload);
-  } catch (error) {
-    returnObj.errMsg = `finalize auction error : ${error}`;
-  }
-
-  return returnObj;
-}
 export class FinalizeAuctionForm extends Component {
   constructor(props) {
     super(props);
@@ -100,7 +80,6 @@ export class FinalizeAuctionForm extends Component {
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
   
   handleOpen = () => {
@@ -131,27 +110,6 @@ export class FinalizeAuctionForm extends Component {
       default:
         break;
     }
-  }
-
-  handleFormSubmit(inputResult) {
-    if (!(this.props.address && this.props.privateKey)) {
-      this.handleWarningMessageOpen('Please unlock wallet before bid ENS.');
-      return;
-    }
-
-    const inputObj = {
-      domainName: this.props.searchResult.searchName,
-      privateKey: this.props.privateKey,
-      gas: inputResult.gas
-    }
-
-    handleFinalizeAuctionProcess(inputObj).then((result) => {
-      // TODO
-      // not yet refactoring error message
-      (result.errMsg === undefined) ?
-        this.setFinalFormSent('sent') :
-        this.handleWarningMessageOpen(result.errMsg);
-    });
   }
 
   checkGas = (v) => {
@@ -212,7 +170,6 @@ export class FinalizeAuctionForm extends Component {
           {...this.state}
           handleOpen={this.handleOpen}
           handleInputChange={this.handleInputChange}
-          handleFormSubmit={this.handleFormSubmit}
           submitDisabled={this.submitDisabled}
         />
         {finalizeAuctionConfirmDialog}
