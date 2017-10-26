@@ -36,26 +36,6 @@
   }
 }
 
-.SearchEns-searchBlock {
-  flex: 1;
-}
-
-.SearchEns-ethTipName {
-  text-align: left;
-  padding-left: 1.2em;
-  font-size: $larger-font-size !important;
-  color: $theme-color-grey-dark !important;
-}
-
-.SearchEns-searchButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-//-----------------------------------
-
 .SearchEns-paper {
   display: flex;
   align-items: center;
@@ -72,51 +52,19 @@
   align-items: center;
 }
 
+.SearchEns-searchBlock {
+  flex: 1;
+}
 
+.SearchEns-ethTipName {
+  text-align: left;
+  padding-left: 1.2em;
+  font-size: $larger-font-size !important;
+  color: $theme-color-grey-dark !important;
+}
 
-
-
-.SearchEns-search {
+.SearchEns-searchButton {
   display: flex;
   justify-content: center;
-}
-
-.SearchEns-btn {
-  font-size: 1.2em;
-  font-weight: bold;
-  border: 1px solid black;
-  padding: 0.5em 0.7em;
-  margin-left: 1em;
-  cursor: pointer;
-}
-
-.SearchEns-result {
-  display: flex;
   align-items: center;
-  // border: 1px solid black;
-  margin: 2em;
-
-  div {
-    border: 1px solid black;
-    margin-left: 1em;
-    padding: 0.5em 1em;
-    h3 {
-      padding: 0;
-      margin: 0;
-    }
-  }
 }
-
-.SearchEns-result-name {
-  flex: 7;
-  text-align: left;
-  font-size: 1.2em;
-
-}
-
-.SearchEns-result-action {
-  flex: 1;
-  font-size: 1.2em;
-}
-
-
