@@ -1,3 +1,10 @@
+@import './scss/_base.scss';
+@import './scss/_color.scss';
+
+body {
+  font-family: 'Noto Sans TC', 'Open Sans', sans-serif;
+}
+
 .App {
   text-align: center;
   display: flex;
