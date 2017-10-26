@@ -67,7 +67,7 @@ const ConfirmFormSubmit = (props) => (
       raised
       label="Dialog"
       disabled={props.disabled}
-      onClick={props.handleOpen}
+      onClick={props.onClick}
     >
       Confirm Submit
     </Button>
