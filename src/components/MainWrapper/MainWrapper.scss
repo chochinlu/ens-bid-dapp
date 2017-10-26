@@ -1,3 +1,6 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
 .Main {
   flex: 1;
 }
@@ -10,11 +13,11 @@
   padding: 2em;
 
   h1 {
-    color: #6203B8;
+    color: $accent-color-blue;
   }
 
   p {
-    line-height: 1.4;
+    line-height: $base-line-height;
     text-align: left;
     width: 70%;
     margin: 0;

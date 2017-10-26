@@ -2,7 +2,6 @@ import React from 'react';
 import {SearchResult} from './SearchResult';
 import Paper from 'material-ui/Paper';
 import Input from 'material-ui/Input';
-import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import './SearchEns.css';
 
@@ -15,7 +14,6 @@ const SearchDescription = () => (
 const SearchInput = (props) => {
   const searchInputField = 
     <Input
-      className="SearchEns-input"
       placeholder="Search"
       minLength="7"
       inputProps={{
@@ -28,23 +26,28 @@ const SearchInput = (props) => {
     />;
 
   const ethTipName = 
-    <div>
-      <Typography type="title" component="p" className="SearchEns-typography">
-        .eth
-      </Typography>
+    <div className="SearchEns-ethTipName">
+      <p>.eth</p>
     </div>;
   
   const searchButton = 
-    <IconButton aria-label="Search" onClick={props.handleSearchClick}>
-      <i className="material-icons">search</i>
-    </IconButton>;
+    <div className="SearchEns-searchButton">
+      <IconButton aria-label="Search" onClick={props.handleSearchClick}>
+        <i className="material-icons">search</i>
+      </IconButton>
+    </div>;
+
+  const searchButtonBlock = 
+    <div className="flex-row-center SearchEns-searchBlock">
+      {ethTipName}
+      {searchButton}
+    </div>;
 
   return (
     <div  className="SearchEns-paper">
       <Paper className="SearchEns-input-block">
         {searchInputField}
-        {ethTipName}
-        {searchButton}
+        {searchButtonBlock}
       </Paper>
     </div>
   );
