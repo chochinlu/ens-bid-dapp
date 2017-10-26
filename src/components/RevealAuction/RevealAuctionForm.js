@@ -6,67 +6,120 @@ import {sealedBids} from '../../lib/ensService';
 import {RevealAuctionConfirmDialog} from './RevealAuctionConfirmDialog';
 import './RevealAuctionForm.css';
 
+const EmailTextField = (props) => (
+  <TextField
+    id="email"
+    name="email"
+    label="Email"
+    value={props.value}
+    onChange={props.onChange}
+    margin="normal"
+    placeholder="youremail@example.com"
+    helperText="The bid information will send to this email"
+  />
+);
+
+const EthBidTextField = (props) => (
+  <TextField
+    error={props.error}
+    id="ethBid"
+    name="ethBid"
+    label="ETH"
+    value={props.value}
+    onChange={props.onChange}
+    margin="normal"
+    placeholder="0.01"
+    helperText={props.error ? props.errMsg : 'Bid amount'}
+  />
+);
+
+const SecretTextField = (props) => (
+  <TextField
+    error={props.error}
+    id="secret"
+    name="secret"
+    label="Secret"
+    value={props.value}
+    onChange={props.onChange}
+    margin="normal"
+    placeholder="pass phrase"
+    helperText={props.error ? props.errMsg :"Please protect your bid with random numbers and characters"}
+  />
+);
+
+const GasTextField = (props) => (
+  <TextField
+    error={props.error}
+    id="gas"
+    name="gas"
+    label="Gas Price (Gwei)"
+    type="number"
+    value={props.value}
+    onChange={props.onChange}
+    margin="normal"
+    helperText={props.error ? props.errMsg : "Recommend use 21 Gwei"}
+  />
+);
+
+const ConfirmFormSubmit = (props) => (
+  <div className="RevealAuctionForm-submit">
+    <Button
+      raised
+      label="Dialog"
+      disabled={props.disabled}
+      onClick={props.handleOpen}
+    >
+      Confirm Submit
+    </Button>
+  </div>
+);
+
 const FormComponent = (props) => (
   <div className="RevealAuctionForm">
     <div className="RevealAuctionForm-field">
-      <TextField
-        id="email"
-        name="email"
-        label="Email"
-        value={props.email}
-        onChange={props.handleInputChange}
-        margin="normal"
-        placeholder="youremail@example.com"
-        helperText="The bid information will send to this email"
+      <EmailTextField
+        value={this.props.email}
+        onChange={this.props.handleInputChange}
       />
-
-      <TextField
-        id="ethBid"
-        name="ethBid"
-        label="ETH"
-        value={props.ethBid}
-        onChange={props.handleInputChange}
-        margin="normal"
-        placeholder="0.01"
-        helperText="Bid amount"
+      <EthBidTextField
+        error={this.state.ethBidErr}
+        errMsg={this.state.ethBidErrMsg}
+        value={this.state.ethBid}
+        onChange={this.handleInputChange}
       />
-      <TextField
-        id="secret"
-        name="secret"
-        label="Secret"
-        value={props.secret}
-        onChange={props.handleInputChange}
-        margin="normal"
-        placeholder="passphrase"
-        helperText="Please protect your bid with random numbers and characters"
+      <SecretTextField
+        error={this.state.secretErr}
+        errMsg={this.state.secretErrMsg}
+        value={this.state.secret}
+        onChange={this.handleInputChange}
       />
-      <TextField
-        id="gas"
-        name="gas"
-        label="Gas Price"
-        type="number"
-        value={props.gas}
-        onChange={props.handleInputChange}
-        margin="normal"
-        helperText="Recommend use 21 Gwei"
+      <GasTextField
+        error={this.state.gasErr}
+        errMsg={this.state.gasErrMsg}
+        value={this.state.gas}
+        onChange={this.handleInputChange}
       />
     </div>
-    <div className="RevealAuctionForm-submit">
-      <Button
-        raised
-        label="Dialog"
-        color="primary"
-        onClick={props.handleOpen}
-      >
-        Confirm Submit
-      </Button>
-    </div>
+    <ConfirmFormSubmit
+      onClick={props.handleOpen}
+      disabled={props.submitDisabled}
+    />
   </div>
 );
 
 export class RevealAuctionForm extends Component {
   state = {
-    open: false
+    open: false,
+    email: '',
+    ethBid: '0.01',
+    ethBidErr: false,
+    ethBidErrMsg: '',
+    secret: '0',
+    secretErr: false,
+    secretErrMsg: '',
+    gas: '21',
+    gasErr: false,
+    gasErrMsg: ''
   };
 
   handleOpen = () => {
@@ -93,36 +146,52 @@ export class RevealAuctionForm extends Component {
     this.setState({open: false});
   }
 
+  handleInputChange(event) {
+    const {name, value} = event.target;
+
+    this.setState({ [name]: value });
+  }
+
+  submitDisabled = () => {
+    const {ethBidErr, secretErr, gasErr} = this.state;
+    return ethBidErr || secretErr || gasErr;
+  }
+
   render() {
+    const domainName = <h2>{this.props.searchResult.searchName}.eth</h2>;
+    const timeDuration = (
+      <div>
+        <div>
+          <p>Reveal Auction On</p>
+          <div>{this.props.unsealStartsAt.toString()}</div>
+          <div>{momentFromNow(this.props.unsealStartsAt).toString()}</div>
+        </div>
+        <div>
+          <p>Finalize Auction On</p>
+          <div>{this.props.registratesAt.toString()}</div>
+          <div>{momentFromNow(this.props.registratesAt).toString()}</div>
+        </div>
+      </div>
+    );
+    const revealAuctionConfirmDialog = 
+      (this.state.open && this.props.address && this.props.privateKey) &&
+        <RevealAuctionConfirmDialog
+          {...this.props}
+          open={this.state.open}
+          handleClose={this.handleClose}
+        />;
+      
     return (
       <div>
-        <h2>{this.props.searchResult.searchName}.eth</h2>
-        <div>
-          <div>
-            <p>Reveal Auction On</p>
-            <div>{this.props.unsealStartsAt.toString()}</div>
-            <div>{momentFromNow(this.props.unsealStartsAt).toString()}</div>
-          </div>
-          <div>
-            <p>Finalize Auction On</p>
-            <div>{this.props.registratesAt.toString()}</div>
-            <div>{momentFromNow(this.props.registratesAt).toString()}</div>
-          </div>
-        </div>
-
+        {domainName}
+        {timeDuration}
         <FormComponent 
           {...this.props}
           handleOpen={this.handleOpen}
+          submitDisabled={this.submitDisabled}
         />
-
-        {
-          (this.state.open && this.props.address && this.props.privateKey) &&
-          <RevealAuctionConfirmDialog
-            {...this.props}
-            open={this.state.open}
-            handleClose={this.handleClose}
-          />
-        }
+        {revealAuctionConfirmDialog}
+        {revealAuctionConfirmDialog}
       </div>
     );
   }

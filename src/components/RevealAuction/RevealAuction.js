@@ -58,14 +58,6 @@ export class RevealAuction extends Component {
     this.setState({revealTXHash: txHash})
   }
 
-  handleInputChange(event) {
-    const {name, value} = event.target;
-
-    this.setState({
-      [name]: value
-    });
-  }
-
   handelRevealFormSubmit(event) {
     event.preventDefault();
 
@@ -122,14 +114,21 @@ export class RevealAuction extends Component {
   );
 
   render() { 
+    const revealAuctionPage = this.state.revealFormSent === 'sent' ?
+      this.revealAutionInfo() :
+      this.revealAuctionForm();
+
+    const warnings =
+      <Warnings
+        warningOpen={this.state.warningOpen}
+        warningMessage={this.state.warningMessage}
+        handleWarningMessageClose={this.handleWarningMessageClose}
+      />;
+
     return(
       <div>
-        {this.state.revealFormSent === 'sent' ? this.revealAutionInfo() : this.revealAuctionForm()}
-        <Warnings
-          warningOpen={this.state.warningOpen}
-          warningMessage={this.state.warningMessage}
-          handleWarningMessageClose={this.handleWarningMessageClose}
-        />
+        {revealAuctionPage}
+        {warnings}
       </div>
     );
   }
