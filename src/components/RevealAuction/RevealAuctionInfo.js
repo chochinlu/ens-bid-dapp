@@ -39,7 +39,7 @@ export const RevealAuctionInfo = (props) => {
           TxHash: <a target='_blank' href={txHashUrl}>{props.revealTXHash}</a>
         </Typography>
         <Typography type="title" component="div">
-          JSON: {JSON.parse(props.json)}
+          JSON: <pre>{JSON.parse(props.exportJson)}</pre>
         </Typography>
         <CardActions className="RevealAuctionInfo-button">
           <Button raised onClick={() => props.switchPage('main')}>BACK TO SEARCH</Button>
