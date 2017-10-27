@@ -4,13 +4,14 @@ import {Warnings} from '../Common/Warnings';
 import {RevealAuctionForm} from './RevealAuctionForm';
 import {RevealAuctionInfo} from './RevealAuctionInfo';
 import {sealedBids, unsealBid} from '../../lib/ensService';
-import {sendRawTransaction} from '../../lib/dAppService';
+import {sendRawTransaction, ensJsonExport, getAddressByPrivateKey} from '../../lib/dAppService';
 import './RevealAuction.css';
 
 const handleRevealAuctionProcess = async (inputObj) => {
   const {domainName, ethBid, secret, privateKey, gas} = inputObj;
   let returnObj = {
     txHash: '',
+    exportJson: '',
     errMsg: undefined
   }
 
@@ -22,6 +23,8 @@ const handleRevealAuctionProcess = async (inputObj) => {
   const payload = unsealBid(domainName, ethBid, secret, privateKey, gas);
   try {
     returnObj.txHash = await sendRawTransaction(payload);
+    address = await getAddressByPrivateKey(privateKey);
+    returnObj.exportJson = await ensJsonExport(domainName, ethBid, secret, address);
   } catch (error) {
     returnObj.errMsg = `unsealBid error : ${error}`;
   }
@@ -37,11 +40,13 @@ export class RevealAuction extends Component {
       revealTXHash: '',
       warningOpen: false,
       warningMessage: '',
-      formResult: {}
+      formResult: {},
+      json: ''
     }
     this.setRevealFormSent = this.setRevealFormSent.bind(this);
     this.setRevealTXHash = this.setRevealTXHash.bind(this);
     this.setRevealFormResult = this.setRevealFormResult.bind(this);
+    this.setExportJson = this.setExportJson.bind(this);
     this.handelRevealFormSubmit = this.handelRevealFormSubmit.bind(this);
     this.handleWarningMessageClose = this.handleWarningMessageClose.bind(this);
     this.handleWarningMessageOpen = this.handleWarningMessageOpen.bind(this);
@@ -57,6 +62,10 @@ export class RevealAuction extends Component {
 
   setRevealFormResult(formResult) {
     this.setState({formResult: formResult});
+  }
+
+  setExportJson(json) {
+    this.setState({json: json});
   }
 
   handelRevealFormSubmit(inputResult) {
@@ -78,6 +87,7 @@ export class RevealAuction extends Component {
       if (result.errMsg === undefined) {
         this.setRevealTXHash(result.txHash);
         this.setRevealFormResult(inputResult);
+        this.setExportJson(result.exportJson);
         this.setRevealFormSent('sent');  
       } else {
         // TODO

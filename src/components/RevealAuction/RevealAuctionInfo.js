@@ -38,6 +38,9 @@ export const RevealAuctionInfo = (props) => {
         <Typography type="title" component="div">
           TxHash: <a target='_blank' href={txHashUrl}>{props.revealTXHash}</a>
         </Typography>
+        <Typography type="title" component="div">
+          JSON: {props.json}
+        </Typography>
         <CardActions className="RevealAuctionInfo-button">
           <Button raised onClick={() => props.switchPage('main')}>BACK TO SEARCH</Button>
           <Button raised>MY ENS LIST</Button>

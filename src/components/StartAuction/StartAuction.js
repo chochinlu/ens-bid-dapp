@@ -1,7 +1,7 @@
 // @flow weak
 import React, {Component} from 'react';
 import {startAuctionAndBid, newBid} from '../../lib/ensService';
-import {sendRawTransaction} from '../../lib/dAppService';
+import {sendRawTransaction, ensJsonExport, getAddressByPrivateKey} from '../../lib/dAppService';
 import {StartAuctionForm} from './StartAuctionForm';
 import {StartAuctionInfo} from './StartAuctionInfo';
 import Snackbar from 'material-ui/Snackbar';
@@ -14,6 +14,7 @@ const handleStartAuctionProcess = async (inputObj) => {
 
   let returnObj = {
     txHash: '',
+    exportJson: '',
     errMsg: undefined
   }
 
@@ -23,6 +24,8 @@ const handleStartAuctionProcess = async (inputObj) => {
 
   try {
     returnObj.txHash = await sendRawTransaction(payload);
+    address = await getAddressByPrivateKey(privateKey)
+    returnObj.exportJson = await ensJsonExport(domainName, ethBid, secret, address);
   } catch (error) {
     returnObj.errMsg = `${state} async error : ${error}`;
   }
@@ -39,11 +42,13 @@ export class StartAuction extends Component {
       open: false,
       message: '',
       checked: false,
-      formResult: {}
+      formResult: {},
+      json: ''
     }
     this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
     this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
     this.setAuctionFormResult = this.setAuctionFormResult.bind(this);
+    this.setExportJson = this.setExportJson.bind(this);
     this.handleAuctionFormSubmit = this.handleAuctionFormSubmit.bind(this);
   }
 
@@ -57,6 +62,10 @@ export class StartAuction extends Component {
 
   setAuctionFormResult(formResult) {
     this.setState({formResult: formResult});
+  }
+
+  setExportJson(json) {
+    this.setState({json: json});
   }
 
   handleMessageOpen = msg => this.setState({ open: true, message: msg });
@@ -74,9 +83,9 @@ export class StartAuction extends Component {
     const inputObject = {
       state:      this.props.searchResult.state,
       domainName: this.props.searchResult.searchName,
+      privateKey: this.props.privateKey,
       ethBid,
       secret,
-      privateKey: this.props.privateKey,
       gas
     };
 
@@ -84,6 +93,7 @@ export class StartAuction extends Component {
       if (result.errMsg === undefined) {
         this.setAuctionTXHash(result.txHash);
         this.setAuctionFormResult(inputResult);
+        this.setExportJson(result.exportJson);
         this.setAuctionFormSent('sent');
       } else {
         // TODO
