@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
+import classNames from 'classnames';
 import {checkBeforeNow} from '../../lib/util';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import './SearchResult.css';
 
-const getStep = (props) => {
-  switch (props.searchResult.state) {
+const getStep = ({state, registrationDate}) => {
+  switch (state) {
     case 'Open':
     case 'Auction':
       return 'StartAuction';
     case 'Reveal':
       // check the current time is before registration date or not
       // check this person if he is the first price bidder of this domain
-      return checkBeforeNow(props.searchResult.registrationDate)
+      return checkBeforeNow(registrationDate)
       ? 'RevealAuction' : 'FinalizeAuction';
     // case 'Owned':
     //   TODO 
@@ -26,54 +26,82 @@ const getStep = (props) => {
   }
 }
 
-class SearchResultItem extends Component {
-  handleClick() {
-    let step = '';
-    step = getStep(this.props);
+export class SearchResult extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
+  handleClick() {
+    const step = getStep(this.props.searchResult);
+
+    //TODO: should use error component?
     if(step === undefined) alert('the domain name service is not available');
+
     this.props.setStep(step);
     this.props.switchPage('auction');
   }
 
-  render() {
-    const actionBtn = (this.props.searchResult.state === 'Auction' || 
-      this.props.searchResult.state === 'Open' || 
-      this.props.searchResult.state === 'Reveal') ?
-      <div className="SearchResultBtn" onClick={() => this.handleClick()}>
-        <IconButton aria-label="Buy Now">
-          <i className="material-icons">shopping_cart</i>
-        </IconButton>
-      </div> : 
+  domainNameAvailiable() {
+    const {state} = this.props.searchResult;
+    const available = ['Auction', 'Open', 'Reveal'];
+    return available.includes(state);
+  }
+
+  buyNowButton() {
+    return (
+      <div className="SearchResultBtn" onClick={this.handleClick}>
+      <IconButton aria-label="Buy Now">
+        <i className="material-icons">shopping_cart</i>
+      </IconButton>
+    </div>
+    )
+  }
+
+  noActionButton() {
+    return (
       <div className="SearchResultBtn">
         <IconButton aria-label="Owned">
           <i className="material-icons">not_interested</i>
         </IconButton>
-      </div>;
+      </div>
+    );
+  }
+
+  statusAndAction() {
+    const domainNameAvailiable = this.domainNameAvailiable();
+    const actionButton = domainNameAvailiable
+      ? this.buyNowButton()
+      : this.noActionButton();
+
+    const statusClass = classNames(
+      'SearchResult-status',
+      domainNameAvailiable ? 'able': 'disable',
+      domainNameAvailiable ? 'able-border': 'disable-border',
+    );
 
     return (
-      <Paper className="SearchResult-paper">
-        <Typography type="title" component="p" className="SearchResult-typography SearchResult-typography-front">
-          {this.props.searchResult.searchName}.eth
-        </Typography>
-        <Typography type="title" component="div" className="SearchResult-typography SearchResult-typography-status">
-          <p>Status</p>
+      <div className="SearchResult-status-and-action">
+        <div className={statusClass}>
           <p>{this.props.searchResult.state}</p>
-        </Typography>
-        {actionBtn}
-      </Paper>
+        </div>
+        {actionButton}
+      </div>
+    );
+  }
+
+  render() {
+    const statusAndAction = this.statusAndAction();
+
+    return (
+      <div className="SearchResult">
+        <Paper className="SearchResult-paper">
+          <div className="SearchResult-paper-eth">
+            <h2>{this.props.searchResult.searchName}.eth</h2>
+          </div>
+          {statusAndAction}
+        </Paper>
+      </div>
     );
   }
 }
-
-export const SearchResult = (props) => {
-  const result = props.searchResult;
-  return result &&
-    (
-      <div className="SearchResult">
-        <SearchResultItem
-          {...props}
-        />
-      </div>
-    );
-};

@@ -62,6 +62,6 @@ export const SearchEns = (props) => (
       handleSearchClick={props.handleSearchClick}
       handleSearchKeyPress={props.handleSearchKeyPress}
     />
-    <SearchResult {...props} />
+    {props.searchResult && <SearchResult {...props} />}
   </div>
 );

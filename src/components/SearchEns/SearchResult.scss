@@ -1,40 +1,83 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
 .SearchResult {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 3em;
-  margin-bottom: 2em;
-  width: 70%;
-  min-width: 380px;
+  margin-top: 1em;
+  padding: 1em;
+  width: 100%;
 }
 
 .SearchResult-paper {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-width: 380px;
-  height: 3em;
-  margin: 0.5em;
-}
-
-.SearchResult-typography {
-  font-size: 1.2em !important;
-  color: rgba(0, 0, 0, 0.54) !important;
-
-  p {
-    font-size: 0.8em !important;
-    padding: 0;
-    margin: 0.3em;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  
+  @include desktop {
+    flex-direction: row;
   }
 }
 
-.SearchResult-typography-front {
-  padding-left: 1em;
+.SearchResult-paper-eth {
+  // border: 1px solid green;
+  width:100%;
   text-align: left;
-  flex: 0.8;
+  word-wrap: break-word;
+  
+  h2 {
+    margin:0 0 1em 0;
+    padding: 0 18px;
+    color: $accent-color-blue;
+    // border:1px solid red;
+  }
+
+  @include desktop {
+    padding: 0;
+    h2 {margin: 0;}
+  }
+}
+
+.SearchResult-status-and-action {
+  display: flex;
+  justify-content: flex-end;
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.SearchResult-status {
+  font-weight: $bold;
+  color: $deep-green;
+  border-bottom:1px solid $deep-green;
+  padding: 0 1em;
+  margin: 0 0.5em;
+  line-height: 0.5;
+}
+
+.able {
+  color: $deep-green;
+}
+
+.disable {
+  color: $theme-color-grey-dark;
+}
+
+.able-border {
+  border-bottom:1px solid $deep-green;
+}
+
+.disable-border {
+  border-bottom:1px solid $theme-color-grey-dark;
 }
 
 .SearchResultBtn {
-  background-color: lightgray;
+  background-color: $theme-color-grey-light;
+  padding: 0 1em;
+  margin-right: 0.5em;
+  cursor: pointer;
+  i {color: $theme-color-grey-dark;}
 }
