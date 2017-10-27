@@ -5,7 +5,7 @@ import CloseIcon from 'material-ui-icons/Close';
 import {SearchEns} from '../SearchEns/SearchEns';
 // import {Content} from './Content'; 
 // import {FAQ} from './FAQ';
-import {About} from './About';
+import {About} from '../About/About';
 import {AuctionWrapper} from '../AuctionWrapper/AuctionWrapper';
 import {entries} from '../../lib/ensService';
 import './MainWrapper.css';

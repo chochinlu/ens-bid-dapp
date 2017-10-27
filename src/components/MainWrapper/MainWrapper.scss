@@ -1,25 +1,4 @@
-@import '../scss/_color.scss';
-@import '../scss/_base.scss';
-
 .Main {
   flex: 1;
 }
 
-.About {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2em;
-
-  h1 {
-    color: $accent-color-blue;
-  }
-
-  p {
-    line-height: $base-line-height;
-    text-align: left;
-    width: 70%;
-    margin: 0;
-  }
-}
