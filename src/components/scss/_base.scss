@@ -29,6 +29,7 @@ $large-font-size: $base-font-size * 2;
 
 
 //RWD
+$smallest-mobile-width: 430px;
 $mobile-width: 768px;
 
 @mixin mobile {
