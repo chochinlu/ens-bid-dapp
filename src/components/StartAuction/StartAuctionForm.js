@@ -249,7 +249,7 @@ export class StartAuctionForm extends Component {
     const timeDuration =  this.props.searchResult.state === 'Auction' && 
       <TimeDuration {...this.props} />;
     
-    const testFields = this.textFields();
+    const textFields = this.textFields();
 
     const startAuctionConfirmDiaglog = this.state.open &&
       <StartAuctionConfirmDiaglog
@@ -263,7 +263,7 @@ export class StartAuctionForm extends Component {
       <div className="StartAuctionForm">
         {domainName}
         {timeDuration}
-        {testFields}
+        {textFields}
         <FormSubmit onClick={this.handleOpen} disabled={this.submitDisabled()} />
         {startAuctionConfirmDiaglog}
       </div>

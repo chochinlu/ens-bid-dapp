@@ -3,17 +3,13 @@ import classNames from 'classnames/bind';
 import './AuctionStepper.css';
 
 const Step = (props) => {
-  let stepStyle = classNames('Step', props.currentStep === props.name ? 'Light' : 'Dark');
-
+  const stepClass = classNames('Step', 
+    props.currentStep === props.name ? 'current' : 'not-current'
+  );
+  
   return (
-    <div className={stepStyle}>
-      <i className="material-icons">arrow_forward</i>
-      <div className='StepNumber'>
-        <div>
-          {props.index + 1}
-        </div>
-      </div>
-      <div>{props.title}</div>
+    <div className={stepClass}>
+      <h4>{props.title}</h4>
     </div>
   );
 }
@@ -31,8 +27,8 @@ export const AuctionStepper = (props) => {
         <Step
           key={`step-${index}`}
           index={index}
-          currentStep={props.step}
           {...step}
+          currentStep={props.step}
           setStep={props.setStep}
         />
       )}

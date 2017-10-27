@@ -1,37 +1,43 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
 $circle-diameter: 2vw;
 $circle-radius: $circle-diameter / 2;
 
 .Stepper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 5em;
-  margin-bottom: 1em;
+  width: 100%;
+  // border: 1px solid red;
 
-  :first-child{
-    i {
-      display: none;
-    }
+  @include desktop {
+    margin-top: 6em;
+    max-width: $main-width;
   }
 }
 
 .Step {
-  display: flex;
+  width: 100%;
+  margin: 0 0.5em;
+
+  h4 {
+    margin: 0;
+    padding: 1em;
+    font-size: 0.9em;
+
+    @include desktop {
+      font-size: 1.1em;
+    }
+  }
 }
 
-.StepNumber {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #252c3e;
-  border-radius: 50%;
-  width: $circle-diameter;
-  height: $circle-diameter;
+.current {
+  border-bottom: 1px solid $deep-green;
+  color: $deep-green;
 }
 
-.Light {
-  color: black;
-}
-
-.Dark {
-  color: grey;
+.not-current {
+  border-bottom: 1px solid $theme-color-grey-dark;
+  color: $theme-color-grey-dark;
 }
