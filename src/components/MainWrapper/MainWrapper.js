@@ -12,8 +12,10 @@ import './MainWrapper.css';
 
 const Main = (props) => (
   <div className="Main">
-    <SearchEns {...props} />
-    <About />
+    <div>
+      <SearchEns {...props} />
+      <About />
+    </div>
   </div>
 );
 
@@ -85,7 +87,7 @@ export class MainWrapper extends Component {
   render() {
     const mainPage = this.mainPage();
     return (
-      <div className="Main">
+      <div>
         {mainPage}
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}

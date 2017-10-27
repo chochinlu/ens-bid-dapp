@@ -1,4 +1,12 @@
-.Main {
-  flex: 1;
-}
+@import '../scss/_base.scss';
+// @import '../scss/_color.scss';
 
+.Main {
+  display: flex;
+  justify-content: center;
+  @include desktop {
+    div {
+      max-width: $main-width;
+    }
+  }
+}

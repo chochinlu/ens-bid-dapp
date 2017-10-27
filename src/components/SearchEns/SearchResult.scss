@@ -13,11 +13,11 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
+  padding: 3em 0;
   
   @include desktop {
     flex-direction: row;
+    padding: 5em 0;
   }
 }
 
@@ -36,7 +36,10 @@
 
   @include desktop {
     padding: 0;
-    h2 {margin: 0;}
+    h2 {
+      margin: 0;
+      font-size: 1.8em;
+    }
   }
 }
 
