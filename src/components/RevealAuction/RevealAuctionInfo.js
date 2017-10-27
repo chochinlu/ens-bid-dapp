@@ -27,13 +27,13 @@ export const RevealAuctionInfo = (props) => {
           )
         }
         {/* <Typography type="title" component="div">
-          Email: {props.email}
+          Email: {props.formResult.email}
         </Typography> */}
         <Typography type="title" component="div">
-          ETH: {props.ethBid}
+          ETH: {props.formResult.ethBid}
         </Typography>
         <Typography type="title" component="div">
-          Secret: {props.secret}
+          Secret: {props.formResult.secret}
         </Typography>
         <Typography type="title" component="div">
           TxHash: <a target='_blank' href={txHashUrl}>{props.revealTXHash}</a>

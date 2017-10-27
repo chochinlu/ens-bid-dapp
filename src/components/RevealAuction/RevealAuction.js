@@ -36,21 +36,27 @@ export class RevealAuction extends Component {
       revealFormSent: '',
       revealTXHash: '',
       warningOpen: false,
-      warningMessage: ''
+      warningMessage: '',
+      formResult: {}
     }
     this.setRevealFormSent = this.setRevealFormSent.bind(this);
     this.setRevealTXHash = this.setRevealTXHash.bind(this);
+    this.setRevealFormResult = this.setRevealFormResult.bind(this);
     this.handelRevealFormSubmit = this.handelRevealFormSubmit.bind(this);
     this.handleWarningMessageClose = this.handleWarningMessageClose.bind(this);
     this.handleWarningMessageOpen = this.handleWarningMessageOpen.bind(this);
   }
 
   setRevealFormSent(state) {
-    this.setState({revealFormSent: state})
+    this.setState({revealFormSent: state});
   }
 
   setRevealTXHash(txHash) {
-    this.setState({revealTXHash: txHash})
+    this.setState({revealTXHash: txHash});
+  }
+
+  setRevealFormResult(formResult) {
+    this.setState({formResult: formResult});
   }
 
   handelRevealFormSubmit(inputResult) {
@@ -71,6 +77,7 @@ export class RevealAuction extends Component {
     handleRevealAuctionProcess(inputObj).then((result) => {
       if (result.errMsg === undefined) {
         this.setRevealTXHash(result.txHash);
+        this.setRevealFormResult(inputResult);
         this.setRevealFormSent('sent');  
       } else {
         // TODO
@@ -92,9 +99,6 @@ export class RevealAuction extends Component {
     <RevealAuctionForm
       {...this.props}
       {...this.state}
-      setRevealFormSent={this.setRevealFormSent}
-      setRevealTXHash={this.setRevealTXHash}
-      handleInputChange={this.handleInputChange}
       handelRevealFormSubmit={this.handelRevealFormSubmit}
       handleWarningMessageOpen={this.handleWarningMessageOpen}
     />

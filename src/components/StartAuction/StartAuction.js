@@ -43,6 +43,7 @@ export class StartAuction extends Component {
     }
     this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
     this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
+    this.setAuctionFormResult = this.setAuctionFormResult.bind(this);
     this.handleAuctionFormSubmit = this.handleAuctionFormSubmit.bind(this);
   }
 
@@ -52,6 +53,10 @@ export class StartAuction extends Component {
 
   setAuctionFormSent(state) {
     this.setState({auctionFormSent: state});
+  }
+
+  setAuctionFormResult(formResult) {
+    this.setState({formResult: formResult});
   }
 
   handleMessageOpen = msg => this.setState({ open: true, message: msg });
@@ -65,7 +70,7 @@ export class StartAuction extends Component {
       return;
     }
 
-    const {ethBid, secret, gas} = inputResult;    
+    const {ethBid, secret, gas} = inputResult;
     const inputObject = {
       state:      this.props.searchResult.state,
       domainName: this.props.searchResult.searchName,
@@ -78,8 +83,8 @@ export class StartAuction extends Component {
     handleStartAuctionProcess(inputObject).then((result) => {
       if (result.errMsg === undefined) {
         this.setAuctionTXHash(result.txHash);
+        this.setAuctionFormResult(inputResult);
         this.setAuctionFormSent('sent');
-        // this.setAuctionFormResult(inputResult);
       } else {
         // TODO
         // not yet refactoring error message
@@ -98,10 +103,6 @@ export class StartAuction extends Component {
       <StartAuctionForm
         {...this.props}
         {...this.state}
-        setAuctionFormSent={this.setAuctionFormSent}
-        setAuctionTXHash={this.setAuctionTXHash}
-        handleInputChange={this.handleInputChange}
-        handleAcceptTerms={this.handleAcceptTerms}
         handleAuctionFormSubmit={this.handleAuctionFormSubmit}
         handleMessageOpen={this.handleMessageOpen}
       />

@@ -87,8 +87,8 @@ export class FinalizeAuction extends Component {
     <FinalizeAuctionForm
       {...this.props}
       {...this.state}
-      setFinalFormSent={this.setFinalFormSent}
       handleFormSubmit={this.handleFormSubmit}
+      handleWarningMessageOpen={this.handleWarningMessageOpen}
     />
   )
 
