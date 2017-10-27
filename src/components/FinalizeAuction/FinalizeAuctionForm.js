@@ -1,22 +1,20 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import {sealedBids, finalizeAuction} from '../../lib/ensService';
-import {sendRawTransaction} from '../../lib/dAppService';
 import {FinalizeAuctionConfirmDialog} from './FinalizeAuctionConfirmDialog';
 
-const EmailTextField = (props) => (
-  <TextField
-    id='email'
-    name='email'
-    label='Email'
-    value={props.value}
-    onChange={props.onChange}
-    margin='normal'
-    placeholder='youremail@example.com'
-    helperText='The bid information will send to this email'
-  />
-);
+// const EmailTextField = (props) => (
+//   <TextField
+//     id='email'
+//     name='email'
+//     label='Email'
+//     value={props.value}
+//     onChange={props.onChange}
+//     margin='normal'
+//     placeholder='youremail@example.com'
+//     helperText='The bid information will send to this email'
+//   />
+// );
 
 const GasTextField = (props) => (
   <TextField
