@@ -26,6 +26,7 @@ export const PassphraseForm = (props) => {
       <Actions
         dragDiabled={props.dragDiabled}
         enableDrag={props.enableDrag}
+        disabled={props.buttonSubmitDisabled}
         unlockWallet={props.unlockWallet}/>
     </FormControl>
   );

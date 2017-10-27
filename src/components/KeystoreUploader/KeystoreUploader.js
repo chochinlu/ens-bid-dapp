@@ -20,6 +20,7 @@ export class KeystoreUploader extends Component {
     this.enableDrag = this.enableDrag.bind(this);
     this.unlockWallet = this.unlockWallet.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.buttonSubmitDisabled = this.buttonSubmitDisabled.bind(this);
   }
 
   onDrop(files) {
@@ -66,6 +67,10 @@ export class KeystoreUploader extends Component {
     this.setState({ dragDiabled: false });
   }
 
+  buttonSubmitDisabled = () => {
+    return !(this.state.keystore && this.state.passpharse);
+  }
+
   unlockWallet() {
     try {
       const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
@@ -109,6 +114,7 @@ export class KeystoreUploader extends Component {
           dragDiabled={this.state.dragDiabled}
           enableDrag={this.enableDrag}
           unlockWallet={this.unlockWallet}
+          buttonSubmitDisabled={this.buttonSubmitDisabled()}
         />
       </Card>
     );
