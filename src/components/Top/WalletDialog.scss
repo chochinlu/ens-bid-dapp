@@ -1,5 +1,7 @@
+@import '../scss/_color.scss';
+
 .WalletDialog {
   h2 {
-    color: #6203B8;
+    color: $accent-color-blue;
   }
 }
