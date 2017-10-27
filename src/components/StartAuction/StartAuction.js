@@ -42,30 +42,23 @@ export class StartAuction extends Component {
       open: false,
       message: '',
       checked: false,
-      formResult: {},
+      formResult: '',
       json: ''
     }
-    this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
-    this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
-    this.setAuctionFormResult = this.setAuctionFormResult.bind(this);
-    this.setExportJson = this.setExportJson.bind(this);
+    this.setAuctionFormResultState = this.setAuctionFormResultState.bind(this);
     this.handleAuctionFormSubmit = this.handleAuctionFormSubmit.bind(this);
   }
 
-  setAuctionTXHash(txHash) {
-    this.setState({auctionTXHash: txHash});
-  }
-
-  setAuctionFormSent(state) {
-    this.setState({auctionFormSent: state});
-  }
-
-  setAuctionFormResult(formResult) {
-    this.setState({formResult: formResult});
-  }
-
-  setExportJson(json) {
-    this.setState({json: json});
+  setAuctionFormResultState(resultObj) {
+    this.setState({
+      txHash:          resultObj.hash,
+      json:            JSON.stringify(resultObj.json),
+      auctionFormSent: resultObj.state,
+      formResult: {
+        ethBid: resultObj.inputResult.ethBid,
+        secret: resultObj.inputResult.secret
+      }
+    })
   }
 
   handleMessageOpen = msg => this.setState({ open: true, message: msg });
@@ -91,10 +84,17 @@ export class StartAuction extends Component {
 
     handleStartAuctionProcess(inputObject).then((result) => {
       if (result.errMsg === undefined) {
-        this.setAuctionTXHash(result.txHash);
-        this.setAuctionFormResult(inputResult);
-        this.setExportJson(result.exportJson);
-        this.setAuctionFormSent('sent');
+        const resultObj = {
+          hash: result.txHash,
+          json: result.exportJson,
+          state: 'sent',
+          inputResult: {
+            ethBid: inputResult.ethBid,
+            secret: inputResult.secret,
+            gas: inputResult.gas
+          }
+        }
+        this.setAuctionFormResultState(resultObj);
       } else {
         // TODO
         // not yet refactoring error message

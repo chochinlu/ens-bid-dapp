@@ -43,13 +43,22 @@ export class RevealAuction extends Component {
       formResult: {},
       json: ''
     }
-    this.setRevealFormSent = this.setRevealFormSent.bind(this);
-    this.setRevealTXHash = this.setRevealTXHash.bind(this);
-    this.setRevealFormResult = this.setRevealFormResult.bind(this);
-    this.setExportJson = this.setExportJson.bind(this);
+    this.setRevealFormResultState = this.setRevealFormResultState.bind(this);
     this.handelRevealFormSubmit = this.handelRevealFormSubmit.bind(this);
     this.handleWarningMessageClose = this.handleWarningMessageClose.bind(this);
     this.handleWarningMessageOpen = this.handleWarningMessageOpen.bind(this);
+  }
+
+  setRevealFormResultState(resultObj) {
+    this.setState({
+      txHash: resultObj.hash,
+      json: JSON.stringify(resultObj.json),
+      revealFormSent: resultObj.state,
+      formResult: {
+        ethBid: resultObj.inputResult.ethBid,
+        secret: resultObj.inputResult.secret
+      }
+    })
   }
 
   setRevealFormSent(state) {
@@ -85,10 +94,17 @@ export class RevealAuction extends Component {
 
     handleRevealAuctionProcess(inputObj).then((result) => {
       if (result.errMsg === undefined) {
-        this.setRevealTXHash(result.txHash);
-        this.setRevealFormResult(inputResult);
-        this.setExportJson(result.exportJson);
-        this.setRevealFormSent('sent');  
+        const resultObj = {
+          hash: result.txHash,
+          json: result.exportJson,
+          state: 'sent',
+          inputResult: {
+            ethBid: inputResult.ethBid,
+            secret: inputResult.secret,
+            gas: inputResult.gas
+          }
+        };
+        this.setRevealFormResultState(resultObj);
       } else {
         // TODO
         // not yet refactoring error message
