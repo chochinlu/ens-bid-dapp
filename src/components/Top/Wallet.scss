@@ -1,7 +1,25 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
 .unlock {
-  color: yellow !important
+  color: yellow !important;
+}
+
+.WalletBtn {
+  @include mobile {
+    min-width: 0em !important;
+    padding-left: 0em !important;
+    padding-right: 0em !important;
+  }
 }
 
 .WalletText {
-  padding-left: 8px;
+  @include desktop {
+    padding-left: 8px;
+    display: block;
+  }
+
+  @include mobile {
+    display: none;
+  }
 }

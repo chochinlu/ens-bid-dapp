@@ -11,7 +11,7 @@ export const Network = (props) => {
         className="Network-select"
         value={props.network}
         onChange={props.handleChange('network')}>
-        <MenuItem value="ropsten" className="Network-MenuItem">Network: Ropsten</MenuItem>
+        <MenuItem value="ropsten" className="Network-MenuItem">Ropsten</MenuItem>
       </Select>
     </div>
   );
