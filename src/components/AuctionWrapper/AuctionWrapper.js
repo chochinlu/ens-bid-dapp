@@ -21,54 +21,28 @@ export class AuctionWrapper extends Component {
     const registratesAt = format(this.props.searchResult.registrationDate);
     const startsAt = moment(registratesAt).subtract(5, 'days');
     const unsealStartsAt = moment(registratesAt).subtract(2, 'days');
-    this.setState({
-      startsAt,
-      unsealStartsAt,
-      registratesAt
-    });
+    this.setState({ startsAt, unsealStartsAt, registratesAt });
   }
 
-  switchStep() {
+  step() {
     switch (this.props.step) {
       case 'StartAuction':
-        return (
-          <StartAuction
-            {...this.state}
-            {...this.props}
-          />
-        );
+        return <StartAuction {...this.state} {...this.props} />;
       case 'RevealAuction':
-        return (
-          <RevealAuction 
-            {...this.state}
-            {...this.props}
-          />
-        );
+        return <RevealAuction {...this.state} {...this.props} />;
       case 'FinalizeAuction':
-        return (
-          <FinalizeAuction
-            {...this.state}
-            {...this.props}
-          />
-        );
+        return <FinalizeAuction {...this.state} {...this.props} />;
       default:
-        return (
-          <StartAuction
-            {...this.state}
-            {...this.props}
-          />
-        );
+        return <StartAuction {...this.state} {...this.props} />;
     }
   }
 
   render() {
+    const step = this.step();
     return(
       <div className="AuctionWrapper">
-        <AuctionStepper
-          {...this.props}
-          setStep={this.props.setStep}
-        />
-        {this.switchStep()}
+        <AuctionStepper {...this.props} setStep={this.props.setStep} />
+        {step}
       </div>
     );
   }
