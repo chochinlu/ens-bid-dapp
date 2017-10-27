@@ -41,7 +41,7 @@ export class RevealAuction extends Component {
       warningOpen: false,
       warningMessage: '',
       formResult: {},
-      json: ''
+      exportJson: ''
     }
     this.setRevealFormResultState = this.setRevealFormResultState.bind(this);
     this.handelRevealFormSubmit = this.handelRevealFormSubmit.bind(this);
@@ -51,30 +51,14 @@ export class RevealAuction extends Component {
 
   setRevealFormResultState(resultObj) {
     this.setState({
-      txHash: resultObj.hash,
-      json: JSON.stringify(resultObj.json),
+      revealTXHash: resultObj.hash,
+      exportJson: resultObj.exportJson,
       revealFormSent: resultObj.state,
       formResult: {
         ethBid: resultObj.inputResult.ethBid,
         secret: resultObj.inputResult.secret
       }
     })
-  }
-
-  setRevealFormSent(state) {
-    this.setState({revealFormSent: state});
-  }
-
-  setRevealTXHash(txHash) {
-    this.setState({revealTXHash: txHash});
-  }
-
-  setRevealFormResult(formResult) {
-    this.setState({formResult: formResult});
-  }
-
-  setExportJson(json) {
-    this.setState({json: json});
   }
 
   handelRevealFormSubmit(inputResult) {
@@ -96,7 +80,7 @@ export class RevealAuction extends Component {
       if (result.errMsg === undefined) {
         const resultObj = {
           hash: result.txHash,
-          json: result.exportJson,
+          exportJson: JSON.stringify(JSON.stringify(result.exportJson)),
           state: 'sent',
           inputResult: {
             ethBid: inputResult.ethBid,

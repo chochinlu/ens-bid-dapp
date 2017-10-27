@@ -42,8 +42,8 @@ export class StartAuction extends Component {
       open: false,
       message: '',
       checked: false,
-      formResult: '',
-      json: ''
+      formResult: {},
+      exportJson: ''
     }
     this.setAuctionFormResultState = this.setAuctionFormResultState.bind(this);
     this.handleAuctionFormSubmit = this.handleAuctionFormSubmit.bind(this);
@@ -51,8 +51,8 @@ export class StartAuction extends Component {
 
   setAuctionFormResultState(resultObj) {
     this.setState({
-      txHash:          resultObj.hash,
-      json:            JSON.stringify(resultObj.json),
+      auctionTXHash:   resultObj.hash,
+      exportJson:      resultObj.exportJson,
       auctionFormSent: resultObj.state,
       formResult: {
         ethBid: resultObj.inputResult.ethBid,
@@ -86,7 +86,7 @@ export class StartAuction extends Component {
       if (result.errMsg === undefined) {
         const resultObj = {
           hash: result.txHash,
-          json: result.exportJson,
+          exportJson: JSON.stringify(JSON.stringify(result.exportJson)),
           state: 'sent',
           inputResult: {
             ethBid: inputResult.ethBid,
