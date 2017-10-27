@@ -6,18 +6,18 @@ import {sealedBids} from '../../lib/ensService';
 import {RevealAuctionConfirmDialog} from './RevealAuctionConfirmDialog';
 import './RevealAuctionForm.css';
 
-const EmailTextField = (props) => (
-  <TextField
-    id="email"
-    name="email"
-    label="Email"
-    value={props.value}
-    onChange={props.onChange}
-    margin="normal"
-    placeholder="youremail@example.com"
-    helperText="The bid information will send to this email"
-  />
-);
+// const EmailTextField = (props) => (
+//   <TextField
+//     id="email"
+//     name="email"
+//     label="Email"
+//     value={props.value}
+//     onChange={props.onChange}
+//     margin="normal"
+//     placeholder="youremail@example.com"
+//     helperText="The bid information will send to this email"
+//   />
+// );
 
 const EthBidTextField = (props) => (
   <TextField

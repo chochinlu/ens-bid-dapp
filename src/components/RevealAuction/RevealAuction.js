@@ -4,13 +4,14 @@ import {Warnings} from '../Common/Warnings';
 import {RevealAuctionForm} from './RevealAuctionForm';
 import {RevealAuctionInfo} from './RevealAuctionInfo';
 import {sealedBids, unsealBid} from '../../lib/ensService';
-import {sendRawTransaction} from '../../lib/dAppService';
+import {sendRawTransaction, ensJsonExport, getAddressByPrivateKey} from '../../lib/dAppService';
 import './RevealAuction.css';
 
 const handleRevealAuctionProcess = async (inputObj) => {
   const {domainName, ethBid, secret, privateKey, gas} = inputObj;
   let returnObj = {
     txHash: '',
+    exportJson: '',
     errMsg: undefined
   }
 
@@ -22,6 +23,8 @@ const handleRevealAuctionProcess = async (inputObj) => {
   const payload = unsealBid(domainName, ethBid, secret, privateKey, gas);
   try {
     returnObj.txHash = await sendRawTransaction(payload);
+    const address = await getAddressByPrivateKey(privateKey);
+    returnObj.exportJson = await ensJsonExport(domainName, ethBid, secret, address);
   } catch (error) {
     returnObj.errMsg = `unsealBid error : ${error}`;
   }
@@ -36,21 +39,26 @@ export class RevealAuction extends Component {
       revealFormSent: '',
       revealTXHash: '',
       warningOpen: false,
-      warningMessage: ''
+      warningMessage: '',
+      formResult: {},
+      exportJson: ''
     }
-    this.setRevealFormSent = this.setRevealFormSent.bind(this);
-    this.setRevealTXHash = this.setRevealTXHash.bind(this);
+    this.setRevealFormResultState = this.setRevealFormResultState.bind(this);
     this.handelRevealFormSubmit = this.handelRevealFormSubmit.bind(this);
     this.handleWarningMessageClose = this.handleWarningMessageClose.bind(this);
     this.handleWarningMessageOpen = this.handleWarningMessageOpen.bind(this);
   }
 
-  setRevealFormSent(state) {
-    this.setState({revealFormSent: state})
-  }
-
-  setRevealTXHash(txHash) {
-    this.setState({revealTXHash: txHash})
+  setRevealFormResultState(resultObj) {
+    this.setState({
+      revealTXHash: resultObj.hash,
+      exportJson: resultObj.exportJson,
+      revealFormSent: resultObj.state,
+      formResult: {
+        ethBid: resultObj.inputResult.ethBid,
+        secret: resultObj.inputResult.secret
+      }
+    })
   }
 
   handelRevealFormSubmit(inputResult) {
@@ -70,8 +78,17 @@ export class RevealAuction extends Component {
 
     handleRevealAuctionProcess(inputObj).then((result) => {
       if (result.errMsg === undefined) {
-        this.setRevealTXHash(result.txHash);
-        this.setRevealFormSent('sent');  
+        const resultObj = {
+          hash: result.txHash,
+          exportJson: JSON.stringify(JSON.stringify(result.exportJson)),
+          state: 'sent',
+          inputResult: {
+            ethBid: inputResult.ethBid,
+            secret: inputResult.secret,
+            gas: inputResult.gas
+          }
+        };
+        this.setRevealFormResultState(resultObj);
       } else {
         // TODO
         // not yet refactoring error message
@@ -92,9 +109,6 @@ export class RevealAuction extends Component {
     <RevealAuctionForm
       {...this.props}
       {...this.state}
-      setRevealFormSent={this.setRevealFormSent}
-      setRevealTXHash={this.setRevealTXHash}
-      handleInputChange={this.handleInputChange}
       handelRevealFormSubmit={this.handelRevealFormSubmit}
       handleWarningMessageOpen={this.handleWarningMessageOpen}
     />

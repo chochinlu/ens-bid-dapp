@@ -26,17 +26,20 @@ export const RevealAuctionInfo = (props) => {
             </Typography>
           )
         }
+        {/* <Typography type="title" component="div">
+          Email: {props.formResult.email}
+        </Typography> */}
         <Typography type="title" component="div">
-          Email: {props.email}
+          ETH: {props.formResult.ethBid}
         </Typography>
         <Typography type="title" component="div">
-          ETH: {props.ethBid}
-        </Typography>
-        <Typography type="title" component="div">
-          Secret: {props.secret}
+          Secret: {props.formResult.secret}
         </Typography>
         <Typography type="title" component="div">
           TxHash: <a target='_blank' href={txHashUrl}>{props.revealTXHash}</a>
+        </Typography>
+        <Typography type="title" component="div">
+          JSON: <pre>{JSON.parse(props.exportJson)}</pre>
         </Typography>
         <CardActions className="RevealAuctionInfo-button">
           <Button raised onClick={() => props.switchPage('main')}>BACK TO SEARCH</Button>

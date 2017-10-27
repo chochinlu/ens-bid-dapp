@@ -15,6 +15,10 @@ const handleFinalizeAuctionProcess = async (inputObj) => {
   }
 
   const payload = finalizeAuction(domainName, privateKey, gas);
+  //  TODO
+  //  - should validate if the user can finalize the auction
+  //  getEstimateGas(payload)
+
   try {
     returnObj.txHash = await sendRawTransaction(payload);
   } catch (error) {
@@ -23,23 +27,19 @@ const handleFinalizeAuctionProcess = async (inputObj) => {
 
   return returnObj;
 }
-
 export class FinalizeAuction extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: '',
       finalFormSent: '',
-      gas: '21',
       warningOpen: false,
       warningMessage: ''
     }
 
     this.setFinalFormSent = this.setFinalFormSent.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleWarningMessageClose = this.handleWarningMessageClose.bind(this);
     this.handleWarningMessageOpen = this.handleWarningMessageOpen.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   setFinalFormSent(state) {
@@ -54,14 +54,7 @@ export class FinalizeAuction extends Component {
     this.setState({warningOpen: true, warningMessage: msg});
   }
 
-  handleChange(event) {
-    this.setState({email: event.target.value});
-  }
-
-  // only success scenario
-  handleFormSubmit(event) {
-    event.preventDefault();
-
+  handleFormSubmit(inputResult) {
     if (!(this.props.address && this.props.privateKey)) {
       this.handleWarningMessageOpen('Please unlock wallet before bid ENS.');
       return;
@@ -70,12 +63,13 @@ export class FinalizeAuction extends Component {
     const inputObj = {
       domainName: this.props.searchResult.searchName,
       privateKey: this.props.privateKey,
-      gas: this.state.gas
+      gas: inputResult.gas
     }
 
     handleFinalizeAuctionProcess(inputObj).then((result) => {
       // TODO
-      // not yet refactoring error message
+      // 1. not yet refactoring error message
+      // 2. add set result data(like txhash) from input result if needed
       (result.errMsg === undefined) ?
         this.setFinalFormSent('sent') :
         this.handleWarningMessageOpen(result.errMsg);
@@ -93,22 +87,27 @@ export class FinalizeAuction extends Component {
     <FinalizeAuctionForm
       {...this.props}
       {...this.state}
-      setFinalFormSent={this.setFinalFormSent}
-      handleChange={this.handleChange}
       handleFormSubmit={this.handleFormSubmit}
+      handleWarningMessageOpen={this.handleWarningMessageOpen}
     />
   )
 
   render() {
+    const finalizeAuctionPage = this.state.finalFormSent === 'sent' ?
+      this.finalizeAuctionInfo() :
+      this.finalizeAuctionForm();
+
+    const warnings =
+      <Warnings
+        warningOpen={this.state.warningOpen}
+        warningMessage={this.state.warningMessage}
+        handleWarningMessageClose={this.handleWarningMessageClose}
+      />
+
     return(
       <div>
-        {this.state.finalFormSent === 'sent' ?
-        this.finalizeAuctionInfo() : this.finalizeAuctionForm()}
-        <Warnings
-          warningOpen={this.state.warningOpen}
-          warningMessage={this.state.warningMessage}
-          handleWarningMessageClose={this.handleWarningMessageClose}
-        />
+        {finalizeAuctionPage}        
+        {warnings}
       </div>
     )
   }

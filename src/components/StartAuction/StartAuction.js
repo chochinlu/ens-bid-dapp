@@ -1,7 +1,7 @@
 // @flow weak
 import React, {Component} from 'react';
 import {startAuctionAndBid, newBid} from '../../lib/ensService';
-import {sendRawTransaction} from '../../lib/dAppService';
+import {sendRawTransaction, ensJsonExport, getAddressByPrivateKey} from '../../lib/dAppService';
 import {StartAuctionForm} from './StartAuctionForm';
 import {StartAuctionInfo} from './StartAuctionInfo';
 import Snackbar from 'material-ui/Snackbar';
@@ -14,6 +14,7 @@ const handleStartAuctionProcess = async (inputObj) => {
 
   let returnObj = {
     txHash: '',
+    exportJson: '',
     errMsg: undefined
   }
 
@@ -23,6 +24,8 @@ const handleStartAuctionProcess = async (inputObj) => {
 
   try {
     returnObj.txHash = await sendRawTransaction(payload);
+    const address = await getAddressByPrivateKey(privateKey)
+    returnObj.exportJson = await ensJsonExport(domainName, ethBid, secret, address);
   } catch (error) {
     returnObj.errMsg = `${state} async error : ${error}`;
   }
@@ -39,18 +42,23 @@ export class StartAuction extends Component {
       open: false,
       message: '',
       checked: false,
+      formResult: {},
+      exportJson: ''
     }
-    this.setAuctionTXHash = this.setAuctionTXHash.bind(this);
-    this.setAuctionFormSent = this.setAuctionFormSent.bind(this);
+    this.setAuctionFormResultState = this.setAuctionFormResultState.bind(this);
     this.handleAuctionFormSubmit = this.handleAuctionFormSubmit.bind(this);
   }
 
-  setAuctionTXHash(txHash) {
-    this.setState({auctionTXHash: txHash});
-  }
-
-  setAuctionFormSent(state) {
-    this.setState({auctionFormSent: state});
+  setAuctionFormResultState(resultObj) {
+    this.setState({
+      auctionTXHash:   resultObj.hash,
+      exportJson:      resultObj.exportJson,
+      auctionFormSent: resultObj.state,
+      formResult: {
+        ethBid: resultObj.inputResult.ethBid,
+        secret: resultObj.inputResult.secret
+      }
+    })
   }
 
   handleMessageOpen = msg => this.setState({ open: true, message: msg });
@@ -64,20 +72,29 @@ export class StartAuction extends Component {
       return;
     }
 
-    const {ethBid, secret, gas} = inputResult;    
+    const {ethBid, secret, gas} = inputResult;
     const inputObject = {
       state:      this.props.searchResult.state,
       domainName: this.props.searchResult.searchName,
+      privateKey: this.props.privateKey,
       ethBid,
       secret,
-      privateKey: this.props.privateKey,
       gas
     };
 
     handleStartAuctionProcess(inputObject).then((result) => {
       if (result.errMsg === undefined) {
-        this.setAuctionTXHash(result.txHash);
-        this.setAuctionFormSent('sent');
+        const resultObj = {
+          hash: result.txHash,
+          exportJson: JSON.stringify(JSON.stringify(result.exportJson)),
+          state: 'sent',
+          inputResult: {
+            ethBid: inputResult.ethBid,
+            secret: inputResult.secret,
+            gas: inputResult.gas
+          }
+        }
+        this.setAuctionFormResultState(resultObj);
       } else {
         // TODO
         // not yet refactoring error message
@@ -96,10 +113,6 @@ export class StartAuction extends Component {
       <StartAuctionForm
         {...this.props}
         {...this.state}
-        setAuctionFormSent={this.setAuctionFormSent}
-        setAuctionTXHash={this.setAuctionTXHash}
-        handleInputChange={this.handleInputChange}
-        handleAcceptTerms={this.handleAcceptTerms}
         handleAuctionFormSubmit={this.handleAuctionFormSubmit}
         handleMessageOpen={this.handleMessageOpen}
       />

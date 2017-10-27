@@ -1,50 +1,84 @@
 import React, {Component} from 'react';
+import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import {sealedBids} from '../../lib/ensService';
 import {FinalizeAuctionConfirmDialog} from './FinalizeAuctionConfirmDialog';
+
+// const EmailTextField = (props) => (
+//   <TextField
+//     id='email'
+//     name='email'
+//     label='Email'
+//     value={props.value}
+//     onChange={props.onChange}
+//     margin='normal'
+//     placeholder='youremail@example.com'
+//     helperText='The bid information will send to this email'
+//   />
+// );
+
+const GasTextField = (props) => (
+  <TextField
+    error={props.error}
+    id='gas'
+    name='gas'
+    label='Gas Price (Gwei)'
+    type='number'
+    value={props.value}
+    onChange={props.onChange}
+    margin='normal'
+    helperText={props.error ? props.errMsg : 'Recommend use 21 Gwei'}
+  />
+);
+
+const ConfirmFormSubmit = (props) => (
+  <div>
+    <Button
+      raised
+      label="Dialog"
+      disabled={props.disabled}
+      onClick={props.onClick}
+    >
+      Confirm Submit
+    </Button>
+  </div>
+);
 
 const FormComponent = (props) => (
   <div>
-    <form>
-      <div>
-        <label>
-          Email:
-          <input
-            name="email"
-            type="email"
-            placeholder="youremail@example.com"
-            value={props.email}
-            onChange={props.handleChange}
-          />
-        </label>
-        <label>
-          Gas:
-          <input
-            name="gas"
-            type="number"
-            value={props.gas}
-            onChange={props.handleChange}
-          />
-        </label>
-      </div>
-      <div>
-        <Button
-          raised
-          label="Dialog"
-          color="primary"
-          onClick={props.handleOpen}
-        >
-          Confirm Submit
-        </Button>
-      </div>
-    </form>
+    <div>
+      {/* <EmailTextField
+        value={props.email}
+        onChange={props.handleInputChange}
+      /> */}
+      <GasTextField
+        error={props.gasErr}
+        errMsg={props.gasErrMsg}
+        value={props.gas}
+        onChange={props.handleInputChange}
+      />
+    </div>
+    <ConfirmFormSubmit
+      onClick={props.handleOpen}
+      disabled={props.submitDisabled()}
+    />
   </div>
 );
 
 export class FinalizeAuctionForm extends Component {
-  state = {
-    open: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      email: '',
+      gas: '21',
+      gasErr: false,
+      gasErrMsg: ''
+    }
+
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
   
   handleOpen = () => {
     if (!(this.props.address && this.props.privateKey)) {
@@ -52,16 +86,9 @@ export class FinalizeAuctionForm extends Component {
       return
     }
 
-    const checkValue = sealedBids(
-      this.props.searchResult.searchName,
-      this.props.ethBid,
-      this.props.secret,
-      this.props.privateKey
-    );
-    if (checkValue === '0x0000000000000000000000000000000000000000') {
-      this.props.handleWarningMessageOpen("Invalid sealed bids");
-      return
-    }
+    //  TODO
+    //  - should validate if the user can finalize the auction
+    //  getEstimateGas(payload)
 
     this.setState({open: true});
   }
@@ -70,29 +97,80 @@ export class FinalizeAuctionForm extends Component {
     this.setState({open: false});
   }
 
-  render() {
-    return (
-      <div>
-        <h2>{this.props.searchResult.searchName}.eth</h2>
-        <div>
-          <p>Finalize Auction On</p>
-          <div>{this.props.registratesAt.toString()}</div>
-          <div>Finalization</div>
-        </div>
+  handleInputChange(event) {
+    const {name, value} = event.target;
+    this.setState({ [name]: value });
 
-        <FormComponent
+    switch (name) {
+      case 'gas':
+        this.checkGas(value);
+        break;
+      default:
+        break;
+    }
+  }
+
+  checkGas = (v) => {
+    // validate value should present
+    if (v === '') {
+      this.setState({
+        gasErr: true,
+        gasErrMsg: 'Please input a number.'
+      })
+      return;
+    }
+
+    // validate should greater than one
+    if (parseFloat(v, 10) <= 1) {
+      this.setState({
+        gasErr: true,
+        gasErrMsg: 'Please input a number large than one'
+      })
+      return;
+    }
+
+    this.setState({
+      gasErr: false,
+      gasErrMsg: ''
+    })
+  }
+
+  submitDisabled = () => {
+    return this.state.gasErr;
+  }
+
+  inputResult = () => ({gas: this.state.gas})
+
+  render() {
+    const domainName = <h2>{this.props.searchResult.searchName}.eth</h2>;
+    const timeDuraton = (
+      <div>
+        <p>Finalize Auction On</p>
+        <div>{this.props.registratesAt.toString()}</div>
+        <div>Finalization</div>
+      </div>
+    );
+    const finalizeAuctionConfirmDialog = 
+      (this.state.open && this.props.address && this.props.privateKey) &&
+        <FinalizeAuctionConfirmDialog
           {...this.props}
-          handleOpen={this.handleOpen}
+          inputResult={this.inputResult()}
+          open={this.state.open}
+          handleClose={this.handleClose}
         />
 
-        {
-          (this.state.open && this.props.address && this.props.privateKey) &&
-          <FinalizeAuctionConfirmDialog
-            {...this.props}
-            open={this.state.open}
-            handleClose={this.handleClose}
-          />
-        }
+    return (
+      <div>
+        {domainName}
+        {timeDuraton}
+        <FormComponent
+          {...this.props}
+          {...this.state}
+          handleOpen={this.handleOpen}
+          handleInputChange={this.handleInputChange}
+          submitDisabled={this.submitDisabled}
+        />
+        {finalizeAuctionConfirmDialog}
       </div>
     )
   }

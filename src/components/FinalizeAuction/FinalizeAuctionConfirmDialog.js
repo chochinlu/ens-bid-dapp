@@ -42,7 +42,7 @@ export const FinalizeAuctionConfirmDialog = (props) => {
           Cancel
         </Button>
         <Button
-          onClick={props.handleFormSubmit}
+          onClick={props.handleFormSubmit(props.inputResult)}
         >
           Submit
         </Button>
