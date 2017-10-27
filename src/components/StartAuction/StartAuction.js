@@ -24,7 +24,7 @@ const handleStartAuctionProcess = async (inputObj) => {
 
   try {
     returnObj.txHash = await sendRawTransaction(payload);
-    address = await getAddressByPrivateKey(privateKey)
+    const address = await getAddressByPrivateKey(privateKey)
     returnObj.exportJson = await ensJsonExport(domainName, ethBid, secret, address);
   } catch (error) {
     returnObj.errMsg = `${state} async error : ${error}`;

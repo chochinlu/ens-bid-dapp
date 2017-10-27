@@ -23,7 +23,7 @@ const handleRevealAuctionProcess = async (inputObj) => {
   const payload = unsealBid(domainName, ethBid, secret, privateKey, gas);
   try {
     returnObj.txHash = await sendRawTransaction(payload);
-    address = await getAddressByPrivateKey(privateKey);
+    const address = await getAddressByPrivateKey(privateKey);
     returnObj.exportJson = await ensJsonExport(domainName, ethBid, secret, address);
   } catch (error) {
     returnObj.errMsg = `unsealBid error : ${error}`;
