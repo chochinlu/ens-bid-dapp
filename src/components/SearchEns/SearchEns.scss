@@ -1,82 +1,71 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
 .SearchEns {
-  margin: 1em;
-  padding: 3em 1em 1em 1em;
+  margin-top: 4em;
+  margin-bottom: 0;
+  padding: 1em;
   min-height: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  input {
+    flex: 3;
+    font-size: $larger-font-size;
+    padding-left: 1em;
+    height: 2em;
+  }
 }
 
-.SearchEns input {
-  font-size: 1.2em;
-  padding-left: 1em;
-  padding-right: 1em !important;
-  height: 2em;
-  width: 100%;
-  // width: -moz-available;
-  // width: -webkit-fill-available;
+.SearchDescription {
+  color: $accent-color-blue;
+  margin-bottom: 1em;
+  
+  @include mobile {
+    h1 {
+      font-weight: $little-light;
+      font-size: $base-font-size * 2;
+    }
+  }
+
+  @include desktop {
+    h1 {
+      font-weight: $bold;
+      font-size: $base-font-size * 3;
+    }
+  }
 }
 
 .SearchEns-paper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 70%;
-  min-width: 380px;
-}
-
-.SearchEns-typography {
-  font-size: 1.2em !important;
-  color: rgba(0, 0, 0, 0.54) !important;
-}
-
-.SearchEns-input {
+  justify-content: center;
   width: 100%;
+
+  div {width: 100%;}
 }
 
-.SearchEns-search {
+.SearchEns-input-block {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.SearchEns-searchBlock {
+  flex: 1;
+}
+
+.SearchEns-ethTipName {
+  text-align: left;
+  padding-left: 1.2em;
+  font-size: $larger-font-size !important;
+  color: $theme-color-grey-dark !important;
+}
+
+.SearchEns-searchButton {
   display: flex;
   justify-content: center;
-}
-
-.SearchEns-btn {
-  font-size: 1.2em;
-  font-weight: bold;
-  border: 1px solid black;
-  padding: 0.5em 0.7em;
-  margin-left: 1em;
-  cursor: pointer;
-}
-
-.SearchEns-result {
-  display: flex;
   align-items: center;
-  // border: 1px solid black;
-  margin: 2em;
-
-  div {
-    border: 1px solid black;
-    margin-left: 1em;
-    padding: 0.5em 1em;
-    h3 {
-      padding: 0;
-      margin: 0;
-    }
-  }
-}
-
-.SearchEns-result-name {
-  flex: 7;
-  text-align: left;
-  font-size: 1.2em;
-
-}
-
-.SearchEns-result-action {
-  flex: 1;
-  font-size: 1.2em;
-}
-
-.SearchDescription {
-  color: #6203B8;
 }

@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {SearchResult} from './SearchResult';
 import Paper from 'material-ui/Paper';
 import Input from 'material-ui/Input';
-import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import './SearchEns.css';
 
@@ -13,55 +12,56 @@ const SearchDescription = () => (
 );
 
 const SearchInput = (props) => {
-  return (
-    <Paper className="SearchEns-paper">
-      <Input
-        className="SearchEns-input"
-        placeholder="Search"
-        minLength="7"
-        inputProps={{
-          'aria-label': 'Search',
-        }}
-        disableUnderline
-        value={props.value}
-        onChange={props.handleSearchChange}
-        onKeyPress={props.handleSearchKeyPress}
-      />
-      <Typography type="title" component="p" className="SearchEns-typography">
-        .eth
-      </Typography>
+  const searchInputField = 
+    <Input
+      placeholder="Search"
+      minLength="7"
+      inputProps={{
+        'aria-label': 'Search',
+      }}
+      disableUnderline
+      value={props.value}
+      onChange={props.handleSearchChange}
+      onKeyPress={props.handleSearchKeyPress}
+    />;
+
+  const ethTipName = 
+    <div className="SearchEns-ethTipName">
+      <p>.eth</p>
+    </div>;
+  
+  const searchButton = 
+    <div className="SearchEns-searchButton">
       <IconButton aria-label="Search" onClick={props.handleSearchClick}>
         <i className="material-icons">search</i>
       </IconButton>
-    </Paper>
+    </div>;
+
+  const searchButtonBlock = 
+    <div className="flex-row-center SearchEns-searchBlock">
+      {ethTipName}
+      {searchButton}
+    </div>;
+
+  return (
+    <div  className="SearchEns-paper">
+      <Paper className="SearchEns-input-block">
+        {searchInputField}
+        {searchButtonBlock}
+      </Paper>
+    </div>
   );
 };
 
-export class SearchEns extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: ''
-    };
-  }
-
-  render() {
-    return (
-      <div className="SearchEns">
-        <SearchDescription />
-        <SearchInput 
-          value={this.props.searchValue}
-          handleSearchChange={this.props.handleSearchChange}
-          handleSearchClick={this.props.handleSearchClick}
-          handleSearchKeyPress={this.props.handleSearchKeyPress}
-        />
-
-        {this.props.searchFetching
-          ? <h3>Fetching...</h3>
-          : <SearchResult
-            {...this.props} />
-        }
-      </div>
-    );
-  }
-}
+export const SearchEns = (props) => (
+  <div className="SearchEns">
+    <SearchDescription />
+    <SearchInput 
+      value={props.searchValue}
+      handleSearchChange={props.handleSearchChange}
+      handleSearchClick={props.handleSearchClick}
+      handleSearchKeyPress={props.handleSearchKeyPress}
+    />
+    {props.searchResult && <SearchResult {...props} />}
+  </div>
+);

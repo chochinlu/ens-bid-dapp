@@ -47,6 +47,14 @@ class App extends Component {
   }
 
   render() {
+    const mainWrapperOrWarning = process.env.REACT_APP_PROVIDER
+      ? <MainWrapper
+          className="App-content"
+          {...this.state}
+          switchPage={this.switchPage}
+        />
+      : <Warnings/>;
+    
     return (
       <div className="App">
         <Top
@@ -57,13 +65,7 @@ class App extends Component {
           setPrivateKey={this.setPrivateKey}
           switchPage={this.switchPage}
         /> 
-        {process.env.REACT_APP_PROVIDER
-          ? <MainWrapper
-              className="App-content"
-              {...this.state}
-              switchPage={this.switchPage}
-            />
-          : <Warnings/>}
+        {mainWrapperOrWarning}
         <Footer/>
       </div>
     );

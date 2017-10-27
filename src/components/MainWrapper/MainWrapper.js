@@ -5,15 +5,17 @@ import CloseIcon from 'material-ui-icons/Close';
 import {SearchEns} from '../SearchEns/SearchEns';
 // import {Content} from './Content'; 
 // import {FAQ} from './FAQ';
-import {About} from './About';
+import {About} from '../About/About';
 import {AuctionWrapper} from '../AuctionWrapper/AuctionWrapper';
 import {entries} from '../../lib/ensService';
 import './MainWrapper.css';
 
 const Main = (props) => (
   <div className="Main">
-    <SearchEns {...props} />
-    <About />
+    <div>
+      <SearchEns {...props} />
+      <About />
+    </div>
   </div>
 );
 
@@ -85,7 +87,7 @@ export class MainWrapper extends Component {
   render() {
     const mainPage = this.mainPage();
     return (
-      <div className="Main">
+      <div>
         {mainPage}
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}

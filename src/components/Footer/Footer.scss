@@ -1,30 +1,26 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
 .Footer {
   display: flex;
-  flex-direction: row !important;
-  align-items: center;
   justify-content: center;
-  background-color: #3F335D !important;
-  height: 100%;
+  margin-top: 1em;
 
-  a {
-    color: white;
-    text-decoration: none;
-  }
+  // a {
+  //   color: white;
+  //   text-decoration: none;
+  // }
 }
 
-.Footer-info {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  margin: 2em 0 2em 0;
-}
+// .Footer-info {
+//   display: flex;
+//   flex-direction: column;
+//   text-align: left;
+//   margin: 2em 0 2em 0;
+// }
 
 .Footer-copyright {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 5em;
-  flex: 0.6;
-  text-align: right;
-  font-weight: bold;
+  color: $primary-color-light;
+  margin: 0 0 0.5em 0;
+  // font-size: $smaller-font-size;
 }

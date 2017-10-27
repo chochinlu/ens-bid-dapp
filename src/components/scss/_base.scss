@@ -2,18 +2,43 @@
 @import url('http://fonts.googleapis.com/earlyaccess/notosanstc.css');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-// Font weights
+// Main Wrapper Width
+$main-width: 1000px;
+
+// Font 
+$base-font-family: 'Noto Sans TC';
+
+$base-line-height: 1.5;
+
 $light: 100;
+$little-light: 300;
 $regular: 400;
 $bold: 600;
-
-$base-font-family: 'Noto Sans TC';
 $base-font-weight: $regular;
+
 $base-font-size: 12px;
-$base-line-height: 1.4;
+$smaller-font-size: 8px;
+$larger-font-size: $base-font-size * 1.5;
+$large-font-size: $base-font-size * 2;
 
-//TODO: Color 
+//Layout 
+.flex-row-center {
+  display: flex;
+  justify-content: center;
+}
 
-body {
-  font-family: 'Noto Sans TC', 'Open Sans', sans-serif;
+
+//RWD
+$mobile-width: 768px;
+
+@mixin mobile {
+  @media (max-width: #{$mobile-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$mobile-width}) {
+    @content;
+  }
 }

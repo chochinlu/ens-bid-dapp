@@ -1,11 +1,16 @@
-.AppBar {
-  background-color: #6203B8 !important;
-}
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
 
 .Top {
+  display: flex;
+  justify-content: center;
   width: 100vw;
   position: fixed;
   z-index: 999;
+}
+
+.AppBar {
+  background-color: $primary-color-light !important;
 }
 
 .Top-info {
@@ -19,7 +24,7 @@
 }
 
 .selected {
-  background: #585f87;
+  background: $accent-color-blue;
   color: white;
 }
 
