@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
-import AppBar from 'material-ui/AppBar';
+import React, {Component} from 'react';
 import './Footer.css';
 
 class Footer extends Component {
-  render () {
+  render() {
     return (
-      <AppBar position="static" className="Footer">
-        <div className="Footer-info">
+      <div className="Footer">
+        {/* <div className="Footer-info">
           <a>FAQ</a>
           <a>Terms of Service</a>
           <a>Privacy</a>
-        </div>
+        </div> */}
         <div className="Footer-copyright">
-          © Copyright 2017 ENS.BID
+          <p>© Copyright 2017 ENS.BID</p>
         </div>
-      </AppBar>
+      </div>
     )
   }
 };
