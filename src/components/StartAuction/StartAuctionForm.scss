@@ -1,25 +1,38 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
 .StartAuctionForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  min-width: 350px;
+  width: 100%;
+  margin-top: 1em;
+
+  h2 {
+    color: $accent-color-blue;
+  }
 }
 
 .StartAuctionForm-field {
   display: flex;
   flex-direction: column;
-  width: 70vw;
-  min-width: 350px;
+  width: 90vw;
+
+  @include desktop {
+    width: 85vw;
+    max-width: $main-width;
+  }
+
 }
 
 .StartAuctionForm-submit {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 2em;
-  margin-top: 1em;
-  width: 70vw;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  width: 90vw;
+  max-width: $main-width;
 }
 
 .StartAuctionForm-terms {
