@@ -5,11 +5,14 @@ import './Network.css';
 
 export const Network = (props) => {
   return (
-    <Select
-      className="Network-select"
-      value={props.network}
-      onChange={props.handleChange('network')}>
-      <MenuItem value="ropsten">Network: Ropsten</MenuItem>
-    </Select>
+    <div className="Network">
+      <i className="material-icons">public</i>&nbsp;
+      <Select
+        className="Network-select"
+        value={props.network}
+        onChange={props.handleChange('network')}>
+        <MenuItem value="ropsten" className="Network-MenuItem">Network: Ropsten</MenuItem>
+      </Select>
+    </div>
   );
 };
