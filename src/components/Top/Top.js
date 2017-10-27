@@ -11,6 +11,7 @@ import Drawer from 'material-ui/Drawer';
 import {Menu} from './Menu';
 import {Title} from './Title';
 import {Wallet} from './Wallet';
+import {Network} from './Network';
 import './Top.css';
 
 const menu = [
@@ -67,6 +68,7 @@ class Top extends Component {
   state = {
     open: false,
     menu: false,
+    network: 'ropsten',
   };
 
   handleRequestClose = () => {
@@ -81,6 +83,10 @@ class Top extends Component {
     this.setState({ menu: false });
   };
 
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
+
   render () {
     return (
       <div className="Top">
@@ -88,6 +94,7 @@ class Top extends Component {
           <Toolbar>
             <Menu handleDrawerOpen={this.handleDrawerOpen}/>
             <Title switchPage={this.props.switchPage} />
+            <Network {...this.state} handleChange={this.handleChange}/>
             <Wallet 
               privateKey={this.props.privateKey}
               onClick={() => this.setState({ open: true })} />
