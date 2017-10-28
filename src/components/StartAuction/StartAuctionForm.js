@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import Button from 'material-ui/Button';
 import {TimeDuration} from './TimeDuration';
-import {StartAuctionConfirmDiaglog} from './StartAutionConfirmDialog';
+import {StartAuctionConfirmDialog} from './StartAuctionConfirmDialog';
 import './StartAuctionForm.css';
 
 // const EmailTextField = (props) => (
@@ -258,8 +258,8 @@ export class StartAuctionForm extends Component {
     
     const textFields = this.textFields();
 
-    const startAuctionConfirmDiaglog = this.state.open &&
-      <StartAuctionConfirmDiaglog
+    const startAuctionConfirmDialog = this.state.open &&
+      <StartAuctionConfirmDialog
         {...this.props}
         inputResult={this.inputResult()}
         open={this.state.open}
@@ -272,7 +272,7 @@ export class StartAuctionForm extends Component {
         {timeDuration}
         {textFields}
         <FormSubmit onClick={this.handleOpen} disabled={this.submitDisabled()} />
-        {startAuctionConfirmDiaglog}
+        {startAuctionConfirmDialog}
       </div>
     );
   };
