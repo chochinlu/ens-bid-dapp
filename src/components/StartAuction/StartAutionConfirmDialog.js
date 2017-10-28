@@ -39,36 +39,46 @@ export class StartAuctionConfirmDiaglog extends Component {
     return `${gas} Gwei * ${estimateGas} = ${transactionFee} ETH`;
   }
 
-  getFormInfo = () => ({
+  formInfo = () => ({
     From: `${this.props.address}`,
     To: getRegistrarAddress(),
     Fee: this.getFeeString(),
     ETH: `${this.props.inputResult.ethBid} ETH`
   })    
+
+  inputResultList() {
+    const formInfo = this.formInfo();
+    return (
+      <List>
+        {Object
+          .keys(formInfo)
+          .map((key, index) => 
+            <ConfirmListItem key={`input-${index}`} name={key} info={formInfo[key]}/>)}
+      </List>
+    );
+  }
     
   render() {
     const {open, handleClose} = this.props;    
-    const formInfo = this.getFormInfo();
+    const inputResultList = this.inputResultList();
 
     return (
       <Dialog open={open} onRequestClose={handleClose}>
         <div className="StartAuctionConfirmDiaglog">
           <h4 className="StartAuctionConfirmDiaglog-title">Confirm Auction Bid Information</h4>
           <DialogContent>
-            <List>
-              {Object
-                .keys(formInfo)
-                .map((key, index) => <ConfirmListItem key={`input-${index}`} name={key} info={formInfo[key]}/>)}
-            </List>
+            {inputResultList}
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button onClick={() => this.props.handleAuctionFormSubmit(this.props.inputResult)}>
-              Submit
-            </Button>
-          </DialogActions>
+          <div className="StartAuctionConfirmDiaglog-action-block">
+            <DialogActions>
+              <Button raised onClick={handleClose}>Cancel</Button>
+              <Button raised
+                className="KeystoreUploader-button" 
+                onClick={() => this.props.handleAuctionFormSubmit(this.props.inputResult)}>
+                Submit
+              </Button>
+            </DialogActions>
+          </div>
         </div>
       </Dialog>
     );
