@@ -1,11 +1,11 @@
 @import '../scss/_color.scss';
 @import '../scss/_base.scss';
 
-.StartAuctionConfirmDiaglog {
+.StartAuctionConfirmDialog {
   margin: 1em 6.5em 1.5em 6.5em;
 }
 
-.StartAuctionConfirmDiaglog-title {
+.StartAuctionConfirmDialog-title {
   color: $accent-color-blue;
   text-align: center;
   font-size: 1.2em;
@@ -13,7 +13,7 @@
   padding-bottom: 1.5em;
 }
 
-.StartAuctionConfirmDiaglog-list-item {
+.StartAuctionConfirmDialog-list-item {
   p {
     &:first-child {
       font-weight: bold;
@@ -26,6 +26,6 @@
   font-size: 0.9em;
 }
 
-.StartAuctionConfirmDiaglog-action-block {
+.StartAuctionConfirmDialog-action-block {
   margin-right: 1em;
 }

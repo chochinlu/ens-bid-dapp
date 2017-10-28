@@ -5,14 +5,14 @@ import Dialog, {DialogActions, DialogContent} from 'material-ui/Dialog';
 import List from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
-import './StartAuctionConfirmDiaglog.css';
+import './StartAuctionConfirmDialog.css';
 
 const ConfirmListItem = (props) => {
   const specialName = ['From', 'To'];
   const classes = specialName.includes(props.name) && 'address';
 
   return (
-    <div className="StartAuctionConfirmDiaglog-list-item">
+    <div className="StartAuctionConfirmDialog-list-item">
       <p>{props.name}:</p>
       <p className={classes}>{props.info}</p>
       <Divider/>
@@ -20,7 +20,7 @@ const ConfirmListItem = (props) => {
   );
 }
 
-export class StartAuctionConfirmDiaglog extends Component {
+export class StartAuctionConfirmDialog extends Component {
 
   payload() {
     const { searchResult: { searchName }, privateKey, state } = this.props;
@@ -64,12 +64,12 @@ export class StartAuctionConfirmDiaglog extends Component {
 
     return (
       <Dialog open={open} onRequestClose={handleClose}>
-        <div className="StartAuctionConfirmDiaglog">
-          <h4 className="StartAuctionConfirmDiaglog-title">Confirm Auction Bid Information</h4>
+        <div className="StartAuctionConfirmDialog">
+          <h4 className="StartAuctionConfirmDialog-title">Confirm Auction Bid Information</h4>
           <DialogContent>
             {inputResultList}
           </DialogContent>
-          <div className="StartAuctionConfirmDiaglog-action-block">
+          <div className="StartAuctionConfirmDialog-action-block">
             <DialogActions>
               <Button raised onClick={handleClose}>Cancel</Button>
               <Button raised

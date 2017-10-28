@@ -1,0 +1,20 @@
+@import '../scss/_color.scss';
+
+.StartAuctionTimeDuration {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: $theme-color-white;
+}
+
+.StartAuctionTimeDuration-Reveal {
+  width: 100%;
+  background-color: $primary-color;
+  padding: 10px;
+}
+
+.StartAuctionTimeDuration-Finalize {
+  width: 100%;
+  background-color: $primary-color-light;
+  padding: 10px;
+}
