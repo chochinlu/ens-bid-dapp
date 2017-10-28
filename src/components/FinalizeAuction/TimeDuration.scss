@@ -1,0 +1,10 @@
+@import '../scss/_color.scss';
+
+.TimeDuration {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  color: $theme-color-white;
+  background-color: $primary-color-light;
+}

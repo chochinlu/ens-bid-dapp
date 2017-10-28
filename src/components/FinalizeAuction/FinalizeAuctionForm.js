@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import {FinalizeAuctionConfirmDialog} from './FinalizeAuctionConfirmDialog';
+import {TimeDuration} from './TimeDuration';
+import './FinalizeAuctionForm.css';
 
 // const EmailTextField = (props) => (
 //   <TextField
@@ -31,7 +33,7 @@ const GasTextField = (props) => (
 );
 
 const ConfirmFormSubmit = (props) => (
-  <div>
+  <div className='FinalizeAuctionForm-submit'>
     <Button
       raised
       label="Dialog"
@@ -44,22 +46,16 @@ const ConfirmFormSubmit = (props) => (
 );
 
 const FormComponent = (props) => (
-  <div>
-    <div>
-      {/* <EmailTextField
-        value={props.email}
-        onChange={props.handleInputChange}
-      /> */}
-      <GasTextField
-        error={props.gasErr}
-        errMsg={props.gasErrMsg}
-        value={props.gas}
-        onChange={props.handleInputChange}
-      />
-    </div>
-    <ConfirmFormSubmit
-      onClick={props.handleOpen}
-      disabled={props.submitDisabled()}
+  <div className='FinalizeAuctionForm-field'>
+    {/* <EmailTextField
+      value={props.email}
+      onChange={props.handleInputChange}
+    /> */}
+    <GasTextField
+      error={props.gasErr}
+      errMsg={props.gasErrMsg}
+      value={props.gas}
+      onChange={props.handleInputChange}
     />
   </div>
 );
@@ -143,13 +139,7 @@ export class FinalizeAuctionForm extends Component {
 
   render() {
     const domainName = <h2>{this.props.searchResult.searchName}.eth</h2>;
-    const timeDuraton = (
-      <div>
-        <p>Finalize Auction On</p>
-        <div>{this.props.registratesAt.toString()}</div>
-        <div>Finalization</div>
-      </div>
-    );
+    const timeDuraton = <TimeDuration {...this.props} />;
     const finalizeAuctionConfirmDialog = 
       (this.state.open && this.props.address && this.props.privateKey) &&
         <FinalizeAuctionConfirmDialog
@@ -158,9 +148,14 @@ export class FinalizeAuctionForm extends Component {
           open={this.state.open}
           handleClose={this.handleClose}
         />
+    const confirmSubmitButton =
+      <ConfirmFormSubmit
+        onClick={this.handleOpen}
+        disabled={this.submitDisabled()}
+      />;
 
     return (
-      <div>
+      <div className='FinalizeAuctionForm'>
         {domainName}
         {timeDuraton}
         <FormComponent
@@ -170,6 +165,7 @@ export class FinalizeAuctionForm extends Component {
           handleInputChange={this.handleInputChange}
           submitDisabled={this.submitDisabled}
         />
+        {confirmSubmitButton}
         {finalizeAuctionConfirmDialog}
       </div>
     )

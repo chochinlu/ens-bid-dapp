@@ -1,7 +1,7 @@
 @import '../scss/_base.scss';
 @import '../scss/_color.scss';
 
-.RevealAuctionForm {
+.FinalizeAuctionForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,7 +14,7 @@
   }
 }
 
-.RevealAuctionForm-field {
+.FinalizeAuctionForm-field {
   display: flex;
   flex-direction: column;
   width: 90vw;
@@ -25,7 +25,7 @@
   }
 }
 
-.RevealAuctionForm-submit {
+.FinalizeAuctionForm-submit {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1em;
