@@ -76,17 +76,24 @@ const ConfirmTermsCheckBox = (props) => (
   />
 );
 
-const FormSubmit = (props) => (
-  <div className='StartAuctionForm-submit'>
-    <Button
-      disabled={props.disabled}
-      raised
-      label='Dialog'
-      onClick={props.onClick} >
-      Confirm Submit
-    </Button>
-  </div>
-);
+const FormSubmit = (props) => {
+  const disabled = props.disabled;
+  const classes = !disabled && 'KeystoreUploader-button'
+
+  return (
+    <div className='StartAuctionForm-submit'>
+      <Button
+        className={classes}
+        disabled={disabled}
+        raised
+        label='Dialog'
+        onClick={props.onClick} >
+        Confirm Submit
+      </Button>
+    </div>
+  );
+} 
+  
 
 export class StartAuctionForm extends Component {
   state = { 

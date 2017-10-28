@@ -1,0 +1,31 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
+.StartAuctionConfirmDiaglog {
+  margin: 1em 6.5em 1.5em 6.5em;
+}
+
+.StartAuctionConfirmDiaglog-title {
+  color: $accent-color-blue;
+  text-align: center;
+  font-size: 1.2em;
+  margin: 1.5em 0 0 0;
+  padding-bottom: 1.5em;
+}
+
+.StartAuctionConfirmDiaglog-list-item {
+  p {
+    &:first-child {
+      font-weight: bold;
+      color: $primary-color-light;
+    }
+  }
+}
+
+.address {
+  font-size: 0.9em;
+}
+
+.StartAuctionConfirmDiaglog-action-block {
+  margin-right: 1em;
+}
