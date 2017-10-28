@@ -61,18 +61,23 @@ const GasTextField = (props) => (
   />
 );
 
-const ConfirmFormSubmit = (props) => (
-  <div className="RevealAuctionForm-submit">
-    <Button
-      raised
-      label="Dialog"
-      disabled={props.disabled}
-      onClick={props.onClick}
-    >
-      Confirm Submit
-    </Button>
-  </div>
-);
+const ConfirmFormSubmit = (props) => {
+  const disabled = props.disabled;
+  const classes = !disabled && 'KeystoreUploader-button';
+
+  return (
+    <div className="RevealAuctionForm-submit">
+      <Button
+        className={classes}
+        disabled={disabled}
+        raised
+        label="Dialog"
+        onClick={props.onClick} >
+        Confirm Submit
+      </Button>
+    </div>
+  );
+};
 
 const FormFields = (props) => (
   <div className="RevealAuctionForm-field">
