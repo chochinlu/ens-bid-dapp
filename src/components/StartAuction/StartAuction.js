@@ -56,6 +56,7 @@ export class StartAuction extends Component {
       auctionFormSent: resultObj.state,
       formResult: {
         ethBid: resultObj.inputResult.ethBid,
+        ethMask: resultObj.inputResult.ethMask,
         secret: resultObj.inputResult.secret
       }
     })
