@@ -24,11 +24,11 @@ export class StartAuctionConfirmDialog extends Component {
 
   payload() {
     const { searchResult: { searchName }, privateKey, state } = this.props;
-    const {ethBid, secret, gas} = this.props.inputResult;
+    const {ethBid, ethMask, secret, gas} = this.props.inputResult;
     
     return (state === 'Open') 
-      ? startAuctionAndBid(searchName, ethBid, secret, privateKey, gas)
-      : newBid(searchName, ethBid, secret, privateKey, gas);
+      ? startAuctionAndBid(searchName, ethBid, ethMask, secret, privateKey, gas)
+      : newBid(searchName, ethBid, ethMask, secret, privateKey, gas);
   }
 
   getFeeString() {
@@ -39,11 +39,18 @@ export class StartAuctionConfirmDialog extends Component {
     return `${gas} Gwei * ${estimateGas} = ${transactionFee} ETH`;
   }
 
+  getETHString() {
+    const {ethBid, ethMask} = this.props.inputResult;
+    const ethTotal = parseFloat(ethBid, 10) + parseFloat(ethMask, 10);
+    return (parseFloat(ethMask) > 0) ? 
+      `${ethBid}(bid) + ${ethMask}(mask) = ${ethTotal} ETH` : `${ethBid} ETH`;
+  }
+
   formInfo = () => ({
     From: `${this.props.address}`,
     To: getRegistrarAddress(),
     Fee: this.getFeeString(),
-    ETH: `${this.props.inputResult.ethBid} ETH`
+    ETH: this.getETHString(),
   })    
 
   inputResultList() {

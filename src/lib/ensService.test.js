@@ -66,8 +66,8 @@ test.skip('sha3', () => {
 });
 
 test('startAuctionAndBid estimateGas', () => {
-  const name = 'mytestingx';
-  const result = getEstimateGas(startAuctionAndBid(name, 0.01, 'testing', process.env.PRIVATE_KEY, 21));
+  const name = 'ethmasks';
+  const result = getEstimateGas(startAuctionAndBid(name, 0.01, 0.02, 'testing', process.env.PRIVATE_KEY, 21));
   console.log("startAuctionAndBid, estimateGas", result);
 });
 
@@ -77,10 +77,10 @@ test.skip('startAuction', () => {
   console.log("startAuction, txHash", result);
 });
 
-test.skip('newBid', async () => {
-  const name = "mytesing";
-  const result = await newBid(name, 0.011, "testing", process.env.PRIVATE_KEY, 21);
-  console.log("newBid, txHash", result);
+test('newBid estimateGas', () => {
+  const name = "ethmask";
+  const result = getEstimateGas(newBid(name, 0.02, 0.05, "testing", process.env.PRIVATE_KEY, 21));
+  console.log("newBid, estimateGas", result);
 });
 
 test.skip('unsealBid', () => {

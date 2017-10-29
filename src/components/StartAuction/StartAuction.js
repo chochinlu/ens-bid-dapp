@@ -10,7 +10,7 @@ import CloseIcon from 'material-ui-icons/Close';
 import './StartAuction.css';
 
 const handleStartAuctionProcess = async (inputObj) => {
-  const {state, domainName, ethBid, secret, privateKey, gas} = inputObj;
+  const {state, domainName, ethBid, ethMask, secret, privateKey, gas} = inputObj;
 
   let returnObj = {
     txHash: '',
@@ -19,8 +19,8 @@ const handleStartAuctionProcess = async (inputObj) => {
   }
 
   const payload = (state === 'Auction') ? 
-    newBid(domainName, ethBid, secret, privateKey, gas) :
-    startAuctionAndBid(domainName, ethBid, secret, privateKey, gas);
+    newBid(domainName, ethBid, ethMask, secret, privateKey, gas) :
+    startAuctionAndBid(domainName, ethBid, ethMask, secret, privateKey, gas);
 
   try {
     returnObj.txHash = await sendRawTransaction(payload);
@@ -56,6 +56,7 @@ export class StartAuction extends Component {
       auctionFormSent: resultObj.state,
       formResult: {
         ethBid: resultObj.inputResult.ethBid,
+        ethMask: resultObj.inputResult.ethMask,
         secret: resultObj.inputResult.secret
       }
     })
@@ -72,12 +73,13 @@ export class StartAuction extends Component {
       return;
     }
 
-    const {ethBid, secret, gas} = inputResult;
+    const {ethBid, ethMask, secret, gas} = inputResult;
     const inputObject = {
       state:      this.props.searchResult.state,
       domainName: this.props.searchResult.searchName,
       privateKey: this.props.privateKey,
       ethBid,
+      ethMask,
       secret,
       gas
     };
@@ -90,6 +92,7 @@ export class StartAuction extends Component {
           state: 'sent',
           inputResult: {
             ethBid: inputResult.ethBid,
+            ethMask: inputResult.ethMask,
             secret: inputResult.secret,
             gas: inputResult.gas
           }

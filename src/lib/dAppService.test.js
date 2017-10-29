@@ -34,7 +34,8 @@ test('getTransactionFee', () => {
   const name = "mytestingy";
   const secret = "testing";
   const ether = 0.01;
+  const mask = 0.02;
   const gas = 21;
-  const payload = startAuctionAndBid(name, ether, secret, process.env.PRIVATE_KEY, gas);
+  const payload = startAuctionAndBid(name, ether, mask, secret, process.env.PRIVATE_KEY, gas);
   console.log(getTransactionFee(gas, getEstimateGas(payload)));
 })
