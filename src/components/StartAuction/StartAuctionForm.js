@@ -156,11 +156,12 @@ export class StartAuctionForm extends Component {
       return;
     }
 
-    if (v < 0.01) {
+    if (parseFloat(v, 10) < 0.01) {
       this.setState({
         ethBidErr: true,
         ethBidErrMsg: 'Bid amount: Minimum bid must at least 0.01'
-      })
+      });
+      return;
     }
     
     this.setState({

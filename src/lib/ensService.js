@@ -123,7 +123,7 @@ export const startAuctionAndBid = (name, ether, mask, secret, privateKey, gasPri
   let byteData = "0x" + 		
                 abi.methodID("startAuctionsAndBid", [ "bytes32[]", "bytes32" ]).toString("hex") + 		
                 abi.rawEncode([ "bytes32[]", "bytes32" ], [ [web3.sha3(name)], bid ]).toString("hex");
-  let total = parseFloat(ether) + parseFloat(mask);
+  let total = parseFloat(ether, 10) + parseFloat(mask, 10);
   const payload = {		
     from: fromAddress,		
     to: ethRegistrarAddress,		
@@ -194,7 +194,7 @@ export const newBid = (name, ether, mask, secret, privateKey, gasPrice) => {
   let byteData = "0x" +
                 abi.methodID("newBid", [ "bytes32" ]).toString("hex") +
                 abi.rawEncode([ "bytes32" ], [ bid ]).toString("hex");
-  let total = parseFloat(ether) + parseFloat(mask);
+  let total = parseFloat(ether, 10) + parseFloat(mask, 10);
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,

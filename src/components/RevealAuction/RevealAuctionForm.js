@@ -195,6 +195,14 @@ export class RevealAuctionForm extends Component {
       return;
     }
 
+    if (parseFloat(v, 10) < 0.01) {
+      this.setState({
+        ethBidErr: true,
+        ethBidErrMsg: 'Bid amount: Minimum bid must at least 0.01'
+      });
+      return;
+    }
+
     this.setState({
       ethBidErr: false,
       ethBidErrMsg: ''
