@@ -20,6 +20,20 @@ import './StartAuctionForm.css';
 //   />
 // );
 
+const EthMaskTextField = (props) => (
+  <TextField
+    error={props.error}
+    id='ethMask'
+    name='ethMask'
+    label='ETH Mask'
+    value={props.value}
+    onChange={props.onChange}
+    margin='normal'
+    placeholder='0'
+    helperText={props.error ? props.errMsg : 'Bid mask'}
+  />
+);
+
 const EthBidTextField = (props) => (
   <TextField
     error={props.error}
@@ -100,14 +114,17 @@ export class StartAuctionForm extends Component {
     open: false,
     email: '',
     ethBid: '0.01',
+    ethMask: '0',
     secret: '0',
     gas: '21',
     checked: false,
     emailErr: false,
     ethBidErr: false,
+    ethMaskErr: false,
     secretErr: false,
     gasErr: false,
     ethBidErrMsg: '',
+    ethMaskErrMsg: '',
     secretErrMsg: '',
     gasErrMsg: ''
   };
@@ -138,10 +155,34 @@ export class StartAuctionForm extends Component {
       });
       return;
     }
+
+    if (v < 0.01) {
+      this.setState({
+        ethBidErr: true,
+        ethBidErrMsg: 'Bid amount: Minimum bid must at least 0.01'
+      })
+    }
     
     this.setState({
       ethBidErr: false,
       ethBidErrMsg: ''
+    });
+  }
+
+  checkEthMask = (v) => {
+    //only number
+    const reg = /^[+-]?\d+(\.\d+)?$/;
+    if (!reg.test(v)) {
+      this.setState({
+        ethMaskErr: true,
+        ethMaskErrMsg: 'Bid mask: Please input a valid number'
+      });
+      return;
+    } 
+
+    this.setState({
+      ethMaskErr: false,
+      ethMaskErrMsg: ''
     });
   }
 
@@ -195,6 +236,9 @@ export class StartAuctionForm extends Component {
       case 'ethBid': 
         this.checkEthBid(value);
         break;
+      case 'ethMask':
+        this.checkEthMask(value);
+        break;
       case 'secret':
         this.checkSecret(value);
         break;
@@ -217,6 +261,12 @@ export class StartAuctionForm extends Component {
         error={this.state.ethBidErr}
         errMsg={this.state.ethBidErrMsg}
         value={this.state.ethBid}
+        onChange={this.handleInputChange}
+      />
+      <EthMaskTextField 
+        error={this.state.ethMaskErr}
+        errMsg={this.state.ethMaskErrMsg}
+        value={this.state.ethMask}
         onChange={this.handleInputChange}
       />
       <SecretTextField 
@@ -246,6 +296,7 @@ export class StartAuctionForm extends Component {
   inputResult = () => ({
     email: this.state.email,
     ethBid: this.state.ethBid,
+    ethMask: this.state.ethMask,
     secret: this.state.secret,
     gas: this.state.gas
   })

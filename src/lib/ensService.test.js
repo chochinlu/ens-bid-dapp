@@ -79,7 +79,7 @@ test.skip('startAuction', () => {
 
 test.skip('newBid', async () => {
   const name = "mytesing";
-  const result = await newBid(name, 0.011, "testing", process.env.PRIVATE_KEY, 21);
+  const result = await newBid(name, 0.011, 0, "testing", process.env.PRIVATE_KEY, 21);
   console.log("newBid, txHash", result);
 });
 

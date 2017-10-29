@@ -115,7 +115,7 @@ export const sealedBids = (name, ether, secret, privateKey) => {
  * @param {*} secret 		
  * @param {*} privateKey 		
  */		
-export const startAuctionAndBid = (name, ether, secret, privateKey, gasPrice) => {
+export const startAuctionAndBid = (name, ether, mask, secret, privateKey, gasPrice) => {
   let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);		
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));		
@@ -123,10 +123,11 @@ export const startAuctionAndBid = (name, ether, secret, privateKey, gasPrice) =>
   let byteData = "0x" + 		
                 abi.methodID("startAuctionsAndBid", [ "bytes32[]", "bytes32" ]).toString("hex") + 		
                 abi.rawEncode([ "bytes32[]", "bytes32" ], [ [web3.sha3(name)], bid ]).toString("hex");
+  let total = parseFloat(ether) + parseFloat(mask);
   const payload = {		
     from: fromAddress,		
     to: ethRegistrarAddress,		
-    value: web3.toHex(web3.toWei(ether, "ether")),		
+    value: web3.toHex(web3.toWei(total, "ether")),		
     data: byteData,		
     privateKey: privateKey,
     gasPrice: customGasPrice		
@@ -185,7 +186,7 @@ export const shaBid = (name, ether, secret, privateKey) => {
  * @param {*} privateKey 
  * @returns {string} transactionHash
  */
-export const newBid = (name, ether, secret, privateKey, gasPrice) => {
+export const newBid = (name, ether, mask, secret, privateKey, gasPrice) => {
   let customGasPrice = gasPrice || 21;
   let fromAddress = dAppService.getAddressByPrivateKey(privateKey);
   let ethRegistrarAddress = contracts.ens.owner(contracts.namehash('eth'));
@@ -193,10 +194,11 @@ export const newBid = (name, ether, secret, privateKey, gasPrice) => {
   let byteData = "0x" +
                 abi.methodID("newBid", [ "bytes32" ]).toString("hex") +
                 abi.rawEncode([ "bytes32" ], [ bid ]).toString("hex");
+  let total = parseFloat(ether) + parseFloat(mask);
   const payload = {
     from: fromAddress,
     to: ethRegistrarAddress,
-    value: web3.toHex(web3.toWei(ether, "ether")),
+    value: web3.toHex(web3.toWei(total, "ether")),
     data: byteData,
     privateKey: privateKey,
     gasPrice: customGasPrice

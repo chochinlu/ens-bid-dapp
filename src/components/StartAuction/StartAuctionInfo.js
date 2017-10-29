@@ -30,7 +30,10 @@ export const StartAuctionInfo = (props) => {
           Email: {props.formResult.email}
         </Typography> */}
         <Typography type="title" component="div">
-          ETH: {props.formResult.ethBid}
+          ETH Bid: {props.formResult.ethBid}
+        </Typography>
+        <Typography type="title" component="div">
+          ETH Mask: {props.formResult.ethMask}
         </Typography>
         <Typography type="title" component="div">
           Secret: {props.formResult.secret}
