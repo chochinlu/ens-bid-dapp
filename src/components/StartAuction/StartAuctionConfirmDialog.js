@@ -42,7 +42,8 @@ export class StartAuctionConfirmDialog extends Component {
   getETHString() {
     const {ethBid, ethMask} = this.props.inputResult;
     const ethTotal = parseFloat(ethBid, 10) + parseFloat(ethMask, 10);
-    return `${ethBid} + ${ethMask} = ${ethTotal} ETH`;
+    return (parseFloat(ethMask) > 0) ? 
+      `${ethBid}(bid) + ${ethMask}(mask) = ${ethTotal} ETH` : `${ethBid} ETH`;
   }
 
   formInfo = () => ({
