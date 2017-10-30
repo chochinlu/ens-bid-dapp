@@ -8,7 +8,11 @@ export const JsonDropZone = (props) => {
     props.dragDiabled ? 'dropzone-disable': 'dropzone-enable'
   );
 
-  const dropMsg = <p className="dropzone-message">Drop your KEY FILE here. (JSON file only)</p>;
+  const dropMsg = 
+    <div className="dropzone-message">
+      <p>Drop your KEY FILE here. </p>
+      <p><span>( JSON file only )</span></p>
+    </div>;
 
   return props.dragDiabled
     ? null

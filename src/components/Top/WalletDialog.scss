@@ -1,7 +1,17 @@
 @import '../scss/_color.scss';
+@import '../scss/_base.scss';
 
 .WalletDialog {
   h2 {
     color: $accent-color-blue;
   }
+}
+
+.WalletDialog-wrapper {
+  @include desktop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 10em;
+  } 
 }
