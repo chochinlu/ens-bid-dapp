@@ -12,7 +12,7 @@ export class KeystoreUploader extends Component {
     super(props);
     this.state = {
       files: [],
-      dragDiabled: false,
+      dragDisabled: false,
       unlock: false,
       passpharse: ''
     };
@@ -45,7 +45,7 @@ export class KeystoreUploader extends Component {
         if (isValidJsonString(jsonStr)) {
           self.setState({
             files,
-            dragDiabled: true,
+            dragDisabled: true,
             keystore,
             message: ''
           });
@@ -63,8 +63,7 @@ export class KeystoreUploader extends Component {
   }
 
   enableDrag() {
-    // this.setState({ dragDiabled: false, keystore: '', passpharse: '' });
-    this.setState({ dragDiabled: false });
+    this.setState({ dragDisabled: false });
   }
 
   buttonSubmitDisabled = () => {
@@ -104,14 +103,14 @@ export class KeystoreUploader extends Component {
         {title}
         {accountInfo}
         <JsonDropZone 
-          dragDiabled={this.state.dragDiabled}
+          dragDisabled={this.state.dragDisabled}
           onDrop={this.onDrop}
         />
         <PassphraseForm
           keystore={this.state.keystore}
           passpharse={this.state.passpharse}
           handleChange={this.handleChange}
-          dragDiabled={this.state.dragDiabled}
+          dragDisabled={this.state.dragDisabled}
           enableDrag={this.enableDrag}
           unlockWallet={this.unlockWallet}
           buttonSubmitDisabled={this.buttonSubmitDisabled()}

@@ -1,20 +1,48 @@
 @import '../scss/_color.scss';
+@import '../scss/_base.scss';
 
-.StartAuctionTimeDuration {
+.TimeDuration {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  text-align: left;
+  font-size: 0.9em;  
   width: 100%;
-  color: $theme-color-white;
+  line-height: 0.5;
+  margin-bottom: 1em;
+  color: $dark-grey;
+
+  @include desktop {
+    flex-direction: row;
+    align-items: center;
+    max-width: $main-width;
+
+    & > div {
+      flex: 1;
+    }
+  }
 }
 
-.StartAuctionTimeDuration-Reveal {
-  width: 100%;
-  background-color: $primary-color;
-  padding: 10px;
+.TimeDuration-block {
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid $dark-grey;
+  
+  h3 {
+    color: $primary-color-light;
+  }
+
+  p:nth-child(3) {
+    text-align: right;
+  }
 }
 
-.StartAuctionTimeDuration-Finalize {
-  width: 100%;
-  background-color: $primary-color-light;
-  padding: 10px;
+.reveal {
+  @include desktop {
+    margin-right: 1em;
+  }
+}
+
+.finalize {
+  @include desktop {
+    margin-left: 1em;
+  }
 }

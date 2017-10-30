@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'material-ui/Button';
 
 const ReUploadButton = (props) => {
-  return props.dragDiabled ? (
+  return props.dragDisabled ? (
     <Button 
       raised 
       className="KeystoreUploader-button-reupload" 
@@ -13,15 +13,20 @@ const ReUploadButton = (props) => {
   ): null;
 };
 
-const UnlockButton = (props) => (
-  <Button 
-    raised 
-    className="KeystoreUploader-button"
-    disabled={props.disabled}
-    onClick={props.unlockWallet}>
-    Unlock
-  </Button>
-);
+const UnlockButton = (props) => {
+  const disabled = props.disabled;
+  const classes = disabled ? '': 'KeystoreUploader-button';
+
+  return (
+    <Button 
+      raised 
+      className={classes}
+      disabled={disabled}
+      onClick={props.unlockWallet}>
+      Unlock
+    </Button>
+  );
+}
 
 export const Actions = (props) => (
   <div className="KeystoreUploader-button-container">

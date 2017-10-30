@@ -92,7 +92,7 @@ const ConfirmTermsCheckBox = (props) => (
 
 const FormSubmit = (props) => {
   const disabled = props.disabled;
-  const classes = !disabled && 'KeystoreUploader-button'
+  const classes = !disabled ? 'KeystoreUploader-button': '';
 
   return (
     <div className='StartAuctionForm-submit'>

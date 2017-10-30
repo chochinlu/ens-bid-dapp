@@ -1,7 +1,49 @@
 @import '../scss/_color.scss';
+@import '../scss/_base.scss';
 
 .WalletDialog {
   h2 {
     color: $accent-color-blue;
+  }
+}
+
+.WalletDialog-wrapper {
+  @include desktop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 10em;
+  } 
+}
+
+.CurrentWallet {
+  margin-bottom: 2em;
+  
+
+  h2 {
+    margin: 0.5em 0;
+    padding: 0;
+  }
+  span {
+    font-weight: $bold;
+  }
+}
+
+.CurrentWallet-address {
+  @include mobile {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  span:last-child {
+    font-weight: normal;
+    font-size: 0.8em;
+    margin-top: 0.5em;
+    word-break: break-all;
+
+    @include desktop {
+      padding-left: 0.5em;
+      font-size: 1em;
+    }
   }
 }
