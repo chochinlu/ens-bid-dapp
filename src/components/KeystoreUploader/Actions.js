@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'material-ui/Button';
 
 const ReUploadButton = (props) => {
-  return props.dragDiabled ? (
+  return props.dragDisabled ? (
     <Button 
       raised 
       className="KeystoreUploader-button-reupload" 
