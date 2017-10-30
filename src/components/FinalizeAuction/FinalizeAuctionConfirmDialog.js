@@ -9,7 +9,7 @@ import './FinalizeAuctionConfirmDialog.css';
 
 const ConfirmListItem = (props) => {
   const specialName = ['From', 'To'];
-  const classes = specialName.includes(props.name) && 'address';
+  const classes = specialName.includes(props.name) ? 'address': '';
 
   return (
     <div className='FinalizeAuctionConfirmDialog-list-item'>
