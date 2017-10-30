@@ -1,9 +1,36 @@
 import React from 'react';
 import {momentFromNow} from '../../lib/util';
 import Button from 'material-ui/Button';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
+import Card from 'material-ui/Card';
+import Divider from 'material-ui/Divider';
 import './StartAuctionInfo.css';
+
+const RevealAuctionOn = (props) =>
+  <div className="RevealAuctionOn">
+    <h4>Reveal Auction On:</h4>
+    <p>{props.unsealStartsAt}</p>
+    <p>{props.endsMomentFromNow}</p>
+    <Divider />
+  </div>;
+
+const InfoItem = (props) => {
+  let classes = '';
+  if (props.title === 'ENS') classes = 'eth-item';
+  if (props.title === 'TxHash') classes = 'eth-txhash';
+
+  return (
+    <div className="StartAuctionInfo-info-item">
+      <p>
+        <span>{props.title}:</span>
+        <span className={classes}>{props.children}</span>
+      </p>
+      <Divider />
+  </div>
+  );
+};
+
+const shorter = (txHash) => 
+  `${txHash.substring(0,12)}...${txHash.substring(txHash.length -12)}`;
 
 export const StartAuctionInfo = (props) => {
   const endsMomentFromNow = momentFromNow(props.unsealStartsAt);
@@ -11,44 +38,39 @@ export const StartAuctionInfo = (props) => {
   const ethersacnUrl = process.env.REACT_APP_ETHERSCAN_URL || 'https://ropsten.etherscan.io/tx/';
   const txHashUrl = ethersacnUrl + props.auctionTXHash;
 
+  const revealAuctionOn =  !props.hidden && 
+    <RevealAuctionOn 
+      hidden={hidden}
+      unsealStartsAt={props.unsealStartsAt.toString()}
+      endsMomentFromNow={endsMomentFromNow.toString()}
+    />;
+
+  const {ethBid, ethMask, secret} = props.formResult;
+
+  const shorterTxHash = shorter(props.auctionTXHash);
+
+  const itemTitleValue = [
+    {title: 'ENS', value: `${props.searchResult.searchName}.eth`},
+    {title: 'ETH Bid', value: ethBid},
+    {title: 'ETH Mask', value: ethMask},
+    {title: 'Secret', value: secret},
+    {title: 'TxHash', value: <a target='_blank' href={txHashUrl}>{shorterTxHash}</a>}
+  ];
+
+  const infoItems = itemTitleValue.map(({title, value}, index) =>
+    <InfoItem key={`infoItem-${index}`} title={title}>{value}</InfoItem>
+  );
+
   return (
-    <Card raised className="StartAuctionInfo">
-      <CardContent>
-        <Typography type="title" component="div">
-          ENS: {props.searchResult.searchName}.eth
-        </Typography>
-        { hidden ? null :
-          (
-            <Typography type="title" component="div">
-              <p>Reveal Auction On</p>
-              <div>{props.unsealStartsAt.toString()}</div>
-              <div>{endsMomentFromNow.toString()}</div>
-            </Typography>
-          )
-        }
-        {/* <Typography type="title" component="div">
-          Email: {props.formResult.email}
-        </Typography> */}
-        <Typography type="title" component="div">
-          ETH Bid: {props.formResult.ethBid}
-        </Typography>
-        <Typography type="title" component="div">
-          ETH Mask: {props.formResult.ethMask}
-        </Typography>
-        <Typography type="title" component="div">
-          Secret: {props.formResult.secret}
-        </Typography>
-        <Typography type="title" component="div">
-          TxHash: <a target='_blank' href={txHashUrl}>{props.auctionTXHash}</a>
-        </Typography>
-        <Typography type="title" component="div">
-          JSON: <pre>{JSON.parse(props.exportJson)}</pre>
-        </Typography>
-        <CardActions className="StartAuctionInfo-button">
+    <Card raised >
+      <div className="StartAuctionInfo">
+        {revealAuctionOn}       
+        {infoItems}
+        <div className="StartAuctionInfo-actions">
           <Button raised onClick={() => props.switchPage('main')}>BACK TO SEARCH</Button>
           <Button raised>MY ENS LIST</Button>
-        </CardActions>
-      </CardContent>
+        </div>
+      </div>  
     </Card>
   );
-};
+}

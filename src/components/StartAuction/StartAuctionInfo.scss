@@ -1,17 +1,74 @@
-.StartAuctionInfo {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  text-align: left;
-  width: 70vw;
-  min-width: 350px;
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
 
-  div {
-    margin: 0.5em;
-  }
+.StartAuctionInfo {
+  margin: 1em 0 0 0;
+  padding: 1em 0 2em 0;
+  text-align: left;
+  width: 90vw;
 }
 
 .StartAuctionInfo-button {
   display: flex;
   justify-content: flex-end;
   margin-top: 1em;
+}
+
+.StartAuctionInfo-info-item {
+  padding: 0 0.5em;
+  span {
+    &:first-child {
+      font-weight: $bold;
+      margin-right: 0.5em;
+      color: $dark-grey;
+    }
+  }
+  
+  a {
+    color: $primary-color-light;
+    font-size: 0.9em;
+  }
+}
+
+.eth-item {
+  color: $accent-color-blue;
+  font-weight: $bold;
+}
+
+.eth-txhash {
+  a {
+    color: $primary-color-light;
+    font-size: 0.9em;
+  }
+  
+}
+
+
+.RevealAuctionOn {
+  padding: 0 0.5em;
+  line-height: 0.5;
+
+  h4 {
+    color: $dark-grey;
+  }
+
+  p {
+    &:nth-child(2) {
+      color: $primary-color-light;
+      font-size: 1.1em;
+    }
+    &:nth-child(3) {
+      text-align: right;
+    }
+  }
+}
+
+.StartAuctionInfo-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1em;
+
+  & > button {
+    margin-right: 0.5em;
+  }
 }
