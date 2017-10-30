@@ -1,20 +1,22 @@
 @import '../scss/_color.scss';
 
-.StartAuctionTimeDuration {
+.TimeDuration {
   display: flex;
   justify-content: space-between;
   width: 100%;
   color: $theme-color-white;
+  padding: 10px;  
 }
 
-.StartAuctionTimeDuration-Reveal {
+.TimeDuration-block {
   width: 100%;
+  padding: 10px;  
+}
+
+.reveal {
   background-color: $primary-color;
-  padding: 10px;
 }
 
-.StartAuctionTimeDuration-Finalize {
-  width: 100%;
-  background-color: $primary-color-light;
-  padding: 10px;
+.finalize {
+  background-color: $primary-color-light;  
 }
