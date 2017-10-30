@@ -1,22 +1,48 @@
 @import '../scss/_color.scss';
+@import '../scss/_base.scss';
 
 .TimeDuration {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  text-align: left;
+  font-size: 0.9em;  
   width: 100%;
-  color: $theme-color-white;
-  padding: 10px;  
+  line-height: 0.5;
+  margin-bottom: 1em;
+  color: $dark-grey;
+
+  @include desktop {
+    flex-direction: row;
+    align-items: center;
+    max-width: $main-width;
+
+    & > div {
+      flex: 1;
+    }
+  }
 }
 
 .TimeDuration-block {
-  width: 100%;
-  padding: 10px;  
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid $dark-grey;
+  
+  h3 {
+    color: $primary-color-light;
+  }
+
+  p:nth-child(3) {
+    text-align: right;
+  }
 }
 
 .reveal {
-  background-color: $primary-color;
+  @include desktop {
+    margin-right: 1em;
+  }
 }
 
 .finalize {
-  background-color: $primary-color-light;  
+  @include desktop {
+    margin-left: 1em;
+  }
 }
