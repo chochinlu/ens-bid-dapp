@@ -94,7 +94,10 @@ export class KeystoreUploader extends Component {
       <h2>Unlock Another Wallet</h2>;
 
     const accountInfo = this.state.keystore && 
-      <p>Current Address: {validAddress(this.state.keystore.address)}</p>
+      <p className="KeystoreUploader-accountInfo">
+        <span>Current Address: </span>
+        <span>{validAddress(this.state.keystore.address)}</span>
+      </p>;
 
     return (
       <Card className='KeystoreUploader'>
