@@ -1,7 +1,7 @@
 import {
   ensAbiArray,
   auctionRegistrarAbiArray,
-  // deedAbiArray,
+  deedAbiArray,
   fifsRegistrarAbiArray,
   resolverAbiArray,
   reverseRegistrarAbiArray
@@ -40,6 +40,9 @@ export const getNameHexHash = (name) => {
 // Get ensContract instance
 export const ens = () => 
   contractFrom(ensAbiArray).at(process.env.REACT_APP_ENS_ADDRESS);
+
+export const deedContract = (address) => 
+  contractFrom(deedAbiArray).at(address);
 
 export const ethRegistrar = () => 
   Box('eth')
