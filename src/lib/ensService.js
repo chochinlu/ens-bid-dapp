@@ -12,7 +12,8 @@
 import {
   contracts,
   getHash,
-  ethRegistrar
+  ethRegistrar,
+  deedContract
  } from './abi/contracts';
 
  import {Box} from './util';
@@ -79,6 +80,14 @@ export const entries = name =>
       highestBid: result[4].toNumber()
     }));
 
+// deed owner
+const getHeightestBidAddress = (name) => {
+  return deedContract(entries(name).deed).owner();
+}
+
+export const checkCurrentUserOwned = (name, currentAddress) => {
+  return currentAddress === getHeightestBidAddress(name);
+}
 
 /**
  * @description 如果 entires[0] 回傳是5，則代表"soft launch"結束後可以開標

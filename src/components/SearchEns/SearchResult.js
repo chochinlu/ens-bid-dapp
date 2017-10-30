@@ -1,25 +1,21 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
-import {checkBeforeNow} from '../../lib/util';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
+import {checkCurrentUserOwned} from '../../lib/ensService';
 import './SearchResult.css';
 
-const getStep = ({state, registrationDate}) => {
+const getStep = (state, domainValue, owned) => {
   switch (state) {
     case 'Open':
     case 'Auction':
       return 'StartAuction';
     case 'Reveal':
-      // check the current time is before registration date or not
-      // check this person if he is the first price bidder of this domain
-      return checkBeforeNow(registrationDate)
-      ? 'RevealAuction' : 'FinalizeAuction';
-    // case 'Owned':
-    //   TODO 
-    //     - check after reveal state
-    //     - to start another auction request 
-    //   break;
+      return 'RevealAuction'
+    case 'Owned':
+      if (domainValue !== 0) return 'AlreadyOwned'
+      if (!owned) return 'AlreadyOwned'
+      return 'FinalizeAuction';
     default:
       // forbidden / not yet available do nothing
       return undefined;
@@ -32,20 +28,34 @@ export class SearchResult extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
-    const step = getStep(this.props.searchResult);
+  getCurrentStep() {
+    const ownedByCurrentUser = checkCurrentUserOwned(
+      this.props.searchResult.searchName,
+      this.props.address
+    );
+    const step = getStep(
+      this.props.searchResult.state,
+      this.props.searchResult.value,
+      ownedByCurrentUser
+    );
+    return step;
+  }
 
+  handleClick() {
+    const step = this.getCurrentStep();
+    
     //TODO: should use error component?
     if(step === undefined) alert('the domain name service is not available');
+    if(step === 'AlreadyOwned') alert('The domain name has already owned');
 
     this.props.setStep(step);
     this.props.switchPage('auction');
   }
 
   domainNameAvailiable() {
-    const {state} = this.props.searchResult;
-    const available = ['Auction', 'Open', 'Reveal'];
-    return available.includes(state);
+    const step = this.getCurrentStep();
+    const available = ['StartAuction', 'RevealAuction', 'FinalizeAuction'];
+    return available.includes(step);
   }
 
   buyNowButton() {
