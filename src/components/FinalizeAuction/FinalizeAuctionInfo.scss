@@ -1,0 +1,41 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
+.FinalizeAuctionInfo {
+  margin: 1em 0 0 0;
+  padding: 1em 0 2em 0;
+  text-align: left;
+  width: 90vw;
+
+  h3 {
+    padding: 0em 0.5em;
+    color: $dark-grey;
+  }
+
+  p {
+    padding: 0em 0.5em;
+    color: $primary-color-light;
+    font-size: 1.1em;
+  }
+
+  @include desktop {
+    max-width: $main-width - 30px;
+  }
+}
+
+.FinalizeAuctionInfo-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1em;
+
+  @include desktop {
+    margin-top: 2em;
+  }
+
+  & > button {
+    margin-right: 0.5em;
+    @include desktop {
+      margin-right: 2em;
+    }
+  }
+}
