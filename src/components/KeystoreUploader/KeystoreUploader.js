@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {isValidJsonString} from '../../lib/util';
 import Card from 'material-ui/Card';
-import {getPrivateKeyFromV3, validAddress} from '../../lib/dAppService';
+import {getPrivateKey, validAddress} from '../../lib/dAppService';
 import {JsonDropZone} from './JsonDropZone';
 import {CurrentWallet} from './CurrentWallet';
 import {PassphraseForm} from './PassphraseForm';
@@ -72,7 +72,7 @@ export class KeystoreUploader extends Component {
 
   unlockWallet() {
     try {
-      const privateKey = getPrivateKeyFromV3(this.state.keystore, this.state.passpharse);
+      const privateKey = getPrivateKey(this.state.keystore, this.state.passpharse);
       this.props.setKeystore(this.state.keystore);
       this.props.setPrivateKey(privateKey);
       this.props.handleRequestClose();

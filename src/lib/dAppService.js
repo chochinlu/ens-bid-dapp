@@ -127,12 +127,25 @@ export const getTransaction = (transactionHash) => {
 }
 
 /**
- * @description return private key by keystore V3 
+ * @description return private key by keystore 
  * @param {*} keystore 
  * @param {*} passpharse 
  */
-export const getPrivateKeyFromV3 = (keystore, passpharse) => {
-  const wallet = Wallet.fromV3(JSON.stringify(keystore), passpharse, true);
+export const getPrivateKey = (keystore, passpharse) => {
+  let wallet;
+  let json;
+  if (typeof keystore === 'object') {
+    json = keystore;
+  } else if (typeof keystore === 'string') {
+    json = JSON.parse(keystore);
+  }
+  if (json.version === 3) {
+    wallet = Wallet.fromV3(JSON.stringify(json), passpharse, true);
+  } else if (json.version === 1) {
+    wallet = Wallet.fromV1(JSON.stringify(json), passpharse);
+  } else {
+    wallet = Wallet.fromEthSale(JSON.stringify(json), passpharse);
+  }
   return wallet.getPrivateKey().toString('hex');
 }
 
