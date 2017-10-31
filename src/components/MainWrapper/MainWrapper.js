@@ -33,6 +33,7 @@ export class MainWrapper extends Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleSearchKeyPress = this.handleSearchKeyPress.bind(this);
+    this.backToSearch = this.backToSearch.bind(this);
     this.setStep = this.setStep.bind(this);
   }
 
@@ -64,6 +65,14 @@ export class MainWrapper extends Component {
     }
   }
 
+  backToSearch() {
+    this.props.switchPage('main');
+    this.setState({
+      searchValue: null,
+      searchResult: null
+    });
+  }
+
   setStep(name) {
     this.setState({step: name});
   }
@@ -81,7 +90,8 @@ export class MainWrapper extends Component {
         {...this.props}
         step={this.state.step}
         setStep={this.setStep}
-        searchResult={this.state.searchResult}/>);
+        searchResult={this.state.searchResult}
+        backToSearch={this.backToSearch}/>);
   }
 
   render() {

@@ -64,7 +64,7 @@ export const RevealAuctionInfo = (props) => {
         {finalizeAuctionOn}
         {infoItems}
         <div className='RevealAuctionInfo-actions'>
-          <Button raised onClick={() => props.switchPage('main')}>BACK TO SEARCH</Button>
+          <Button raised onClick={() => props.backToSearch()}>BACK TO SEARCH</Button>
           <Button raised>MY ENS LIST</Button>
         </div>
       </div>
