@@ -36,7 +36,7 @@ export const StartAuctionInfo = (props) => {
   const ethersacnUrl = process.env.REACT_APP_ETHERSCAN_URL || 'https://ropsten.etherscan.io/tx/';
   const txHashUrl = ethersacnUrl + props.auctionTXHash;
 
-  const revealAuctionOn = !props.hidden && 
+  const revealAuctionOn = !hidden && 
     <RevealAuctionOn 
       unsealStartsAt={props.unsealStartsAt.toString()}
       endsMomentFromNow={endsMomentFromNow.toString()}

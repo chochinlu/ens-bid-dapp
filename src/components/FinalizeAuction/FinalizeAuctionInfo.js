@@ -2,7 +2,6 @@
 import React from 'react';
 import Button from 'material-ui/Button';
 import Card from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
 import './FinalizeAuctionInfo.css';
 
 export const FinalizeAuctionInfo = (props) => (
