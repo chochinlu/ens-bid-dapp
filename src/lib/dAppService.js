@@ -132,7 +132,7 @@ export const getTransaction = (transactionHash) => {
  * @param {*} passpharse 
  */
 export const getPrivateKeyFromV3 = (keystore, passpharse) => {
-  const wallet = Wallet.fromV3(keystore, passpharse);
+  const wallet = Wallet.fromV3(JSON.stringify(keystore), passpharse, true);
   return wallet.getPrivateKey().toString('hex');
 }
 
