@@ -36,3 +36,7 @@ export const urlQueryParamsObject = (url) => {
 export const checkBeforeNow = (time) => format(moment()).diff(format(time)) < 0;
 export const format = (date) => moment(date, 'dddd, MMMM D YYYY, h:mm:ss a z');
 export const momentFromNow = (thisTime) => moment(thisTime).fromNow();
+
+// view format helper
+export const shortFormatHash = (hash, number = 12) =>
+  `${hash.substring(0, number)}...${hash.substring(hash.length - number)}`;
