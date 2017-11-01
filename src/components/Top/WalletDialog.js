@@ -10,7 +10,7 @@ export const WalletDialog = (props) => (
   <Dialog
     className="WalletDialog"
     fullScreen
-    open={props.open}
+    open={props.menuOpen}
     transition={Slide}>
     <IconButton
       color="primary"

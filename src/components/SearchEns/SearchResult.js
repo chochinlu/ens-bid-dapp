@@ -60,6 +60,11 @@ export class SearchResult extends Component {
     if(step === undefined) alert('the domain name service is not available');
     if(step === 'AlreadyOwned') alert('The domain name has already owned');
 
+    if (!(this.props.address && this.props.privateKey)) {
+      this.props.handleOpenWallet();
+      return;
+    }
+
     this.props.setStep(step);
     this.props.switchPage('auction');
   }

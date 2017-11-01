@@ -25,6 +25,10 @@ class App extends Component {
       searchFetching: false,
       warningMessage: '',
       warningOpen: false,
+
+      // open unlock wallet
+      menuOpen: false,
+      menuWarningMessage: ''
     };
 
     this.setAddress = this.setAddress.bind(this);
@@ -40,6 +44,29 @@ class App extends Component {
     this.handleMessageOpen = this.handleMessageOpen.bind(this);
     this.handleMessageClose = this.handleMessageClose.bind(this);
     this.backToSearch = this.backToSearch.bind(this);
+
+    // unlock wallet
+    this.handleOpenWallet = this.handleOpenWallet.bind(this);
+    this.handleCloseWallet = this.handleCloseWallet.bind(this);
+  }
+
+  // unlock wallet
+  handleOpenWallet() {
+    let menuWarningMessage = '';
+    if (!(this.props.address && this.props.privateKey)) {
+      menuWarningMessage = 'Please login before bidding!';
+    }
+    this.setState({
+      menuWarningMessage: menuWarningMessage,
+      menuOpen: true
+    });
+  }
+  
+  handleCloseWallet() {
+    this.setState({
+      menuWarningMessage: null,
+      menuOpen: false
+    });
   }
 
   handleSearchChange(e) {
@@ -54,21 +81,23 @@ class App extends Component {
 
   handleSearchClick(e) {
     e.preventDefault();
+
     if ((this.state.searchValue).length < 7) {
       this.handleMessageOpen('ENS .eth should greater than 7 words');
-    } else {
-      if (this.state.searchValue) {
-        this.setState({fetching: true}); //TODO: not work
-        const searchResult = entries(this.state.searchValue);
-        searchResult.searchName = this.state.searchValue;
-        this.setState({searchResult, searchFetching: false});
-      }
+      return;
+    }
+
+    if (this.state.searchValue) {
+      this.setState({fetching: true}); //TODO: not work
+      const searchResult = entries(this.state.searchValue);
+      searchResult.searchName = this.state.searchValue;
+      this.setState({searchResult, searchFetching: false});
     }
   }
 
   backToSearch() {
-    this.switchPage('main');
     this.setState({
+      page: 'main',
       searchValue: null,
       searchResult: null
     });
@@ -110,6 +139,8 @@ class App extends Component {
           backToSearch={this.backToSearch}
           handleMessageOpen={this.handleMessageOpen}
           handleMessageClose={this.handleMessageClose}
+          handleOpenWallet={this.handleOpenWallet}
+          handleCloseWallet={this.handleCloseWallet}
         />
       : <Warnings/>;
     
@@ -122,6 +153,8 @@ class App extends Component {
           setKeystore={this.setKeystore}
           setPrivateKey={this.setPrivateKey}
           backToSearch={this.backToSearch}
+          handleOpenWallet={this.handleOpenWallet}
+          handleCloseWallet={this.handleCloseWallet}
         /> 
         {mainWrapperOrWarning}
         <Footer/>

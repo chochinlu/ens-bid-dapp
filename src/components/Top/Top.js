@@ -66,13 +66,8 @@ const MenuDrawer = (props) => (
 
 class Top extends Component {
   state = {
-    open: false,
     menu: false,
     network: 'ropsten',
-  };
-
-  handleRequestClose = () => {
-    this.setState({ open: false });
   };
 
   handleDrawerOpen = () => {
@@ -93,15 +88,14 @@ class Top extends Component {
         <AppBar position="static" className="AppBar">
           <Toolbar>
             <Menu handleDrawerOpen={this.handleDrawerOpen}/>
-            <Title backToSearch={this.props.switchPage} />
+            <Title backToSearch={this.props.backToSearch} />
             <Network network={this.state.network} handleChange={this.handleChange}/>
             <Wallet 
               privateKey={this.props.privateKey}
-              onClick={() => this.setState({ open: true })} />
-            <WalletDialog 
-              open={this.state.open} 
+              onClick={() => this.props.handleOpenWallet()} />
+            <WalletDialog
               {...this.props}
-              handleRequestClose={this.handleRequestClose}
+              handleRequestClose={this.props.handleCloseWallet}
               />
           </Toolbar>
         </AppBar>
