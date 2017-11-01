@@ -14,13 +14,18 @@ export class KeystoreUploader extends Component {
       files: [],
       dragDisabled: false,
       unlock: false,
-      passpharse: ''
+      passpharse: '',
+      message: null
     };
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
     this.unlockWallet = this.unlockWallet.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.buttonSubmitDisabled = this.buttonSubmitDisabled.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({message: this.props.menuWarningMessage});
   }
 
   onDrop(files) {
@@ -87,7 +92,7 @@ export class KeystoreUploader extends Component {
 
   render() {    
     const msg = this.state.message && 
-      <p>{this.state.message}</p>;
+      <p className='errMsg'>{this.state.message}</p>;
 
     const title = this.props.privateKey === "" ?
       <h2>Unlock Wallet</h2> : 
