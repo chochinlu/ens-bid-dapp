@@ -25,7 +25,7 @@ export class KeystoreUploader extends Component {
   }
 
   componentDidMount() {
-    this.setState({message: this.props.menuWarningMessage});
+    this.setState({message: this.props.walletWarningMessage});
   }
 
   onDrop(files) {

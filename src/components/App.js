@@ -27,8 +27,8 @@ class App extends Component {
       warningOpen: false,
 
       // open unlock wallet
-      menuOpen: false,
-      menuWarningMessage: ''
+      walletOpen: false,
+      walletWarningMessage: ''
     };
 
     this.setAddress = this.setAddress.bind(this);
@@ -43,6 +43,7 @@ class App extends Component {
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleMessageOpen = this.handleMessageOpen.bind(this);
     this.handleMessageClose = this.handleMessageClose.bind(this);
+    this.handleWalletWarningMsg = this.handleWalletWarningMsg.bind(this);
     this.backToSearch = this.backToSearch.bind(this);
 
     // unlock wallet
@@ -52,20 +53,17 @@ class App extends Component {
 
   // unlock wallet
   handleOpenWallet() {
-    let menuWarningMessage = '';
-    if (!(this.props.address && this.props.privateKey)) {
-      menuWarningMessage = 'Please login before bidding!';
-    }
-    this.setState({
-      menuWarningMessage: menuWarningMessage,
-      menuOpen: true
-    });
+    this.setState({walletOpen: true});
+  }
+
+  handleWalletWarningMsg(msg) {
+    this.setState({walletWarningMessage: msg})
   }
   
   handleCloseWallet() {
     this.setState({
-      menuWarningMessage: null,
-      menuOpen: false
+      walletWarningMessage: null,
+      walletOpen: false
     });
   }
 
@@ -141,6 +139,7 @@ class App extends Component {
           handleMessageClose={this.handleMessageClose}
           handleOpenWallet={this.handleOpenWallet}
           handleCloseWallet={this.handleCloseWallet}
+          handleWalletWarningMsg={this.handleWalletWarningMsg}
         />
       : <Warnings/>;
     

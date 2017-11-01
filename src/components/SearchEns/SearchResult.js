@@ -41,7 +41,9 @@ export class SearchResult extends Component {
   }
 
   getCurrentStep() {
-    const ownedByCurrentUser = this.props.address && 
+    const ownedByCurrentUser = 
+      this.props.address &&
+      (this.state.currentSearchName !== this.state.prevSearchName) &&
       checkCurrentUserOwned(
         this.props.searchResult.searchName,
         this.props.address
@@ -63,6 +65,7 @@ export class SearchResult extends Component {
 
     if (!(this.props.address && this.props.privateKey)) {
       this.props.handleOpenWallet();
+      this.props.handleWalletWarningMsg('Please login before bidding!');
       return;
     }
 
@@ -79,10 +82,10 @@ export class SearchResult extends Component {
   buyNowButton() {
     return (
       <div className="SearchResultBtn-active" onClick={this.handleClick}>
-      <IconButton aria-label="Buy Now">
-        <i className="material-icons">gavel</i>
-      </IconButton>
-    </div>
+        <IconButton aria-label="Buy Now">
+          <i className="material-icons">gavel</i>
+        </IconButton>
+      </div>
     )
   }
 
