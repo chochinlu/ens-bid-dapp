@@ -41,10 +41,11 @@ export class SearchResult extends Component {
   }
 
   getCurrentStep() {
-    const ownedByCurrentUser = checkCurrentUserOwned(
-      this.props.searchResult.searchName,
-      this.props.address
-    );
+    const ownedByCurrentUser = this.props.address && 
+      checkCurrentUserOwned(
+        this.props.searchResult.searchName,
+        this.props.address
+      );
     const step = getStep(
       this.props.searchResult.state,
       this.props.searchResult.value,
@@ -118,9 +119,7 @@ export class SearchResult extends Component {
   }
 
   render() {
-    const statusAndAction = 
-      this.state.currentSearchName !== this.state.prevSearchName &&
-      this.statusAndAction();
+    const statusAndAction = this.statusAndAction();
 
     return (
       <div className="SearchResult">
