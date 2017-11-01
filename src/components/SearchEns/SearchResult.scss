@@ -77,7 +77,15 @@
   border-bottom:1px solid $theme-color-grey-dark;
 }
 
-.SearchResultBtn {
+.SearchResultBtn-active {
+  background-color: $accent-color-blue;
+  padding: 0 1em;
+  margin-right: 0.5em;
+  cursor: pointer;
+  i {color: $theme-color-white;}
+}
+
+.SearchResultBtn-inactive {
   background-color: $theme-color-grey-light;
   padding: 0 1em;
   margin-right: 0.5em;

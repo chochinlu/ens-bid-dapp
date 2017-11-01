@@ -94,7 +94,7 @@ class Top extends Component {
           <Toolbar>
             <Menu handleDrawerOpen={this.handleDrawerOpen}/>
             <Title switchPage={this.props.switchPage} />
-            <Network {...this.state} handleChange={this.handleChange}/>
+            <Network network={this.state.network} handleChange={this.handleChange}/>
             <Wallet 
               privateKey={this.props.privateKey}
               onClick={() => this.setState({ open: true })} />

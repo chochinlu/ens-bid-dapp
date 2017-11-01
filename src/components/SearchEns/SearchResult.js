@@ -60,9 +60,9 @@ export class SearchResult extends Component {
 
   buyNowButton() {
     return (
-      <div className="SearchResultBtn" onClick={this.handleClick}>
+      <div className="SearchResultBtn-active" onClick={this.handleClick}>
       <IconButton aria-label="Buy Now">
-        <i className="material-icons">shopping_cart</i>
+        <i className="material-icons">gavel</i>
       </IconButton>
     </div>
     )
@@ -70,7 +70,7 @@ export class SearchResult extends Component {
 
   noActionButton() {
     return (
-      <div className="SearchResultBtn">
+      <div className="SearchResultBtn-inactive">
         <IconButton aria-label="Owned">
           <i className="material-icons">not_interested</i>
         </IconButton>
