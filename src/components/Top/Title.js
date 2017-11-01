@@ -5,7 +5,7 @@ import './Title.css';
 export const Title = (props) => {
   return (
     <Typography type="title" color="inherit" align="left" className="Title">
-      <span className="Title-name" onClick={() => props.switchPage('main')}>ENS.BID</span>
+      <span className="Title-name" onClick={() => props.backToSearch()}>ENS.BID</span>
     </Typography>
   );
 };

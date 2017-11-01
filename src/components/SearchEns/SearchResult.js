@@ -25,7 +25,19 @@ const getStep = (state, domainValue, owned) => {
 export class SearchResult extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentSearchName: this.props.searchResult.searchName,
+      prevSearchName: ''
+    }
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const olderName = this.state.currentSearchName;
+    this.setState({
+      currentSearchName: nextProps.searchResult.searchName,
+      prevSearchName: olderName
+    })
   }
 
   getCurrentStep() {
@@ -101,7 +113,9 @@ export class SearchResult extends Component {
   }
 
   render() {
-    const statusAndAction = this.statusAndAction();
+    const statusAndAction = 
+      this.state.currentSearchName !== this.state.prevSearchName &&
+      this.statusAndAction();
 
     return (
       <div className="SearchResult">
