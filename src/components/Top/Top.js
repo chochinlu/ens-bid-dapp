@@ -93,7 +93,7 @@ class Top extends Component {
         <AppBar position="static" className="AppBar">
           <Toolbar>
             <Menu handleDrawerOpen={this.handleDrawerOpen}/>
-            <Title switchPage={this.props.switchPage} />
+            <Title backToSearch={this.props.switchPage} />
             <Network network={this.state.network} handleChange={this.handleChange}/>
             <Wallet 
               privateKey={this.props.privateKey}
