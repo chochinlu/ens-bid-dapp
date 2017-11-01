@@ -93,8 +93,8 @@ class Top extends Component {
         <AppBar position="static" className="AppBar">
           <Toolbar>
             <Menu handleDrawerOpen={this.handleDrawerOpen}/>
-            <Title backToSearch={this.props.backToSearch} />
-            <Network {...this.state} handleChange={this.handleChange}/>
+            <Title backToSearch={this.props.switchPage} />
+            <Network network={this.state.network} handleChange={this.handleChange}/>
             <Wallet 
               privateKey={this.props.privateKey}
               onClick={() => this.setState({ open: true })} />
