@@ -78,6 +78,7 @@ export class FinalizeAuction extends Component {
 
   finalizeAuctionInfo = () => (
     <FinalizeAuctionInfo
+      backToSearch={this.props.backToSearch}
       searchName={this.props.searchResult.searchName}
       switchPage={this.props.switchPage}
     />
