@@ -7,7 +7,6 @@ import {SearchEns} from '../SearchEns/SearchEns';
 // import {FAQ} from './FAQ';
 import {About} from '../About/About';
 import {AuctionWrapper} from '../AuctionWrapper/AuctionWrapper';
-import {entries} from '../../lib/ensService';
 import './MainWrapper.css';
 
 const Main = (props) => (
@@ -23,54 +22,9 @@ export class MainWrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: '',
-      searchResult: null,
-      searchFetching: false,
-      step: 'StartAuction',
-      message: '',
-      open: false
+      step: 'StartAuction'
     };
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-    this.handleSearchClick = this.handleSearchClick.bind(this);
-    this.handleSearchKeyPress = this.handleSearchKeyPress.bind(this);
-    this.backToSearch = this.backToSearch.bind(this);
     this.setStep = this.setStep.bind(this);
-  }
-
-  handleSearchChange(e) {
-    this.setState({searchValue: e.target.value});
-  }
-
-  handleSearchKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.handleSearchClick(e);
-    }
-  }
-
-  handleMessageOpen = msg => this.setState({open: true, message: msg});
-
-  handleMessageClose = () => this.setState({open: false});
-
-  handleSearchClick(e) {
-    e.preventDefault();
-    if ((this.state.searchValue).length < 7) {
-      this.handleMessageOpen('ENS .eth should greater than 7 words');
-    } else {
-      if (this.state.searchValue) {
-        this.setState({fetching: true}); //TODO: not work
-        const searchResult = entries(this.state.searchValue);
-        searchResult.searchName = this.state.searchValue;
-        this.setState({searchResult, searchFetching: false});
-      }
-    }
-  }
-
-  backToSearch() {
-    this.props.switchPage('main');
-    this.setState({
-      searchValue: null,
-      searchResult: null
-    });
   }
 
   setStep(name) {
@@ -82,38 +36,40 @@ export class MainWrapper extends Component {
       ? (<Main
         {...this.state}
         {...this.props}
-        handleSearchChange={this.handleSearchChange}
-        handleSearchClick={this.handleSearchClick}
-        handleSearchKeyPress={this.handleSearchKeyPress}
         setStep={this.setStep}/>)
       : (<AuctionWrapper
         {...this.props}
         step={this.state.step}
-        setStep={this.setStep}
-        searchResult={this.state.searchResult}
-        backToSearch={this.backToSearch}/>);
+        setStep={this.setStep}/>);
+  }
+
+  snack() {
+    return(
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        autoHideDuration={6000}
+        open={this.props.warningOpen}
+        onRequestClose={this.props.handleMessageClose}
+        SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
+        message={< span id = "message-id">{this.props.warningMessage}</span>}
+        action={[ 
+          < IconButton 
+            key="close" 
+            aria-label="Close" 
+            color="inherit" 
+            onClick={this.props.handleMessageClose}> 
+            <CloseIcon/> 
+          </IconButton>]}/>
+    )
   }
 
   render() {
     const mainPage = this.mainPage();
+    const snack = this.snack();
     return (
       <div>
         {mainPage}
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          autoHideDuration={6000}
-          open={this.state.open}
-          onRequestClose={this.handleMessageClose}
-          SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
-          message={< span id = "message-id">{this.state.message}</span>}
-          action={[ 
-            < IconButton 
-              key="close" 
-              aria-label="Close" 
-              color="inherit" 
-              onClick={this.handleMessageClose}> 
-              <CloseIcon/> 
-            </IconButton>]}/>
+        {snack}
       </div>
     );
   }
