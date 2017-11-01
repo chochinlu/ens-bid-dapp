@@ -83,6 +83,7 @@ class Top extends Component {
   };
 
   render () {
+    const menuDrawer = this.state.menu === true && <MenuDrawer menu={this.state.menu} handleDrawerClose={this.handleDrawerClose}/>
     return (
       <div className="Top">
         <AppBar position="static" className="AppBar">
@@ -99,7 +100,7 @@ class Top extends Component {
               />
           </Toolbar>
         </AppBar>
-        <MenuDrawer menu={this.state.menu} handleDrawerClose={this.handleDrawerClose}/>
+        {menuDrawer}
       </div>
     );
   }

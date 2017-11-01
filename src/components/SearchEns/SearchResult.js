@@ -33,10 +33,9 @@ export class SearchResult extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const olderName = this.state.currentSearchName;
     this.setState({
       currentSearchName: nextProps.searchResult.searchName,
-      prevSearchName: olderName
+      prevSearchName: this.state.currentSearchName
     })
   }
 
