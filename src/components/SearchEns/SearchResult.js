@@ -93,7 +93,7 @@ export class SearchResult extends Component {
     return (
       <div className="SearchResultBtn-inactive">
         <IconButton aria-label="Owned">
-          <i className="material-icons">not_interested</i>
+          <i className="material-icons">remove_shopping_cart</i>
         </IconButton>
       </div>
     );

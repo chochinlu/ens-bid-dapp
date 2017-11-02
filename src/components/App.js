@@ -147,6 +147,7 @@ class App extends Component {
       <div className="App">
         <Top
           {...this.state}
+          switchPage={this.switchPage}
           setAddress={this.setAddress}
           setSource={this.setSource}
           setKeystore={this.setKeystore}
