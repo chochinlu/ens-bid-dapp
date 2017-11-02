@@ -23,6 +23,7 @@ const SearchInput = (props) => {
       value={props.value}
       onChange={props.handleSearchChange}
       onKeyPress={props.handleSearchKeyPress}
+      onKeyDown={props.handleSearchKeyDown}
     />;
 
   const ethTipName = 
@@ -61,6 +62,7 @@ export const SearchEns = (props) => (
       handleSearchChange={props.handleSearchChange}
       handleSearchClick={props.handleSearchClick}
       handleSearchKeyPress={props.handleSearchKeyPress}
+      handleSearchKeyDown={props.handleSearchKeyDown}
     />
     {props.searchResult && <SearchResult {...props} />}
   </div>

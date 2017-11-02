@@ -40,6 +40,7 @@ class App extends Component {
     // for handling search
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchKeyPress = this.handleSearchKeyPress.bind(this);
+    this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleMessageOpen = this.handleMessageOpen.bind(this);
     this.handleMessageClose = this.handleMessageClose.bind(this);
@@ -77,6 +78,12 @@ class App extends Component {
     }
   }
 
+  handleSearchKeyDown(e) {
+    if (e.keyCode === 27) {
+      this.setState({searchValue: ''});
+    }
+  }
+ 
   handleSearchClick(e) {
     e.preventDefault();
 
@@ -137,6 +144,7 @@ class App extends Component {
           handleSearchChange={this.handleSearchChange}
           handleSearchClick={this.handleSearchClick}
           handleSearchKeyPress={this.handleSearchKeyPress}
+          handleSearchKeyDown={this.handleSearchKeyDown}
           backToSearch={this.backToSearch}
           handleMessageOpen={this.handleMessageOpen}
           handleMessageClose={this.handleMessageClose}
