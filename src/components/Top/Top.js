@@ -15,20 +15,20 @@ import {Network} from './Network';
 import './Top.css';
 
 const menu = [
-  {icon: 'home', name: 'ENS.BID'},
-  {icon: 'view_list', name: 'My ENS List'},
-  {icon: 'gavel', name: 'ENS Trade'},
-  {icon: 'attach_money', name: 'ENS Loan'},
+  {icon: 'home', name: 'ENS.BID', disabled: false},
+  {icon: 'view_list', name: 'My ENS List', disabled: true},
+  {icon: 'gavel', name: 'ENS Trade', disabled: true},
+  {icon: 'attach_money', name: 'ENS Loan', disabled: true},
 ];
 
 const info = [
-  {icon: 'help_outline', name: 'FAQ'},
-  {icon: 'assignment', name: 'Terms of Service'},
-  {icon: 'lock_outline', name: 'Privacy'},
+  {icon: 'help_outline', name: 'FAQ', disabled: false},
+  {icon: 'assignment', name: 'Terms of Service', disabled: false},
+  {icon: 'lock_outline', name: 'Privacy', disabled: false},
 ]
 
 const MenuItem = (props) => (
-  <ListItem button className="Top-Drawer-ListItem">
+  <ListItem button className="Top-Drawer-ListItem" disabled={props.disabled}>
      <ListItemIcon>
         <i className="material-icons">{props.icon}</i>
      </ListItemIcon>
@@ -36,16 +36,16 @@ const MenuItem = (props) => (
   </ListItem>
 ); 
 
-const menuItems = menu.map(({icon, name}, index) => 
-  <MenuItem key={`menu-${index}`} icon={icon}>{name}</MenuItem>);
+const menuItems = menu.map(({icon, name, disabled}, index) => 
+  <MenuItem key={`menu-${index}`} icon={icon} disabled={disabled}>{name}</MenuItem>);
 
-const infoItems = info.map(({icon, name}, index) => 
-  <MenuItem key={`menu-${index}`} icon={icon}>{name}</MenuItem>);
+const infoItems = info.map(({icon, name, disabled}, index) => 
+  <MenuItem key={`menu-${index}`} icon={icon} disabled={disabled}>{name}</MenuItem>);
 
 const MenuDrawer = (props) => (
   <Drawer
     type="persistent"
-    open={props.menu}>
+    open={props.menuOpen}>
   <div className="Top-Drawer">
     <div className="Top-Drawer-Chevron">
       <IconButton onClick={props.handleDrawerClose}>
@@ -66,16 +66,16 @@ const MenuDrawer = (props) => (
 
 class Top extends Component {
   state = {
-    menu: false,
+    menuOpen: false,
     network: 'ropsten',
   };
 
   handleDrawerOpen = () => {
-    this.setState({ menu: true });
+    this.setState({ menuOpen: true });
   };
 
   handleDrawerClose = () => {
-    this.setState({ menu: false });
+    this.setState({ menuOpen: false });
   };
 
   handleChange = name => event => {
@@ -83,7 +83,7 @@ class Top extends Component {
   };
 
   render () {
-    const menuDrawer = this.state.menu === true && <MenuDrawer menu={this.state.menu} handleDrawerClose={this.handleDrawerClose}/>
+    const menuDrawer = this.state.menuOpen === true && <MenuDrawer menuOpen={this.state.menuOpen} handleDrawerClose={this.handleDrawerClose}/>
     return (
       <div className="Top">
         <AppBar position="static" className="AppBar">
