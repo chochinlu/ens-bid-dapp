@@ -66,7 +66,7 @@ export const StartAuctionInfo = (props) => {
         {infoItems}
         <div className="StartAuctionInfo-actions">
           <Button raised onClick={() => props.backToSearch()}>BACK TO SEARCH</Button>
-          <Button raised>MY ENS LIST</Button>
+          {/*<Button raised>MY ENS LIST</Button>*/}
         </div>
       </div>  
     </Card>

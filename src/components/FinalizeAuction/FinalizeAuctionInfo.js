@@ -15,7 +15,7 @@ export const FinalizeAuctionInfo = (props) => (
         <Button raised onClick={() => props.backToSearch()}>
           BACK TO SEARCH
         </Button>
-        <Button raised>MY ENS LIST</Button>
+        {/*<Button raised>MY ENS LIST</Button>*/}
       </div>
     </div>
   </Card>
