@@ -15,12 +15,6 @@ setWeb3Provider();
 
 export const getBlockNumber = () => web3.eth.blockNumber;
 
-export const validAddress = (address) => {
-  return (address !== undefined && address.slice(0,2) === '0x')
-    ? address 
-    : '0x' + address
-};
-
 /**
  * @description get address balance
  * @param {*} address 

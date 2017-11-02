@@ -31,7 +31,7 @@ class App extends Component {
       walletWarningMessage: ''
     };
 
-    this.setAddress = this.setAddress.bind(this);
+    this.setAddressAndBalance = this.setAddressAndBalance.bind(this);
     this.setSource = this.setSource.bind(this);
     this.switchPage = this.switchPage.bind(this);
     this.setKeystore = this.setKeystore.bind(this);
@@ -108,9 +108,12 @@ class App extends Component {
     this.setState({source: type});
   }
 
-  setAddress(address) {
+  setAddressAndBalance(address) {
     const balance = getAddressBalance(address);
-    this.setState({address, balance});
+    this.setState({
+      address: address,
+      balance: balance
+    });
   }
 
   setKeystore(keystore) {
@@ -148,7 +151,7 @@ class App extends Component {
         <Top
           {...this.state}
           switchPage={this.switchPage}
-          setAddress={this.setAddress}
+          setAddressAndBalance={this.setAddressAndBalance}
           setSource={this.setSource}
           setKeystore={this.setKeystore}
           setPrivateKey={this.setPrivateKey}

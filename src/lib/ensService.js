@@ -80,11 +80,20 @@ export const entries = name =>
       highestBid: result[4].toNumber()
     }));
 
-// deed owner
+
+/**
+ * @description 查出domain現在最高得標者address
+ * @param {*} name 
+ */
 const getHeightestBidAddress = (name) => {
   return deedContract(entries(name).deed).owner();
 }
 
+/**
+ * @description 確認domain的擁有者是不是當前address的使用者
+ * @param {*} name 
+ * @param {*} currentAddress 
+ */
 export const checkCurrentUserOwned = (name, currentAddress) => {
   return currentAddress === getHeightestBidAddress(name);
 }

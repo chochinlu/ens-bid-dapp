@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {isValidJsonString} from '../../lib/util';
+import {isValidJsonString, validAddress} from '../../lib/util';
 import Card from 'material-ui/Card';
-import {getPrivateKey, validAddress} from '../../lib/dAppService';
+import {getPrivateKey} from '../../lib/dAppService';
 import {JsonDropZone} from './JsonDropZone';
 import {CurrentWallet} from './CurrentWallet';
 import {PassphraseForm} from './PassphraseForm';
@@ -15,7 +15,10 @@ export class KeystoreUploader extends Component {
       dragDisabled: false,
       unlock: false,
       passpharse: '',
-      message: null
+      message: null,
+      olderAddress: '',
+      olderBalance: '',
+      currentAddress: ''
     };
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
@@ -46,17 +49,20 @@ export class KeystoreUploader extends Component {
         const jsonStr = atob(base64data);
 
         const keystore = JSON.parse(jsonStr);
-
         if (isValidJsonString(jsonStr)) {
+          const olderAddress = self.props.address;
+          const olderBalance = self.props.balance;
+          const currentAddress = validAddress(keystore.address);
+
           self.setState({
             files,
             dragDisabled: true,
+            message: '',
             keystore,
-            message: ''
+            olderAddress,
+            olderBalance,
+            currentAddress
           });
-
-          const address = validAddress(keystore.address);
-          this.props.setAddress(address);
         } else {
           self.setState({
             message: 'Please upload a valid JSON file.'
@@ -78,6 +84,7 @@ export class KeystoreUploader extends Component {
   unlockWallet() {
     try {
       const privateKey = getPrivateKey(this.state.keystore, this.state.passpharse);
+      this.props.setAddressAndBalance(this.state.currentAddress);
       this.props.setKeystore(this.state.keystore);
       this.props.setPrivateKey(privateKey);
       this.props.handleRequestClose();
@@ -93,21 +100,29 @@ export class KeystoreUploader extends Component {
   render() {    
     const msg = this.state.message && 
       <p className='errMsg'>{this.state.message}</p>;
+    
+    const currentWallet = 
+      this.props.privateKey && (
+        <CurrentWallet
+          address={this.props.address}
+          balance={this.props.balance} />
+      );
 
     const title = this.props.privateKey === "" ?
       <h2>Unlock Wallet</h2> : 
       <h2>Unlock Another Wallet</h2>;
 
-    const accountInfo = this.state.keystore && 
+    const accountInfo =
+     this.state.currentAddress &&
       <p className="KeystoreUploader-accountInfo">
         <span>Current Address: </span>
-        <span>{validAddress(this.state.keystore.address)}</span>
+        <span>{validAddress(this.state.currentAddress)}</span>
       </p>;
 
     return (
       <Card className='KeystoreUploader'>
         {msg}
-        <CurrentWallet address={this.props.address} privateKey={this.props.privateKey} />
+        {currentWallet}
         {title}
         {accountInfo}
         <JsonDropZone 
