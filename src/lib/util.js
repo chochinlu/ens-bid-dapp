@@ -40,3 +40,9 @@ export const momentFromNow = (thisTime) => moment(thisTime).fromNow();
 // view format helper
 export const shortFormatHash = (hash, number = 12) =>
   `${hash.substring(0, number)}...${hash.substring(hash.length - number)}`;
+
+export const validAddress = (address) => {
+  return (address !== undefined && address.slice(0,2) === '0x')
+    ? address 
+    : '0x' + address
+};
