@@ -6,7 +6,6 @@ const ReUploadButton = (props) => {
     <Button 
       raised 
       className="KeystoreUploader-button-reupload" 
-      disabled={props.disabled}
       onClick={props.enableDrag}>
       Reupload
     </Button>

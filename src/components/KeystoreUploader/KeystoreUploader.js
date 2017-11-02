@@ -74,7 +74,7 @@ export class KeystoreUploader extends Component {
   }
 
   enableDrag() {
-    this.setState({ dragDisabled: false });
+    this.setState({ dragDisabled: false, passpharse: '' });
   }
 
   buttonSubmitDisabled = () => {
