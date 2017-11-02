@@ -45,7 +45,7 @@ const infoItems = info.map(({icon, name, disabled}, index) =>
 const MenuDrawer = (props) => (
   <Drawer
     type="persistent"
-    open={props.menu}>
+    open={props.menuOpen}>
   <div className="Top-Drawer">
     <div className="Top-Drawer-Chevron">
       <IconButton onClick={props.handleDrawerClose}>
@@ -66,16 +66,16 @@ const MenuDrawer = (props) => (
 
 class Top extends Component {
   state = {
-    menu: false,
+    menuOpen: false,
     network: 'ropsten',
   };
 
   handleDrawerOpen = () => {
-    this.setState({ menu: true });
+    this.setState({ menuOpen: true });
   };
 
   handleDrawerClose = () => {
-    this.setState({ menu: false });
+    this.setState({ menuOpen: false });
   };
 
   handleChange = name => event => {
@@ -83,7 +83,7 @@ class Top extends Component {
   };
 
   render () {
-    const menuDrawer = this.state.menu === true && <MenuDrawer menu={this.state.menu} handleDrawerClose={this.handleDrawerClose}/>
+    const menuDrawer = this.state.menuOpen === true && <MenuDrawer menuOpen={this.state.menuOpen} handleDrawerClose={this.handleDrawerClose}/>
     return (
       <div className="Top">
         <AppBar position="static" className="AppBar">
