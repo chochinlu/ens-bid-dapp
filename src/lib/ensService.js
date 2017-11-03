@@ -124,6 +124,20 @@ export const sealedBids = (name, ether, secret, privateKey) => {
   return contracts.ethRegistrar.sealedBids(fromAddress, bid);
 }
 
+export const validateStartAuctionBid = (name, ether, secret, privateKey) => {
+  const result = sealedBids(name, ether, secret, privateKey);
+  if (result !== '0x0000000000000000000000000000000000000000') {
+    return 'Invalid auction bids.';
+  }
+}
+
+export const validateRevealAuctionBid = (name, ether, secret, privateKey) => {
+  const result = sealedBids(name, ether, secret, privateKey);
+  if (result === '0x0000000000000000000000000000000000000000') {
+    return 'Invalid sealed bids.';
+  }
+}
+
 /**	
  * @description STEP 2: 同時開標並且投標，整合 startAuction + newBid		
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L369		
