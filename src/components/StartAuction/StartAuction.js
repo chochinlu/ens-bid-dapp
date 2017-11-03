@@ -1,6 +1,6 @@
 // @flow weak
 import React, {Component} from 'react';
-import {startAuctionAndBid, newBid} from '../../lib/ensService';
+import {startAuctionAndBid, newBid, validateStartAuctionBid} from '../../lib/ensService';
 import {sendRawTransaction, ensJsonExport, getAddressByPrivateKey} from '../../lib/dAppService';
 import {StartAuctionForm} from './StartAuctionForm';
 import {StartAuctionInfo} from './StartAuctionInfo';
@@ -17,6 +17,9 @@ const handleStartAuctionProcess = async (inputObj) => {
     exportJson: '',
     errMsg: undefined
   }
+
+  returnObj.errMsg = validateStartAuctionBid(domainName, ethBid, secret, privateKey);
+  if (returnObj.errMsg !== undefined) return returnObj;
 
   const payload = (state === 'Auction') ? 
     newBid(domainName, ethBid, ethMask, secret, privateKey, gas) :

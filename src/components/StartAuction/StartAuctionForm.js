@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {validateStartAuctionBid} from '../../lib/ensService';
 import { FormControlLabel } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
@@ -129,9 +130,23 @@ export class StartAuctionForm extends Component {
     gasErrMsg: ''
   };
 
-  handleOpen = () => this.props.address && this.props.privateKey
-    ? this.setState({open: true}) 
-    : this.props.handleMessageOpen('Please Unlock Wallet First.');
+  handleOpen = () => {
+    if (!(this.props.address && this.props.privateKey)) {
+      this.props.handleMessageOpen('Please Unlock Wallet First.');
+      return;
+    }
+
+    const err = validateStartAuctionBid(
+      this.props.searchResult.searchName,
+      this.state.ethBid, this.state.secret, this.props.privateKey
+    );
+    if (err !== undefined) {
+      this.props.handleMessageOpen(err);
+      return
+    }
+
+    this.setState({open: true})
+  }
 
   handleClose = () => this.setState({open: false});
 
