@@ -18,8 +18,11 @@ const handleStartAuctionProcess = async (inputObj) => {
     errMsg: undefined
   }
 
-  returnObj.errMsg = validateStartAuctionBid(domainName, ethBid, secret, privateKey);
-  if (returnObj.errMsg !== undefined) return returnObj;
+  const validateObj = validateStartAuctionBid(domainName, ethBid, secret, privateKey);
+  if (!validateObj.validate) {
+    returnObj.errMsg = validateObj.err;
+    return returnObj;
+  };
 
   const payload = (state === 'Auction') ? 
     newBid(domainName, ethBid, ethMask, secret, privateKey, gas) :

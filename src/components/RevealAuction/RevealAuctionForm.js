@@ -138,12 +138,12 @@ export class RevealAuctionForm extends Component {
       return
     }
 
-    const err = validateRevealAuctionBid(
+    const validateObj = validateRevealAuctionBid(
       this.props.searchResult.searchName,
       this.state.ethBid, this.state.secret, this.props.privateKey
     );
-    if (err !== undefined) {
-      this.props.handleMessageOpen(err);
+    if (!validateObj.validate) {
+      this.props.handleMessageOpen(validateObj.err);
       return
     }
 

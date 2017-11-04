@@ -124,18 +124,47 @@ export const sealedBids = (name, ether, secret, privateKey) => {
   return contracts.ethRegistrar.sealedBids(fromAddress, bid);
 }
 
-export const validateStartAuctionBid = (name, ether, secret, privateKey) => {
-  const result = sealedBids(name, ether, secret, privateKey);
-  if (result !== '0x0000000000000000000000000000000000000000') {
-    return 'Invalid auction bids.';
-  }
+const checkZeroSealedBids = (name, ether, secret, privateKey) => {
+  return (sealedBids(name, ether, secret, privateKey) === '0x0000000000000000000000000000000000000000');
 }
 
-export const validateRevealAuctionBid = (name, ether, secret, privateKey) => {
-  const result = sealedBids(name, ether, secret, privateKey);
-  if (result === '0x0000000000000000000000000000000000000000') {
-    return 'Invalid sealed bids.';
+/**
+ * @description 用來確認起標資料是不是重複的，這是contract設計上有問題的地方
+ * 重複的起標金會報這樣的錯
+ * @param {*} name 
+ * @param {*} ether 
+ * @param {*} secret 
+ * @param {*} privateKey 
+ */
+export const validateStartAuctionBid = (name, ether, secret, privateKey) => {
+  let returnObj = {
+    validate: true,
+    err: ''
   }
+  if (!checkZeroSealedBids(name, ether, secret, privateKey)) {
+    returnObj.validate = false;
+    returnObj.err = 'Invalid auction bids.';
+  }
+  return returnObj;
+}
+
+/**
+ * @description 用來確認是不是成功可接標的
+ * @param {*} name 
+ * @param {*} ether 
+ * @param {*} secret 
+ * @param {*} privateKey 
+ */
+export const validateRevealAuctionBid = (name, ether, secret, privateKey) => {
+  let returnObj = {
+    validate: true,
+    err: ''
+  }
+  if (checkZeroSealedBids(name, ether, secret, privateKey)) {
+    returnObj.validate = false;
+    returnObj.err = 'Invalid auction bids.'
+  }
+  return returnObj;
 }
 
 /**	

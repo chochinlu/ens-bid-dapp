@@ -15,8 +15,11 @@ const handleRevealAuctionProcess = async (inputObj) => {
     errMsg: undefined
   }
 
-  returnObj.errMsg = validateRevealAuctionBid(domainName, ethBid, secret, privateKey);
-  if (returnObj.errMsg !== undefined) return returnObj;
+  const validateObj = validateRevealAuctionBid(domainName, ethBid, secret, privateKey);
+  if (!validateObj.validate) {
+    returnObj.errMsg = validateObj.err;
+    return returnObj;
+  };
 
   const payload = unsealBid(domainName, ethBid, secret, privateKey, gas);
   try {
