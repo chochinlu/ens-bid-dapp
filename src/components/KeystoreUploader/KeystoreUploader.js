@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {isValidJsonString, validAddress} from '../../lib/util';
 import Card from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
 import {getPrivateKey} from '../../lib/dAppService';
 import {Warnings} from '../Common/Warnings';
 import {JsonDropZone} from './JsonDropZone';
@@ -13,7 +14,7 @@ const Notice = () => (
     <span>Notice:</span>
     <span>
       ENS.BID does not hold your keys for you. 
-      We cannot access accounts, recover keys, reset passwords, nor reverse transactions. 
+      We cannot access accounts, recover keys, reset passwords, nor reverse transactions.
       Protect your keys & always check that you are on correct URL. You are responsible for your security.
     </span>
   </p>
@@ -128,10 +129,36 @@ export class KeystoreUploader extends Component {
     this.setState({ passpharse: event.target.value });
   };
 
-  render() {    
-    const msg = this.state.message && 
+  handleTextFieldChange = (event) => {
+    event.preventDefault();
+    const self = this;
+    const jsonStr = event.target.value;
+    if (isValidJsonString(jsonStr)) {
+      const keystore = JSON.parse(event.target.value);
+      const olderAddress = self.props.address;
+      const olderBalance = self.props.balance;
+      const currentAddress = validAddress(keystore.address);
+
+      self.setState({
+        dragDisabled: true,
+        message: '',
+        keystore,
+        olderAddress,
+        olderBalance,
+        currentAddress
+      });
+      console.log(keystore)
+    } else {
+      self.setState({
+        message: 'Please paste a valid JSON file.'
+      });
+    }
+  }
+
+  render() {
+    const msg = this.state.message &&
       <ErrMsg>{this.state.message}</ErrMsg>;
-    
+
     const currentWallet = 
       this.props.privateKey && (
         <CurrentWallet
@@ -165,10 +192,17 @@ export class KeystoreUploader extends Component {
         {title}
         {accountInfo}
         {warning}
-        <JsonDropZone 
-          dragDisabled={this.state.dragDisabled}
-          onDrop={this.onDrop}
-        />
+        <div className='input-table'>
+          <TextField
+            multiLine={true}
+            rows={3}
+            onChange={this.handleTextFieldChange}
+          />
+          <JsonDropZone
+            dragDisabled={this.state.dragDisabled}
+            onDrop={this.onDrop}
+          />
+        </div>
         <PassphraseForm
           keystore={this.state.keystore}
           passpharse={this.state.passpharse}
