@@ -2,15 +2,24 @@
 @import '../scss/_base.scss';
 
 .StartAuctionConfirmDialog {
-  margin: 1em 6.5em 1.5em 6.5em;
+  padding: 0;
+  margin: 0;
+
+  @include desktop {
+    margin: 1em 6.5em 1.5em 6.5em;
+  }
 }
 
 .StartAuctionConfirmDialog-title {
   color: $accent-color-blue;
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1.1em;
   margin: 1.5em 0 0 0;
   padding-bottom: 1.5em;
+
+  @include desktop {
+    font-size: 1.2em;
+  }
 }
 
 .StartAuctionConfirmDialog-list-item {
@@ -23,9 +32,14 @@
 }
 
 .address {
-  font-size: 0.9em;
+  font-size: 0.7em;
+
+  @include desktop {
+    font-size: 0.9em !important;
+  }
 }
 
 .StartAuctionConfirmDialog-action-block {
   margin-right: 1em;
+  margin-bottom: 1.5em;
 }
