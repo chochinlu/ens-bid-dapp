@@ -124,9 +124,9 @@ export const sealedBids = (name, ether, secret, privateKey) => {
   return contracts.ethRegistrar.sealedBids(fromAddress, bid);
 }
 
-const checkZeroSealedBids = (name, ether, secret, privateKey) => {
-  return (sealedBids(name, ether, secret, privateKey) === '0x0000000000000000000000000000000000000000');
-}
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+const isZeroSealBid = (name, ether, secret, privateKey) => 
+  sealedBids(name, ether, secret, privateKey) === ZERO_ADDRESS;
 
 /**
  * @description 用來確認起標資料是不是重複的，這是contract設計上有問題的地方
@@ -137,9 +137,9 @@ const checkZeroSealedBids = (name, ether, secret, privateKey) => {
  * @param {*} privateKey 
  */
 export const validateStartAuctionBid = (name, ether, secret, privateKey) =>
-  checkZeroSealedBids(name, ether, secret, privateKey) 
+  isZeroSealBid(name, ether, secret, privateKey) 
     ? {validate: true}
-    : {validate: false, err = 'Invalid auction bids.'};
+    : {validate: false, err: 'Invalid auction bids.'};
 
 /**
  * @description 用來確認是不是成功可接標的
@@ -149,8 +149,8 @@ export const validateStartAuctionBid = (name, ether, secret, privateKey) =>
  * @param {*} privateKey 
  */
 export const validateRevealAuctionBid = (name, ether, secret, privateKey) => 
-  checkZeroSealedBids(name, ether, secret, privateKey)
-  ? {validate: false, err = 'Invalid auction bids.'}
+  isZeroSealBid(name, ether, secret, privateKey)
+  ? {validate: false, err: 'Invalid auction bids.'}
   : {validate: true};
 
 /**	
