@@ -22,9 +22,9 @@ const menu = [
 ];
 
 const info = [
-  {icon: 'help_outline', name: 'FAQ', disabled: false},
-  {icon: 'assignment', name: 'Terms of Service', disabled: false},
-  {icon: 'lock_outline', name: 'Privacy', disabled: false},
+  {icon: 'help_outline', name: 'FAQ', disabled: true},
+  {icon: 'assignment', name: 'Disclaimer', disabled: true},
+  {icon: 'bug_report', name: 'Bug Report', disabled: true}
 ]
 
 const MenuItem = (props) => (

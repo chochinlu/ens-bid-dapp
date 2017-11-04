@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {isValidJsonString, validAddress} from '../../lib/util';
 import Card from 'material-ui/Card';
 import {getPrivateKey} from '../../lib/dAppService';
+import {Warnings} from '../Common/Warnings';
 import {JsonDropZone} from './JsonDropZone';
 import {CurrentWallet} from './CurrentWallet';
 import {PassphraseForm} from './PassphraseForm';
@@ -18,17 +19,29 @@ export class KeystoreUploader extends Component {
       message: null,
       olderAddress: '',
       olderBalance: '',
-      currentAddress: ''
+      currentAddress: '',
+      warningOpen: false,
+      warningMessage: '',
     };
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
     this.unlockWallet = this.unlockWallet.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.buttonSubmitDisabled = this.buttonSubmitDisabled.bind(this);
+    this.handleWarningMessageClose = this.handleWarningMessageClose.bind(this);
+    this.handleWarningMessageOpen = this.handleWarningMessageOpen.bind(this);
   }
 
   componentDidMount() {
     this.setState({message: this.props.walletWarningMessage});
+  }
+
+  handleWarningMessageClose() {
+    this.setState({warningOpen: false});
+  }
+
+  handleWarningMessageOpen(msg) {
+    this.setState({warningOpen: true, warningMessage: msg});
   }
 
   onDrop(files) {
@@ -89,7 +102,7 @@ export class KeystoreUploader extends Component {
       this.props.setPrivateKey(privateKey);
       this.props.handleRequestClose();
     } catch(err) {
-      console.log("err", err);
+      this.handleWarningMessageOpen(err.message);
     }
   }
 
@@ -119,6 +132,13 @@ export class KeystoreUploader extends Component {
         {validAddress(this.state.currentAddress)}
       </p>;
 
+    const warning = 
+      <Warnings
+        warningOpen={this.state.warningOpen}
+        warningMessage={this.state.warningMessage}
+        handleWarningMessageClose={this.handleWarningMessageClose}
+      />  
+
     return (
       <Card className='KeystoreUploader'>
         {msg}
@@ -126,6 +146,7 @@ export class KeystoreUploader extends Component {
         {currentWallet}
         {title}
         {accountInfo}
+        {warning}
         <JsonDropZone 
           dragDisabled={this.state.dragDisabled}
           onDrop={this.onDrop}
