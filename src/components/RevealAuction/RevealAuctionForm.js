@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import {sealedBids} from '../../lib/ensService';
+import {validateRevealAuctionBid} from '../../lib/ensService';
 import {TimeDuration} from './TimeDuration';
 import {RevealAuctionConfirmDialog} from './RevealAuctionConfirmDialog';
 import './RevealAuctionForm.css';
@@ -138,14 +138,12 @@ export class RevealAuctionForm extends Component {
       return
     }
 
-    const checkValue = sealedBids(
+    const validateObj = validateRevealAuctionBid(
       this.props.searchResult.searchName,
-      this.state.ethBid,
-      this.state.secret,
-      this.props.privateKey
+      this.state.ethBid, this.state.secret, this.props.privateKey
     );
-    if (checkValue === '0x0000000000000000000000000000000000000000') {
-      this.props.handleWarningMessageOpen("Invalid sealed bids");
+    if (!validateObj.validate) {
+      this.props.handleMessageOpen(validateObj.err);
       return
     }
 

@@ -124,6 +124,35 @@ export const sealedBids = (name, ether, secret, privateKey) => {
   return contracts.ethRegistrar.sealedBids(fromAddress, bid);
 }
 
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+const isZeroSealBid = (name, ether, secret, privateKey) => 
+  sealedBids(name, ether, secret, privateKey) === ZERO_ADDRESS;
+
+/**
+ * @description 用來確認起標資料是不是重複的，這是contract設計上有問題的地方
+ * 重複的起標金會報這樣的錯
+ * @param {*} name 
+ * @param {*} ether 
+ * @param {*} secret 
+ * @param {*} privateKey 
+ */
+export const validateStartAuctionBid = (name, ether, secret, privateKey) =>
+  isZeroSealBid(name, ether, secret, privateKey) 
+    ? {validate: true}
+    : {validate: false, err: 'Invalid auction bids.'};
+
+/**
+ * @description 用來確認是不是成功可接標的
+ * @param {*} name 
+ * @param {*} ether 
+ * @param {*} secret 
+ * @param {*} privateKey 
+ */
+export const validateRevealAuctionBid = (name, ether, secret, privateKey) => 
+  isZeroSealBid(name, ether, secret, privateKey)
+  ? {validate: false, err: 'Invalid auction bids.'}
+  : {validate: true};
+
 /**	
  * @description STEP 2: 同時開標並且投標，整合 startAuction + newBid		
  * https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L369		

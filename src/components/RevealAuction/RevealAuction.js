@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {Warnings} from '../Common/Warnings';
 import {RevealAuctionForm} from './RevealAuctionForm';
 import {RevealAuctionInfo} from './RevealAuctionInfo';
-import {sealedBids, unsealBid} from '../../lib/ensService';
+import {unsealBid, validateRevealAuctionBid} from '../../lib/ensService';
 import {sendRawTransaction, ensJsonExport, getAddressByPrivateKey} from '../../lib/dAppService';
 import './RevealAuction.css';
 
@@ -15,10 +15,11 @@ const handleRevealAuctionProcess = async (inputObj) => {
     errMsg: undefined
   }
 
-  const checkValue = sealedBids(domainName, ethBid, secret, privateKey);
-  if (checkValue === '0x0000000000000000000000000000000000000000') {
-    return returnObj.errMsg = "Invalid sealed bids";
-  }
+  const validateObj = validateRevealAuctionBid(domainName, ethBid, secret, privateKey);
+  if (!validateObj.validate) {
+    returnObj.errMsg = validateObj.err;
+    return returnObj;
+  };
 
   const payload = unsealBid(domainName, ethBid, secret, privateKey, gas);
   try {
