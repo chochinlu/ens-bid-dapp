@@ -75,12 +75,14 @@ class App extends Component {
   handleSearchKeyPress(e) {
     if (e.key === 'Enter') {
       this.handleSearchClick(e);
+    } else {
+      this.setState({ searchResult: null });
     }
   }
 
   handleSearchKeyDown(e) {
     if (e.keyCode === 27) {
-      this.setState({searchValue: ''});
+      this.setState({ searchValue: '', searchResult: null});
     }
   }
  
