@@ -8,7 +8,7 @@ import {CurrentWallet} from './CurrentWallet';
 import {PassphraseForm} from './PassphraseForm';
 import './KeystoreUploader.css';
 
-const Notice = (props) => (
+const Notice = () => (
   <p className="notice">
     <span>Notice:</span>
     <span>
@@ -17,6 +17,13 @@ const Notice = (props) => (
       Protect your keys & always check that you are on correct URL. You are responsible for your security.
     </span>
   </p>
+);
+
+const ErrMsg = (props) => (
+  <div className='errMsg'>
+    <i className="material-icons">info</i>
+    <p>{props.children}</p>
+  </div>
 );
 
 export class KeystoreUploader extends Component {
@@ -123,7 +130,7 @@ export class KeystoreUploader extends Component {
 
   render() {    
     const msg = this.state.message && 
-      <p className='errMsg'>{this.state.message}</p>;
+      <ErrMsg>{this.state.message}</ErrMsg>;
     
     const currentWallet = 
       this.props.privateKey && (
