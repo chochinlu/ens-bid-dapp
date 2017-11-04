@@ -116,12 +116,13 @@ export class KeystoreUploader extends Component {
      this.state.currentAddress &&
       <p className="KeystoreUploader-accountInfo">
         <span>Current Address: </span>
-        <span>{validAddress(this.state.currentAddress)}</span>
+        {validAddress(this.state.currentAddress)}
       </p>;
 
     return (
       <Card className='KeystoreUploader'>
         {msg}
+        <p className="notice"><span>Notice:</span> ENS.BID does not hold your keys for you. We cannot access accounts, recover keys, reset passwords, nor reverse transactions. Protect your keys & always check that you are on correct URL. You are responsible for your security.</p>
         {currentWallet}
         {title}
         {accountInfo}

@@ -1,0 +1,25 @@
+@import '../scss/_color.scss';
+@import '../scss/_base.scss';
+
+.CurrentWallet {
+  font-size: 0.8em;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+
+  @include desktop {
+    font-size: 1em;
+  }
+
+  p {
+    display: inline-flex;
+    flex-direction: column;
+    margin-top: 0;
+    color: $dark-grey;
+
+    @include desktop {
+      flex-direction: row;
+      font-size: 1em;
+    }
+  }
+}
