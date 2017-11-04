@@ -136,17 +136,10 @@ const checkZeroSealedBids = (name, ether, secret, privateKey) => {
  * @param {*} secret 
  * @param {*} privateKey 
  */
-export const validateStartAuctionBid = (name, ether, secret, privateKey) => {
-  let returnObj = {
-    validate: true,
-    err: ''
-  }
-  if (!checkZeroSealedBids(name, ether, secret, privateKey)) {
-    returnObj.validate = false;
-    returnObj.err = 'Invalid auction bids.';
-  }
-  return returnObj;
-}
+export const validateStartAuctionBid = (name, ether, secret, privateKey) =>
+  checkZeroSealedBids(name, ether, secret, privateKey) 
+    ? {validate: true}
+    : {validate: false, err = 'Invalid auction bids.'};
 
 /**
  * @description 用來確認是不是成功可接標的
@@ -155,17 +148,10 @@ export const validateStartAuctionBid = (name, ether, secret, privateKey) => {
  * @param {*} secret 
  * @param {*} privateKey 
  */
-export const validateRevealAuctionBid = (name, ether, secret, privateKey) => {
-  let returnObj = {
-    validate: true,
-    err: ''
-  }
-  if (checkZeroSealedBids(name, ether, secret, privateKey)) {
-    returnObj.validate = false;
-    returnObj.err = 'Invalid auction bids.'
-  }
-  return returnObj;
-}
+export const validateRevealAuctionBid = (name, ether, secret, privateKey) => 
+  checkZeroSealedBids(name, ether, secret, privateKey)
+  ? {validate: false, err = 'Invalid auction bids.'}
+  : {validate: true};
 
 /**	
  * @description STEP 2: 同時開標並且投標，整合 startAuction + newBid		
