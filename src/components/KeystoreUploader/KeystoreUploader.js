@@ -8,6 +8,17 @@ import {CurrentWallet} from './CurrentWallet';
 import {PassphraseForm} from './PassphraseForm';
 import './KeystoreUploader.css';
 
+const Notice = (props) => (
+  <p className="notice">
+    <span>Notice:</span>
+    <span>
+      ENS.BID does not hold your keys for you. 
+      We cannot access accounts, recover keys, reset passwords, nor reverse transactions. 
+      Protect your keys & always check that you are on correct URL. You are responsible for your security.
+    </span>
+  </p>
+);
+
 export class KeystoreUploader extends Component {
   constructor(props) {
     super(props);
@@ -142,7 +153,7 @@ export class KeystoreUploader extends Component {
     return (
       <Card className='KeystoreUploader'>
         {msg}
-        <p className="notice"><span>Notice:</span> ENS.BID does not hold your keys for you. We cannot access accounts, recover keys, reset passwords, nor reverse transactions. Protect your keys & always check that you are on correct URL. You are responsible for your security.</p>
+        <Notice />
         {currentWallet}
         {title}
         {accountInfo}
