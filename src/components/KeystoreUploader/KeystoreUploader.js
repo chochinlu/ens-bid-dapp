@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {isValidJsonString, validAddress} from '../../lib/util';
 import Card from 'material-ui/Card';
-import TextField from 'material-ui/TextField';
+// import TextField from 'material-ui/TextField';
 import {getPrivateKey} from '../../lib/dAppService';
 import {Warnings} from '../Common/Warnings';
 import {JsonDropZone} from './JsonDropZone';
@@ -26,6 +26,18 @@ const ErrMsg = (props) => (
     <p>{props.children}</p>
   </div>
 );
+
+// For Mobile. 
+// In some mobile devices, we just can only copy/paste the keystore json file
+// const InputTable = (props) => (
+//   <div className='input-table'>
+//     <TextField
+//       multiline={true}
+//       rows={3}
+//       onChange={props.handleTextFieldChange}
+//     />
+//   </div>
+// );
 
 export class KeystoreUploader extends Component {
   constructor(props) {
@@ -129,31 +141,32 @@ export class KeystoreUploader extends Component {
     this.setState({ passpharse: event.target.value });
   };
 
-  handleTextFieldChange = (event) => {
-    event.preventDefault();
-    const self = this;
-    const jsonStr = event.target.value;
-    if (isValidJsonString(jsonStr)) {
-      const keystore = JSON.parse(event.target.value);
-      const olderAddress = self.props.address;
-      const olderBalance = self.props.balance;
-      const currentAddress = validAddress(keystore.address);
+  // handleTextFieldChange = (event) => {
+  //   event.preventDefault();
+  //   const self = this;
+  //   const jsonStr = event.target.value;
+  //   if (isValidJsonString(jsonStr)) {
+  //     const keystore = JSON.parse(event.target.value);
+  //     const olderAddress = self.props.address;
+  //     const olderBalance = self.props.balance;
+  //     const currentAddress = validAddress(keystore.address);
 
-      self.setState({
-        dragDisabled: true,
-        message: '',
-        keystore,
-        olderAddress,
-        olderBalance,
-        currentAddress
-      });
-      console.log(keystore)
-    } else {
-      self.setState({
-        message: 'Please paste a valid JSON file.'
-      });
-    }
-  }
+  //     self.setState({
+  //       dragDisabled: true,
+  //       message: '',
+  //       keystore,
+  //       olderAddress,
+  //       olderBalance,
+  //       currentAddress
+  //     });
+  //     console.log(keystore)
+  //   } else {
+  //     self.setState({
+  //       message: 'Please paste a valid JSON file.'
+  //     });
+  //   }
+  // }
+
 
   render() {
     const msg = this.state.message &&
@@ -192,17 +205,10 @@ export class KeystoreUploader extends Component {
         {title}
         {accountInfo}
         {warning}
-        <div className='input-table'>
-          <TextField
-            multiLine={true}
-            rows={3}
-            onChange={this.handleTextFieldChange}
-          />
-          <JsonDropZone
-            dragDisabled={this.state.dragDisabled}
-            onDrop={this.onDrop}
-          />
-        </div>
+        <JsonDropZone
+          dragDisabled={this.state.dragDisabled}
+          onDrop={this.onDrop}
+        />
         <PassphraseForm
           keystore={this.state.keystore}
           passpharse={this.state.passpharse}
