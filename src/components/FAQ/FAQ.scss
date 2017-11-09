@@ -1,7 +1,7 @@
 @import '../scss/_color.scss';
 @import '../scss/_base.scss';
 
-.Disclaimer {
+.FAQ {
   display: flex;
   justify-content: center;
   padding: 0 1em;
@@ -20,8 +20,8 @@
     font-size: 1em;
     line-height: 1.7;
     color: $dark-grey;
-    text-indent: 1em;
-    &::first-letter {
+    //text-indent: 1em;
+    /*&::first-letter {
       color: $accent-color-blue;
       font-size: 1.2em;
       padding-right: 1px;
@@ -29,7 +29,7 @@
 
     &:last-child {
       margin-bottom: 2em;
-    }
+    }*/
 
     @include desktop {
       line-height: $base-line-height;
