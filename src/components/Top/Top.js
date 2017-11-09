@@ -12,57 +12,34 @@ import {Menu} from './Menu';
 import {Title} from './Title';
 import {Wallet} from './Wallet';
 import {Network} from './Network';
+import * as labels from '../../constants/menu';
 import './Top.css';
 
 const menu = [
-  {icon: 'home', name: 'ENS.BID', disabled: false},
-  {icon: 'view_list', name: 'My ENS List', disabled: true},
-  {icon: 'gavel', name: 'ENS Trade', disabled: true},
-  {icon: 'attach_money', name: 'ENS Loan', disabled: true},
+  {icon: 'home', name: 'ENS.BID', disabled: false, label: labels.ENS_BID},
+  {icon: 'view_list', name: 'My ENS List', disabled: true, label: labels.MY_ENS_LIST},
+  {icon: 'gavel', name: 'ENS Trade', disabled: true, label: labels.ENS_TRADE},
+  {icon: 'attach_money', name: 'ENS Loan', disabled: true, label: labels.ENS_LOAD},
 ];
 
 const info = [
-  {icon: 'help_outline', name: 'FAQ', disabled: true},
-  {icon: 'assignment', name: 'Disclaimer', disabled: true},
-  {icon: 'bug_report', name: 'Bug Report', disabled: true}
+  {icon: 'help_outline', name: 'FAQ', disabled: false, label: labels.FAQ},
+  {icon: 'assignment', name: 'Disclaimer', disabled: false, label: labels.DISCLAIMER},
+  {icon: 'bug_report', name: 'Bug Report', disabled: false, label: labels.BUG_REPORT},
+  {icon: 'settings', name: 'ENS Settings', disabled: true, label: labels.SETTINGS},
 ]
 
 const MenuItem = (props) => (
-  <ListItem button className="Top-Drawer-ListItem" disabled={props.disabled}>
+  <ListItem button 
+    className="Top-Drawer-ListItem" 
+    disabled={props.disabled}
+    onClick={() => props.handleMenuSwitch(props.label)}>
      <ListItemIcon>
         <i className="material-icons">{props.icon}</i>
      </ListItemIcon>
      <ListItemText primary={props.children} className="Top-Drawer-ListItemText"/>
   </ListItem>
 ); 
-
-const menuItems = menu.map(({icon, name, disabled}, index) => 
-  <MenuItem key={`menu-${index}`} icon={icon} disabled={disabled}>{name}</MenuItem>);
-
-const infoItems = info.map(({icon, name, disabled}, index) => 
-  <MenuItem key={`menu-${index}`} icon={icon} disabled={disabled}>{name}</MenuItem>);
-
-const MenuDrawer = (props) => (
-  <Drawer
-    type="persistent"
-    open={props.menuOpen}>
-  <div className="Top-Drawer">
-    <div className="Top-Drawer-Chevron">
-      <IconButton onClick={props.handleDrawerClose}>
-        <i className="material-icons">chevron_left</i>
-      </IconButton>
-    </div>
-    <Divider />
-    <List>
-      {menuItems}
-    </List>
-    <Divider />
-    <List>
-      {infoItems}
-    </List>
-  </div>
-</Drawer>
-);
 
 class Top extends Component {
   state = {
@@ -82,8 +59,51 @@ class Top extends Component {
     this.setState({ [name]: event.target.value });
   };
 
+  handleMenuSwitch = (label) => {
+    this.props.menuSwitch(label); 
+    this.handleDrawerClose();
+  }
+
   render () {
-    const menuDrawer = this.state.menuOpen === true && <MenuDrawer menuOpen={this.state.menuOpen} handleDrawerClose={this.handleDrawerClose}/>
+    const menuItems = menu.map(({icon, name, disabled, label}, index) => 
+      <MenuItem 
+        key={`menu-${index}`} 
+        icon={icon} 
+        disabled={disabled}
+        label={label}
+        handleMenuSwitch={this.handleMenuSwitch}>{name}</MenuItem>);
+  
+    const infoItems = info.map(({icon, name, disabled, label}, index) => 
+      <MenuItem 
+        key={`menu-${index}`} 
+        icon={icon} 
+        disabled={disabled}
+        label={label}
+        menuSwitch={this.props.menuSwitch}
+        handleMenuSwitch={this.handleMenuSwitch}>{name}</MenuItem>);
+
+    const menuDrawer = 
+      this.state.menuOpen === true &&
+      <Drawer
+        type="persistent"
+        open={this.state.menuOpen}>
+        <div className="Top-Drawer">
+          <div className="Top-Drawer-Chevron">
+            <IconButton onClick={this.handleDrawerClose}>
+              <i className="material-icons">chevron_left</i>
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {menuItems}
+          </List>
+          <Divider />
+          <List>
+            {infoItems}
+          </List>
+        </div>
+      </Drawer>;
+
     return (
       <div className="Top">
         <AppBar position="static" className="AppBar">

@@ -3,8 +3,11 @@ import {MainWrapper} from './MainWrapper/MainWrapper';
 import Warnings from './Warnings';
 import Top from './Top/Top';
 import Footer from './Footer/Footer';
+import {FAQ} from './FAQ/FAQ';
+import {Disclaimer} from './Disclaimer/Disclaimer';
 import {getAddressBalance} from '../lib/dAppService';
 import {entries} from '../lib/ensService';
+import * as labels from '../constants/menu';
 import 'typeface-roboto';
 import './App.css';
 
@@ -28,7 +31,9 @@ class App extends Component {
 
       // open unlock wallet
       walletOpen: false,
-      walletWarningMessage: ''
+      walletWarningMessage: '',
+
+      menuLabel: labels.ENS_BID
     };
 
     this.setAddressAndBalance = this.setAddressAndBalance.bind(this);
@@ -50,6 +55,8 @@ class App extends Component {
     // unlock wallet
     this.handleOpenWallet = this.handleOpenWallet.bind(this);
     this.handleCloseWallet = this.handleCloseWallet.bind(this);
+    
+    this.menuSwitch = this.menuSwitch.bind(this);
   }
 
   // unlock wallet
@@ -137,29 +144,65 @@ class App extends Component {
     this.setState({page});
   }
 
+  menuSwitch(menuLabel) {
+    this.setState({menuLabel});
+  }
+
+  handleMenuSwitch() {
+    switch(this.state.menuLabel) {
+      case labels.ENS_BID:
+        return this.mainWrapperPage();
+      case labels.FAQ:
+        return this.faqPage();
+      case labels.DISCLAIMER:
+        return this.disclaimerPage();
+      case labels.BUG_REPORT:
+        return this.bugReportPage();
+      default:
+        return this.mainWrapperPage();;
+    }
+  }
+
+  faqPage() {
+    return <FAQ/>;
+  }
+
+  disclaimerPage() {
+    return <Disclaimer/>;
+  }
+
+  bugReportPage() {
+    window.location.href="https://github.com/ens-bid/ens-bid-dapp/issues";
+  }
+
+  mainWrapperPage() {
+    return process.env.REACT_APP_PROVIDER
+    ? <MainWrapper
+        className="App-content"
+        {...this.state}
+        switchPage={this.switchPage}
+        handleSearchChange={this.handleSearchChange}
+        handleSearchClick={this.handleSearchClick}
+        handleSearchKeyPress={this.handleSearchKeyPress}
+        handleSearchKeyDown={this.handleSearchKeyDown}
+        backToSearch={this.backToSearch}
+        handleMessageOpen={this.handleMessageOpen}
+        handleMessageClose={this.handleMessageClose}
+        handleOpenWallet={this.handleOpenWallet}
+        handleCloseWallet={this.handleCloseWallet}
+        handleWalletWarningMsg={this.handleWalletWarningMsg}
+      />
+    : <Warnings/>;
+  }
+
   render() {
-    const mainWrapperOrWarning = process.env.REACT_APP_PROVIDER
-      ? <MainWrapper
-          className="App-content"
-          {...this.state}
-          switchPage={this.switchPage}
-          handleSearchChange={this.handleSearchChange}
-          handleSearchClick={this.handleSearchClick}
-          handleSearchKeyPress={this.handleSearchKeyPress}
-          handleSearchKeyDown={this.handleSearchKeyDown}
-          backToSearch={this.backToSearch}
-          handleMessageOpen={this.handleMessageOpen}
-          handleMessageClose={this.handleMessageClose}
-          handleOpenWallet={this.handleOpenWallet}
-          handleCloseWallet={this.handleCloseWallet}
-          handleWalletWarningMsg={this.handleWalletWarningMsg}
-        />
-      : <Warnings/>;
+    const showPage = this.handleMenuSwitch();
     
     return (
       <div className="App">
         <Top
           {...this.state}
+          menuSwitch={this.menuSwitch}
           switchPage={this.switchPage}
           setAddressAndBalance={this.setAddressAndBalance}
           setSource={this.setSource}
@@ -169,7 +212,7 @@ class App extends Component {
           handleOpenWallet={this.handleOpenWallet}
           handleCloseWallet={this.handleCloseWallet}
         /> 
-        {mainWrapperOrWarning}
+        {showPage}
         <Footer/>
       </div>
     );

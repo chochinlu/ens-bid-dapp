@@ -6,7 +6,7 @@ export const Disclaimer = () => (
   <div className="Disclaimer">
     <Paper >
       <h1>Disclaimer</h1>
-      <p>ENS.BID are not "web wallets". You do not create an account or give us your funds 
+      <p>ENS.BID is not a "web wallet". You do not create an account or give us your funds 
         to hold onto. No data leaves your computer / your browser. We make it easy for you 
         to save and access your information and interact with the blockchain.</p>
       <p>We are not responsible for any loss: Ethereum, ENS.BID, and some of the underlying 
@@ -25,15 +25,13 @@ export const Disclaimer = () => (
       <p>The above copyright notice and this permission notice shall be included in all copies 
         or substantial portions of the Software.
       </p>
-      <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+      <p><span>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
         INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
         PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE 
         FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
         OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
         DEALINGS IN THE SOFTWARE.
-      </p>
-      <p>MIT License Copyright © 2017 ENS.BID</p>
+      </span></p>
     </Paper>
   </div>
-
 );
