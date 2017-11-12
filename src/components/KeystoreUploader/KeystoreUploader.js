@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {isValidJsonString, validAddress} from '../../lib/util';
 import Card from 'material-ui/Card';
+import Button from 'material-ui/Button';
 // import TextField from 'material-ui/TextField';
-import {getPrivateKey} from '../../lib/dAppService';
+import {getPrivateKey, getAddressByPrivateKey} from '../../lib/dAppService';
 import {Warnings} from '../Common/Warnings';
 import {JsonDropZone} from './JsonDropZone';
 import {CurrentWallet} from './CurrentWallet';
 import {PassphraseForm} from './PassphraseForm';
+import {PrivateKeyForm} from './PrivateKeyForm';
 import './KeystoreUploader.css';
 
 const Notice = () => (
@@ -24,6 +26,41 @@ const ErrMsg = (props) => (
   <div className='errMsg'>
     <i className="material-icons">info</i>
     <p>{props.children}</p>
+  </div>
+);
+
+/* TODO refactor
+const actions = [
+  {icon: 'file_upload', name: 'Keystore File', disabled: false, label: 'KeystoreFile'},
+  {icon: 'vpn_key', name: 'Private Key', disabled: false, label: 'PrivateKey'},
+]
+
+const UnlockActionButton = (props) => {
+  <Button raised 
+    color="default"
+    disabled={(props.unlockAction === props.label) ? "disabled" : ""} 
+    onClick={() => props.handleUnlockActionClick('KeystoreFile')}>
+    <i class="material-icons">{props.icon}</i>
+    {props.children}
+  </Button>
+}*/
+
+const UnlockActions = (props) => (
+  <div className="unlock-actions">
+    <Button raised 
+      color="default" 
+      disabled={(props.unlockAction === 'KeystoreFile') ? true : false}
+      onClick={() => props.handleUnlockActionClick('KeystoreFile')}>
+      <i className="material-icons">file_upload</i>
+      Keystore File
+    </Button>
+    <Button raised 
+      color="default" 
+      disabled={(props.unlockAction === 'PrivateKey') ? true : false}
+      onClick={() => props.handleUnlockActionClick('PrivateKey')}>
+      <i className="material-icons">vpn_key</i>
+      Private Key
+    </Button>
   </div>
 );
 
@@ -53,11 +90,15 @@ export class KeystoreUploader extends Component {
       currentAddress: '',
       warningOpen: false,
       warningMessage: '',
+      unlockAction: 'KeystoreFile',
+      privateKey: '',
     };
     this.onDrop = this.onDrop.bind(this);
     this.enableDrag = this.enableDrag.bind(this);
     this.unlockWallet = this.unlockWallet.bind(this);
+    this.savePrivateKey = this.savePrivateKey.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handlePrivateKeyChange = this.handlePrivateKeyChange.bind(this);
     this.buttonSubmitDisabled = this.buttonSubmitDisabled.bind(this);
     this.handleWarningMessageClose = this.handleWarningMessageClose.bind(this);
     this.handleWarningMessageOpen = this.handleWarningMessageOpen.bind(this);
@@ -137,9 +178,32 @@ export class KeystoreUploader extends Component {
     }
   }
 
+  savePrivateKey() {
+    try {
+      const privateKey = (this.state.privateKey.startsWith('0x')) ? 
+        this.state.privateKey.substring(2) : this.state.privateKey;
+      const currentAddress = getAddressByPrivateKey(privateKey);
+      this.setState({currentAddress});
+      this.props.setAddressAndBalance(currentAddress);
+      this.props.setPrivateKey(privateKey);
+      this.props.handleRequestClose();
+    } catch(err) {
+      console.log("error", err);
+      this.handleWarningMessageOpen(err.message);
+    }
+  }
+
+  handleUnlockActionClick = unlockAction => {
+    this.setState({unlockAction});
+  }
+
   handleChange = event => {
     this.setState({ passpharse: event.target.value });
   };
+
+  handlePrivateKeyChange = event => {
+    this.setState({ privateKey: event.target.value });
+  }
 
   // handleTextFieldChange = (event) => {
   //   event.preventDefault();
@@ -167,7 +231,6 @@ export class KeystoreUploader extends Component {
   //   }
   // }
 
-
   render() {
     const msg = this.state.message &&
       <ErrMsg>{this.state.message}</ErrMsg>;
@@ -183,6 +246,12 @@ export class KeystoreUploader extends Component {
       <h2>Unlock Wallet</h2> : 
       <h2>Unlock Another Wallet</h2>;
 
+    const unlockActions = 
+      <UnlockActions 
+        unlockAction={this.state.unlockAction} 
+        handleUnlockActionClick={this.handleUnlockActionClick}
+      />;
+
     const accountInfo =
      this.state.currentAddress &&
       <p className="KeystoreUploader-accountInfo">
@@ -197,27 +266,42 @@ export class KeystoreUploader extends Component {
         handleWarningMessageClose={this.handleWarningMessageClose}
       />  
 
+    const keystoreUpload = this.state.unlockAction === 'KeystoreFile' &&
+      <JsonDropZone
+        dragDisabled={this.state.dragDisabled}
+        onDrop={this.onDrop}
+      />;
+    
+    const passphraseForm = this.state.unlockAction === 'KeystoreFile' &&
+      <PassphraseForm
+        keystore={this.state.keystore}
+        passpharse={this.state.passpharse}
+        handleChange={this.handleChange}
+        dragDisabled={this.state.dragDisabled}
+        enableDrag={this.enableDrag}
+        unlockWallet={this.unlockWallet}
+        buttonSubmitDisabled={this.buttonSubmitDisabled()}
+      />;
+
+    const privateKeyForm = this.state.unlockAction === 'PrivateKey' &&
+      <PrivateKeyForm
+        privateKey={this.state.privateKey}
+        handlePrivateKeyChange={this.handlePrivateKeyChange}
+        savePrivateKey={this.savePrivateKey}
+      />
+
     return (
       <Card className='KeystoreUploader'>
         {msg}
         <Notice />
         {currentWallet}
         {title}
+        {unlockActions}
         {accountInfo}
         {warning}
-        <JsonDropZone
-          dragDisabled={this.state.dragDisabled}
-          onDrop={this.onDrop}
-        />
-        <PassphraseForm
-          keystore={this.state.keystore}
-          passpharse={this.state.passpharse}
-          handleChange={this.handleChange}
-          dragDisabled={this.state.dragDisabled}
-          enableDrag={this.enableDrag}
-          unlockWallet={this.unlockWallet}
-          buttonSubmitDisabled={this.buttonSubmitDisabled()}
-        />
+        {keystoreUpload}
+        {passphraseForm}
+        {privateKeyForm}
       </Card>
     );
   }
