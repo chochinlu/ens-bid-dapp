@@ -159,7 +159,7 @@ class App extends Component {
       case labels.BUG_REPORT:
         return this.bugReportPage();
       default:
-        return this.mainWrapperPage();;
+        return this.mainWrapperPage();
     }
   }
 
