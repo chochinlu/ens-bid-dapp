@@ -10,6 +10,7 @@ import {entries} from '../lib/ensService';
 import * as labels from '../constants/menu';
 import 'typeface-roboto';
 import './App.css';
+// import {Counter} from './Counter';
 
 class App extends Component {
   constructor(props) {
@@ -213,6 +214,7 @@ class App extends Component {
           handleCloseWallet={this.handleCloseWallet}
         /> 
         {showPage}
+        {/* <Counter {...this.props} /> */}
         <Footer/>
       </div>
     );
